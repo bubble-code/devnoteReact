@@ -13,7 +13,7 @@ export default styled(Button)(({ theme, ownerState }) => {
   const containedStyles = () => {
     // background color value
     const backgroundValue = palette[color] ? palette[color].main : palettePastel.main;
-    console.log(palette[color]);
+    
 
     // backgroundColor value when button is focused
     const focusedBackgroundValue = palette[color] ? palette[color].focus : white.focus;

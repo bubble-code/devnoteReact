@@ -1,19 +1,3 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
@@ -31,21 +15,21 @@ import borders from "assets/theme/base/borders";
 import masterCardLogo from "assets/images/logos/mastercard.png";
 import visaLogo from "assets/images/logos/visa.png";
 
-function PaymentMethod() {
+function AddBillingForm() {
   const { borderWidth, borderColor } = borders;
 
   return (
     <Card id="delete-account">
-      <SoftBox pt={2} px={2} display="flex" justifyContent="space-between" alignItems="center">
+      <SoftBox pt={2} px={2} py={2} display="flex" justifyContent="space-between" alignItems="center">
         <SoftTypography variant="h6" fontWeight="medium">
-          Payment Method
+          Create a new billing
         </SoftTypography>
         <SoftButton variant="gradient" color="dark">
           <Icon sx={{ fontWeight: "bold" }}>add</Icon>
-          &nbsp;add new card
+          &nbsp;Add Billing
         </SoftButton>
       </SoftBox>
-      <SoftBox p={2}>
+      {/* <SoftBox p={2}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
             <SoftBox
@@ -91,10 +75,11 @@ function PaymentMethod() {
               </SoftBox>
             </SoftBox>
           </Grid>
-        </Grid>
-      </SoftBox>
+         </Grid>
+       </SoftBox>
+       */}
     </Card>
   );
 }
 
-export default PaymentMethod;
+export default AddBillingForm;

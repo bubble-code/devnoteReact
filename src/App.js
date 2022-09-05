@@ -107,7 +107,7 @@ export default function App() {
           <>
             <Sidenav
               color={sidenavColor}
-              brand={brand}
+              // brand={brand}
               brandName="Dev Notes"
               routes={routes}
               onMouseEnter={handleOnMouseEnter}

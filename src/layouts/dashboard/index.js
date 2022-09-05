@@ -1,31 +1,15 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
-
-// Soft UI Dashboard React components
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 
 // Soft UI Dashboard React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
+// import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
-import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniStatisticsCard";
+import MiniStatisticsCard from "../../examples/Cards/StatisticsCards/MiniStatisticsCard/index";
+// import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniStatisticsCard";
 import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
 
@@ -54,42 +38,47 @@ function Dashboard() {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "today's money" }}
-                count="$53,000"
-                percentage={{ color: "success", text: "+55%" }}
-                icon={{ color: "info", component: "paid" }}
+                title={{ text: "CM Raulito",color: "white" }}
+                count="0"
+                percentage={{ color: "#82d616", text: "100%" }}
+                icon={{ color: "info", component: "man" }}
+                bgColor={'#344767'}
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "today's users" }}
+                title={{ text: "CM Ana C",color: "white" }}
                 count="2,300"
-                percentage={{ color: "success", text: "+3%" }}
+                percentage={{ color: "#fbcf33", text: "+3%" }}
                 icon={{ color: "info", component: "public" }}
+                bgColor={'#344767'}
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "new clients" }}
-                count="+3,462"
-                percentage={{ color: "error", text: "-2%" }}
+                title={{ text: "CM Lia", color: "white" }}
+                count="000"
+                percentage={{ color: "#ea0606", text: "000%" }}
                 icon={{ color: "info", component: "emoji_events" }}
+                bgColor={'#344767'}
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "sales" }}
+                title={{ text: "Otros", color: "white" }}
                 count="$103,430"
-                percentage={{ color: "success", text: "+5%" }}
+                percentage={{ color: "#e9ecef", text: "+5%" }}
                 icon={{
                   color: "info",
                   component: "shopping_cart",
                 }}
+                bgColor={'#344767'}
+                colorstadistics={'#344767'}
               />
             </Grid>
           </Grid>
         </SoftBox>
-        <SoftBox mb={3}>
+        {/*  <SoftBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} lg={7}>
               <BuildByDevelopers />
@@ -99,7 +88,7 @@ function Dashboard() {
             </Grid>
           </Grid>
         </SoftBox>
-        <SoftBox mb={3}>
+       <SoftBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} lg={5}>
               <ReportsBarChart
@@ -134,7 +123,7 @@ function Dashboard() {
               />
             </Grid>
           </Grid>
-        </SoftBox>
+              </SoftBox>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={8}>
             <Projects />
@@ -142,7 +131,7 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={4}>
             <OrderOverview />
           </Grid>
-        </Grid>
+        </Grid>*/}
       </SoftBox>
       <Footer />
     </DashboardLayout>

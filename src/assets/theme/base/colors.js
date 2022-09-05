@@ -10,6 +10,9 @@ const colors = {
 
   transparent: {
     main: "transparent",
+    mio: "solid",
+    notransparent: "#F4EEE1",
+    textColorMio: "#EFEEEE"
   },
 
   white: {
@@ -21,7 +24,10 @@ const colors = {
     main: "#F4EEE1",
     focus: "#ffffff",
   },
-
+  cardColor: {
+    main: "#E8E6D9",
+    focus: "#E4DAC2",
+  },
   black: {
     light: "#141414",
     main: "#000000",

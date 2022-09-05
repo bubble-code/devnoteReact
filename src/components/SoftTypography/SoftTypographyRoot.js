@@ -42,7 +42,7 @@ export default styled(Typography)(({ theme, ownerState }) => {
     display: "inline-block",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: transparent.main,
-    position: "relative",
+    position: "relative", 
     zIndex: 1,
   });
 
@@ -51,7 +51,8 @@ export default styled(Typography)(({ theme, ownerState }) => {
     textTransform,
     verticalAlign,
     textDecoration: "none",
-    color: color === "inherit" || !palette[color] ? "inherit" : palette[color].main,
+    color: color ,
+    // color: color === "inherit" || !palette[color] ? "inherit" : palette[color].textColorMio,
     fontWeight: fontWeights[fontWeight] && fontWeights[fontWeight],
     ...(textGradient && gradientStyles()),
   };

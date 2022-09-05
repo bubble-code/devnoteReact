@@ -1,34 +1,17 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
-
-// @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
 
 // Soft UI Dashboard React components
-import SoftBox from "components/SoftBox";
+import SoftBox from "../../../../components/SoftBox/index";
+// import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 
-function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction }) {
+function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction, colorText, colorstadistics }) {
   return (
     <Card>
-      <SoftBox bgColor={bgColor} variant="gradient">
+      <SoftBox bgColor={bgColor} variant="contained">
         <SoftBox p={2}>
           <Grid container alignItems="center">
             {direction === "left" ? (
@@ -45,7 +28,7 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction
                   alignItems="center"
                   shadow="md"
                 >
-                  <Icon fontSize="small" color="inherit">
+                  <Icon fontSize="small" color="#344767">
                     {icon.component}
                   </Icon>
                 </SoftBox>
@@ -55,8 +38,8 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction
               <SoftBox ml={direction === "left" ? 2 : 0} lineHeight={1}>
                 <SoftTypography
                   variant="button"
-                  color={bgColor === "white" ? "text" : "white"}
-                  opacity={bgColor === "white" ? 1 : 0.7}
+                  color={title.color}
+                  opacity={1}
                   textTransform="capitalize"
                   fontWeight={title.fontWeight}
                 >
@@ -78,8 +61,9 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction
               <Grid item xs={4}>
                 <SoftBox
                   variant="gradient"
-                  bgColor={bgColor === "white" ? icon.color : "white"}
-                  color={bgColor === "white" ? "white" : "dark"}
+                  bgColor={bgColor !== "white" ? icon.color : "palettePastel"}
+                  // bgColor={bgColor === "white" ? icon.color : "white"}
+                  color={bgColor !== "white" ? "white" : "dark"}
                   width="3rem"
                   height="3rem"
                   marginLeft="auto"
@@ -104,7 +88,7 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction
 
 // Setting default values for the props of MiniStatisticsCard
 MiniStatisticsCard.defaultProps = {
-  bgColor: "white",
+  bgColor: "palettePastel",
   title: {
     fontWeight: "medium",
     text: "",
@@ -127,10 +111,12 @@ MiniStatisticsCard.propTypes = {
     "warning",
     "error",
     "dark",
+    "palettePastel",
   ]),
   title: PropTypes.PropTypes.shape({
     fontWeight: PropTypes.oneOf(["light", "regular", "medium", "bold"]),
     text: PropTypes.string,
+    color: PropTypes.string,
   }),
   count: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   percentage: PropTypes.shape({
@@ -143,7 +129,7 @@ MiniStatisticsCard.propTypes = {
       "error",
       "dark",
       "white",
-    ]),
+    ]) ,
     text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }),
   icon: PropTypes.shape({
@@ -151,6 +137,8 @@ MiniStatisticsCard.propTypes = {
     component: PropTypes.node.isRequired,
   }).isRequired,
   direction: PropTypes.oneOf(["right", "left"]),
+  colorText: PropTypes.string,
+  colorstadistics: PropTypes.string,
 };
 
 export default MiniStatisticsCard;

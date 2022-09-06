@@ -1,5 +1,8 @@
-import Grid from "@mui/material/Grid"; 
+import { useEffect } from "react";
+import Grid from "@mui/material/Grid";
 import SoftBox from "components/SoftBox";
+import { useSoftUIController } from '../../context';
+import FormAddBilling from "components/FormAddBilling";
 
 // Soft UI Dashboard React components
 import MasterCard from "examples/Cards/MasterCard";
@@ -16,8 +19,19 @@ import Invoices from "layouts/billing/components/Invoices";
 import BillingInformation from "layouts/billing/components/BillingInformation";
 import Transactions from "layouts/billing/components/Transactions";
 import ViewTable from "../../components/Table";
+import DataService from '../../service/services'
 
 function Billing() {
+  const [context, dispatch] = useSoftUIController();
+  const { listBilling } = context;
+  useEffect(() => {
+    DataService.listAgencias().then((response) => {
+      response.forEach((element) => {
+        console.log(element.id);
+      });
+    });
+  }, []);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -30,7 +44,15 @@ function Billing() {
                   <AddBillingForm />
                 </Grid>
                 <Grid item xs={12}>
-                  <ViewTable py={2} mb={2} headTitle={"Hola"}  />
+                  {(() => {
+                    switch (listBilling) {
+                      case 0:
+                        return <ViewTable py={2} mb={2} headTitle={"Hola"} />
+                      default:
+                        return <FormAddBilling py={2} mb={2} headTitle={"Billing Invoice"} />
+                    }
+                  })()
+                  }
                 </Grid>
                 {/*<Grid item xs={12} xl={6}>
                   <MasterCard number={4562112245947852} holder="jack peterson" expires="11/22" />

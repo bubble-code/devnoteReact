@@ -1,3 +1,4 @@
+import { useSoftUIController } from '../../../../context';
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
@@ -16,6 +17,8 @@ import masterCardLogo from "assets/images/logos/mastercard.png";
 import visaLogo from "assets/images/logos/visa.png";
 
 function AddBillingForm() {
+  const [controller] = useSoftUIController();
+  const { listBilling } = controller;
   const { borderWidth, borderColor } = borders;
 
   return (
@@ -24,10 +27,18 @@ function AddBillingForm() {
         <SoftTypography variant="h6" fontWeight="medium">
           Create a new billing
         </SoftTypography>
-        <SoftButton variant="gradient" color="dark">
-          <Icon sx={{ fontWeight: "bold" }}>add</Icon>
-          &nbsp;Add Billing
-        </SoftButton>
+        <SoftBox display="flex" justifyContent="space-between" alignItems="left">
+          <SoftBox mr={6}>
+            <SoftButton variant="gradient" color={listBilling === 0 ? "dark" : "light"} current={0}>
+              <Icon sx={{ fontWeight: "bold" }}>add</Icon>
+              &nbsp;Add Billing
+            </SoftButton>
+          </SoftBox>
+          <SoftButton variant="gradient" color={listBilling === 1 ? "dark" : "light"} current={1} >
+            <Icon sx={{ fontWeight: "bold" }}>add</Icon>
+            &nbsp;List Billings
+          </SoftButton>
+        </SoftBox>
       </SoftBox>
       {/* <SoftBox p={2}>
         <Grid container spacing={3}>

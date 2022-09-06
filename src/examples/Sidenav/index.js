@@ -22,12 +22,12 @@ import SidenavRoot from "examples/Sidenav/SidenavRoot";
 import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
 
 // Soft UI Dashboard React context
-import { useSoftUIController, setMiniSidenav } from "context";
+import { useSoftUIController, setMiniSidenav } from "../../context";
 
 function Sidenav({ color, brandName, routes, ...rest }) {
   // brand
   const [controller, dispatch] = useSoftUIController();
-  const { miniSidenav, transparentSidenav } = controller;
+  const { miniSidenav, transparentSidenav, } = controller;
   const location = useLocation();
   const { pathname } = location;
   const collapseName = pathname.split("/").slice(1)[0];
@@ -126,7 +126,7 @@ function Sidenav({ color, brandName, routes, ...rest }) {
           </SoftTypography>
         </SoftBox>
         <SoftBox component={NavLink} to="/" display="flex" alignItems="center">
-           {/*brand && <SoftBox component="img" src={brand} alt="Soft UI Logo" width="2rem" />*/}
+          {/*brand && <SoftBox component="img" src={brand} alt="Soft UI Logo" width="2rem" />*/}
           <SoftBox
             width={!brandName && "100%"}
             sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}
@@ -139,7 +139,7 @@ function Sidenav({ color, brandName, routes, ...rest }) {
       </SoftBox>
       <Divider />
       <List>{renderRoutes}</List>
-      <SoftBox pt={2} my={2} mx={2} mt="auto">
+      {/* <SoftBox pt={2} my={2} mx={2} mt="auto">
         <SidenavCard  /> 
         <SoftBox mt={2}>
           <SoftButton
@@ -154,7 +154,7 @@ function Sidenav({ color, brandName, routes, ...rest }) {
             upgrade to pro
           </SoftButton>
         </SoftBox>
-      </SoftBox>
+  </SoftBox>*/}
     </SidenavRoot>
   );
 }

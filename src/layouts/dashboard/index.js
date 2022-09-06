@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import DataService from '../../service/services';
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
 import SoftBox from "components/SoftBox";
@@ -27,8 +29,34 @@ import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import gradientLineChartData from "layouts/dashboard/data/gradientLineChartData";
 
 function Dashboard() {
+  const [cm, setCm] = useState([]);
   const { size } = typography;
   const { chart, items } = reportsBarChartData;
+
+  const getData = async () => {
+    const res = [];
+    const response = await DataService.listCM();
+    response.forEach((element) => {
+      console.log(element.id);
+      res.push(
+        <Grid item xs={12} sm={6} xl={3}>
+          <MiniStatisticsCard
+            title={{ text: `${element.id}`, color: "white" }}
+            count="0"
+            percentage={{ color: "#82d616", text: "100%" }}
+            icon={{ color: "info", component: "man" }}
+            bgColor={'#344767'}
+          />
+        </Grid>
+      );
+    }
+    );
+    setCm(res)
+  }
+  useEffect(() => {
+    getData()
+  }, [])
+
 
   return (
     <DashboardLayout>
@@ -36,46 +64,7 @@ function Dashboard() {
       <SoftBox py={3}>
         <SoftBox mb={3}>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} xl={3}>
-              <MiniStatisticsCard
-                title={{ text: "CM Raulito",color: "white" }}
-                count="0"
-                percentage={{ color: "#82d616", text: "100%" }}
-                icon={{ color: "info", component: "man" }}
-                bgColor={'#344767'}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} xl={3}>
-              <MiniStatisticsCard
-                title={{ text: "CM Ana C",color: "white" }}
-                count="2,300"
-                percentage={{ color: "#fbcf33", text: "+3%" }}
-                icon={{ color: "info", component: "public" }}
-                bgColor={'#344767'}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} xl={3}>
-              <MiniStatisticsCard
-                title={{ text: "CM Lia", color: "white" }}
-                count="000"
-                percentage={{ color: "#ea0606", text: "000%" }}
-                icon={{ color: "info", component: "emoji_events" }}
-                bgColor={'#344767'}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} xl={3}>
-              <MiniStatisticsCard
-                title={{ text: "Otros", color: "white" }}
-                count="$103,430"
-                percentage={{ color: "#e9ecef", text: "+5%" }}
-                icon={{
-                  color: "info",
-                  component: "shopping_cart",
-                }}
-                bgColor={'#344767'}
-                colorstadistics={'#344767'}
-              />
-            </Grid>
+            {[...cm]}
           </Grid>
         </SoftBox>
         {/*  <SoftBox mb={3}>

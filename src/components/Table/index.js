@@ -6,12 +6,10 @@ import Table from "examples/Tables/Table";
 import PropTypes from "prop-types";
 
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
+import billiTable from "layouts/tables/data/billingTable";
 
 function ViewTable({ py, mb, headTitle }) {
-    const { columns, rows } = authorsTableData;
-    const { columns: prCols, rows: prRows } = projectsTableData;
+    const { columns, rows } = billiTable;
     return (
         <SoftBox py={py}>
             <SoftBox mb={mb}>
@@ -33,23 +31,6 @@ function ViewTable({ py, mb, headTitle }) {
                     </SoftBox>
                 </Card>
             </SoftBox>
-            <Card>
-                <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-                    <SoftTypography variant="h6">Projects table</SoftTypography>
-                </SoftBox>
-                <SoftBox
-                    sx={{
-                        "& .MuiTableRow-root:not(:last-child)": {
-                            "& td": {
-                                borderBottom: ({ borders: { borderWidth, borderColor } }) =>
-                                    `${borderWidth[1]} solid ${borderColor}`,
-                            },
-                        },
-                    }}
-                >
-                    <Table columns={prCols} rows={prRows} />
-                </SoftBox>
-            </Card>
         </SoftBox>
     );
 }

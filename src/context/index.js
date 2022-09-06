@@ -36,6 +36,9 @@ function reducer(state, action) {
     case "LAYOUT": {
       return { ...state, layout: action.value };
     }
+    case "LIST_BILLING": {
+      return { ...state, listBilling: action.value };
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -53,6 +56,7 @@ function SoftUIControllerProvider({ children }) {
     openConfigurator: false,
     direction: "ltr",
     layout: "dashboard",
+    listBilling: 0,
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);
@@ -87,6 +91,7 @@ const setFixedNavbar = (dispatch, value) => dispatch({ type: "FIXED_NAVBAR", val
 const setOpenConfigurator = (dispatch, value) => dispatch({ type: "OPEN_CONFIGURATOR", value });
 const setDirection = (dispatch, value) => dispatch({ type: "DIRECTION", value });
 const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
+const setListBilling = (dispatch, value) => dispatch({ type: "LIST_BILLING", value });
 
 export {
   SoftUIControllerProvider,
@@ -99,4 +104,5 @@ export {
   setOpenConfigurator,
   setDirection,
   setLayout,
+  setListBilling,
 };

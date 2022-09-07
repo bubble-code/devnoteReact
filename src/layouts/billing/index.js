@@ -1,8 +1,10 @@
+/* eslint-disable react/jsx-filename-extension */
 import { useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import SoftBox from "components/SoftBox";
 import { useSoftUIController } from '../../context';
-import FormAddBilling from "components/FormAddBilling";
+// import FormAddBilling from "components/FormAddBilling";
+import FormAddBilling from "../../components/FormAddBilling";
 
 // Soft UI Dashboard React components
 import MasterCard from "examples/Cards/MasterCard";
@@ -20,6 +22,7 @@ import BillingInformation from "layouts/billing/components/BillingInformation";
 import Transactions from "layouts/billing/components/Transactions";
 import ViewTable from "../../components/Table";
 import DataService from '../../service/services'
+import TableBillingService from "components/TableBillingService";
 
 function Billing() {
   const [context, dispatch] = useSoftUIController();
@@ -35,7 +38,7 @@ function Billing() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <SoftBox mt={4}>
+      <SoftBox mt={2}>
         <SoftBox mb={1.5}>
           <Grid container spacing={3}>
             <Grid item xs={12} lg={8}>
@@ -53,6 +56,9 @@ function Billing() {
                     }
                   })()
                   }
+                </Grid>
+                <Grid item xs={12}>
+                  <TableBillingService py={0} mb={2} headTitle={"Billing Service"} />
                 </Grid>
                 {/*<Grid item xs={12} xl={6}>
                   <MasterCard number={4562112245947852} holder="jack peterson" expires="11/22" />
@@ -82,7 +88,7 @@ function Billing() {
             </Grid>
           </Grid>
         </SoftBox>
-        <SoftBox my={3}>
+        <SoftBox my={2}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={7}>
               <BillingInformation />

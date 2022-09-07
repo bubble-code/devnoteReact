@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import { forwardRef } from "react";
 
 // prop-types is a library for typechecking of props

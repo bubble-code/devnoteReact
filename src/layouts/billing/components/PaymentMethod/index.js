@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import { useSoftUIController } from '../../../../context';
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";

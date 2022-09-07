@@ -47,17 +47,17 @@ class DataService {
     async listBilling({ cm }) {
         const billingsOpen = await this.listBillingOpenByCm({ cm });
         const response = [];
-        Promise.all(billingsOpen.map(async (item) => {
+        return Promise.all(billingsOpen.map(async (item) => {
             return await this.listBillingOpenByCm({ cm, day: item.id });
         })).then((result) => {
             result.forEach((item) => {
                 item.forEach((item2) => {
-                    console.log(item2.id);
-                    response.push(item2.id);
+                    response.push(item2.data());
                 })
             });
-        });
-        return response;
+            return response;
+        }
+        );
     }
 }
 

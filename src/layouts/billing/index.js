@@ -57,9 +57,6 @@ function Billing() {
                   })()
                   }
                 </Grid>
-                <Grid item xs={12}>
-                  <TableBillingService py={0} mb={2} headTitle={"Billing Service"} />
-                </Grid>
                 {/*<Grid item xs={12} xl={6}>
                   <MasterCard number={4562112245947852} holder="jack peterson" expires="11/22" />
                 </Grid>
@@ -88,6 +85,11 @@ function Billing() {
             </Grid>
           </Grid>
         </SoftBox>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <TableBillingService py={0} mb={2} headTitle={"Billing Service"} />
+          </Grid>
+        </Grid>
         <SoftBox my={2}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={7}>

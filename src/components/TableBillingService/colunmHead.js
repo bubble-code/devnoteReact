@@ -1,10 +1,11 @@
 export const columns = [
-    { name: "Client Name", align: "left" },
+    { name: "ClientName", align: "left" },
     { name: "Pos", align: "left" },
-    { name: "Service Description", align: "center" },
-    { name: "Start Time", align: "center" },
-    { name: "End Time", align: "center" },
-    { name: "Min", align: "center" },
-    { name: "Doc", align: "center" },
+    { name: "ServiceDescription", align: "left" },
+    { name: "StartTime", align: "left" },
+    { name: "EndTime", align: "left" },
+    { name: "Min", align: "left" },
+    { name: "Doc", align: "left" },
     { name: "Units", align: "center" },
 ]
+

@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-filename-extension */
-import React, { forwardRef } from "react";
+import React, { forwardRef, useEffect, useRef } from "react";
 
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
@@ -17,26 +17,30 @@ const top100Films = [
 ];
 
 const parseData = (data) => {
+    // console.log("data", data);
     return data.map((item) => {
         for (const key in item) {
-            // console.log(item[key]);
             return { label: key };
         }
     });
 }
 
-const SelectInput = ({ data, sxx = { width: 250 } }) => {
-    const dataParsed = parseData(data);
+const SelectInput = forwardRef(({ data, sxx = { width: 250 }, onchange, parse, hText }) => {
+    const dataParsed = parse ? parseData(data) : data;
+    // const [value, setValue] = React.useState({ label: '' });
     return (
         <Autocomplete
             disablePortal
             id="combo-box-demo"
             options={dataParsed}
             sx={sxx}
-            renderInput={(params) => <TextField {...params} helperText="Choice CM Name" />}
+            renderInput={(params) => <TextField {...params} helperText={hText} />}
+            onChange={(event, value) => onchange(event, value)}
+            // value={[]}
+            // defaultValue={[]}
         />
     );
-};
+});
 
 // Setting default values for the props of SoftInput
 // SelectInput.defaultProps = {
@@ -65,5 +69,8 @@ const SelectInput = ({ data, sxx = { width: 250 } }) => {
 SelectInput.propTypes = {
     data: PropTypes.array,
     sxx: PropTypes.object,
+    onchange: PropTypes.func,
+    parse: PropTypes.bool,
+    hText: PropTypes.string,
 };
 export default SelectInput;

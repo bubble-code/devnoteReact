@@ -59,6 +59,21 @@ class DataService {
         }
         );
     }
+    async totalUnits({ cm, day }) {
+        let total = 0;
+        try {
+            const conllectionn = collection(db, `${this._pathCM}/${cm}/openBilling/${day}/1`);
+            const querySnapShot = query(conllectionn);
+            const result = await getDocs(querySnapShot);
+            result.docs.forEach((item) => {
+                total += item.data().u;
+                // console.log(total)
+            })
+        } catch (error) {
+            console.log(error);
+        }
+        return total;
+    }
 }
 
 

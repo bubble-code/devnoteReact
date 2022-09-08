@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useSoftUIController } from "context";
 import Grid from '@mui/material/Grid';
 
 // Component: SoftBox
 // import SoftBox from "components/SoftBox";
 import SoftBox from "../../components/SoftBox";
+import SelectInput from "../../components/SelectInput";
 // import SoftInput from "components/SoftInput";
 import SoftInput from "../../components/SoftInput";
 import SoftTypography from "components/SoftTypography";
@@ -13,15 +15,20 @@ import Divider from '@mui/material/Divider';
 import SoftButton from "components/SoftButton";
 import Icon from "@mui/material/Icon";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import DateTimePicker from "components/DateTimePicker";
 
 
 function FormAddBilling({ py, mb, headTitle }) {
+    const [controler] = useSoftUIController();
+    const { listCM } = controler;
     return (
         <SoftBox py={py}>
             <SoftBox mb={mb}>
                 <Card>
                     <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
                         <SoftTypography variant="h6">{headTitle}</SoftTypography>
+                        <SelectInput data={listCM} />
+                        <DateTimePicker />
                     </SoftBox>
                     <Divider color="black" />
                     <SoftBox
@@ -38,6 +45,7 @@ function FormAddBilling({ py, mb, headTitle }) {
                             <Grid item xs={12} md={3} ml={1} mr={0}>
                                 <SoftInput placeholder="Client Name"
                                     icon={{ component: <AccountCircle sx={{ fontWeight: "bold" }} />, direction: "left" }} />
+                                <SelectInput data={listCM} sxx={{ width: 200 }} />
                             </Grid>
                             <Grid item xs={1} md={1} ml={1} mr={0}>
                                 <SoftInput placeholder="Pos"

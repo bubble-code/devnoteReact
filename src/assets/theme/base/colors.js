@@ -18,6 +18,7 @@ const colors = {
   white: {
     main: "#ffffff",
     focus: "#ffffff",
+    mio: "#0c0c0c"
   },
 
   palettePastel: {

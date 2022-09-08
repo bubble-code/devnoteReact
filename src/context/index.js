@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import { createContext, useContext, useReducer, useMemo } from "react";
 
 // prop-types is a library for typechecking of props
@@ -39,6 +40,9 @@ function reducer(state, action) {
     case "LIST_BILLING": {
       return { ...state, listBilling: action.value };
     }
+    case "LOAD_CM": {
+      return { ...state, listCM: action.value };
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -57,6 +61,7 @@ function SoftUIControllerProvider({ children }) {
     direction: "ltr",
     layout: "dashboard",
     listBilling: 0,
+    listCM: []
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);
@@ -92,6 +97,7 @@ const setOpenConfigurator = (dispatch, value) => dispatch({ type: "OPEN_CONFIGUR
 const setDirection = (dispatch, value) => dispatch({ type: "DIRECTION", value });
 const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
 const setListBilling = (dispatch, value) => dispatch({ type: "LIST_BILLING", value });
+const setLoadListCm = (dispatch, value) => dispatch({ type: "LOAD_CM", value });
 
 export {
   SoftUIControllerProvider,
@@ -105,4 +111,5 @@ export {
   setDirection,
   setLayout,
   setListBilling,
+  setLoadListCm,
 };

@@ -23,7 +23,7 @@ function TableBillingService({ py, mb, headTitle }) {
 
     const loadBillingData = async () => {
         const response = await DataService.listBilling({ cm: caseManagement });
-        console.log(response);
+        // console.log(response);
         const rows = response.map((item) => {
             const row = {
                 ClientName: <TagClientName  name={item.Client_Name} email=" " />,

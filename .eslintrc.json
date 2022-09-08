@@ -7,7 +7,8 @@
   },
   "extends": [
     "plugin:react/recommended",
-    "prettier"
+    "prettier",
+    "plugin:react-hooks/recommended"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -36,7 +37,11 @@
     "no-param-reassign": "off",
     "jsx-a11y/alt-text": "off",
     "react/react-in-jsx-scope": "off",
-    "react/display-name": "off"
+    "react/display-name": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": ["warn", {
+      "additionalHooks": "(useMyCustomHook|useMyOtherCustomHook)"
+    }]
   },
   "settings": {
     "react": {

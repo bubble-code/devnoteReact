@@ -43,6 +43,9 @@ function reducer(state, action) {
     case "LOAD_CM": {
       return { ...state, listCM: action.value };
     }
+    case "LOAD_ACTCLIENT": {
+      return { ...state, listActClient: action.value };
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -61,7 +64,8 @@ function SoftUIControllerProvider({ children }) {
     direction: "ltr",
     layout: "dashboard",
     listBilling: 0,
-    listCM: []
+    listCM: [],
+    listActClient: [],
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);
@@ -98,6 +102,7 @@ const setDirection = (dispatch, value) => dispatch({ type: "DIRECTION", value })
 const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
 const setListBilling = (dispatch, value) => dispatch({ type: "LIST_BILLING", value });
 const setLoadListCm = (dispatch, value) => dispatch({ type: "LOAD_CM", value });
+const setLoadActiClient = (dispatch, value) => dispatch({ type: "LOAD_ACTCLIENT", value });
 
 export {
   SoftUIControllerProvider,
@@ -112,4 +117,5 @@ export {
   setLayout,
   setListBilling,
   setLoadListCm,
+  setLoadActiClient,
 };

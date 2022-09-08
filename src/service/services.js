@@ -74,6 +74,12 @@ class DataService {
         }
         return total;
     }
+    async listActivedClients({ cm }) {
+        const collectionn = collection(db, `${this._pathCM}/${cm}/activeClient`);
+        const querySnapShot = query(collectionn);
+        const result = await getDocs(querySnapShot)
+        return result.docs;
+    }
 }
 
 

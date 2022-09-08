@@ -16,21 +16,32 @@ import SoftButton from "components/SoftButton";
 import Icon from "@mui/material/Icon";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import DateTimePicker from "components/DateTimePicker";
+import DataService from '../../service/services'
 
 
 function FormAddBilling({ py, mb, headTitle }) {
+    const [actClinet, setactClinet] = React.useState([]);
     const [controler] = useSoftUIController();
     const { listCM } = controler;
+    const handleChangeCmName = async (event, value) => {
+        const request = await DataService.listActivedClients({ cm: value.label })
+        console.log("request");
+        const listActClient = request.map((item) => {
+            return { label: item.id }
+        });
+        // console.log(listActClient);
+        setactClinet(listActClient);
+    };
     return (
         <SoftBox py={py}>
             <SoftBox mb={mb}>
                 <Card>
                     <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
                         <SoftTypography variant="h6">{headTitle}</SoftTypography>
-                        <SelectInput data={listCM} />
+                        <SelectInput data={listCM} onchange={handleChangeCmName} parse hText="Choice CM Name" />
                         <DateTimePicker />
                     </SoftBox>
-                    <Divider color="black" />
+                    <Divider color="black" /> 
                     <SoftBox
                         sx={{
                             "& .MuiTableRow-root:not(:last-child)": {
@@ -43,9 +54,7 @@ function FormAddBilling({ py, mb, headTitle }) {
                     >
                         <Grid container spacing={0}>
                             <Grid item xs={12} md={3} ml={1} mr={0}>
-                                <SoftInput placeholder="Client Name"
-                                    icon={{ component: <AccountCircle sx={{ fontWeight: "bold" }} />, direction: "left" }} />
-                                <SelectInput data={listCM} sxx={{ width: 200 }} />
+                                <SelectInput data={actClinet} sxx={{ width: 200 }} onchange={() => { }} hText="Type Name Client" />
                             </Grid>
                             <Grid item xs={1} md={1} ml={1} mr={0}>
                                 <SoftInput placeholder="Pos"

@@ -21,6 +21,8 @@ export default styled(Badge)(({ theme, ownerState }) => {
   const { palette, typography, borders, functions } = theme;
   const { color, circular, border, size, indicator, variant, container, children } = ownerState;
 
+
+
   const { white, dark, gradients, badgeColors } = palette;
   const { size: fontSize, fontWeightBold } = typography;
   const { borderRadius, borderWidth } = borders;
@@ -35,7 +37,8 @@ export default styled(Badge)(({ theme, ownerState }) => {
   };
 
   // fontSize value
-  const fontSizeValue = size === "xs" ? fontSize.xxs : fontSize.xs;
+  let fontSizeValue = size === "xs" ? fontSize.xxs : fontSize.xs;
+  fontSizeValue = size === "lg" ? fontSize.xl : fontSizeValue;
 
   // border value
   const borderValue = border ? `${borderWidth[3]} solid ${white.main}` : "none";

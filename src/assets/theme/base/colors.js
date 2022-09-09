@@ -112,7 +112,10 @@ const colors = {
       main: "#f53939",
       state: "#fbcf33",
     },
-
+    palettePastel: {
+      main: "#1b234f",
+      state: "#974727",
+    },
     error: {
       main: "#ea0606",
       state: "#ff667c",
@@ -271,7 +274,10 @@ const colors = {
       background: "#fc9797",
       text: "#bd0000",
     },
-
+    palettePastel: {
+      background: "#000000",
+      text: "#000000",
+    },
     light: {
       background: "#ffffff",
       text: "#c7d3de",

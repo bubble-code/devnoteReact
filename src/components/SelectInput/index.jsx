@@ -25,19 +25,29 @@ const parseData = (data) => {
     });
 }
 
-const SelectInput = forwardRef(({ data, sxx = { width: 250 }, onchange, parse, hText }) => {
+const SelectInput = forwardRef(({ data, sxx = { width: 250 }, onchange, parse, hText, id }, ref) => {
     const dataParsed = parse ? parseData(data) : data;
-    // const [value, setValue] = React.useState({ label: '' });
+    // console.log(ref);
+    const [value, setValue] = React.useState({ label: '' });
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+        onchange(id, event, newValue);
+    }
+    useEffect(() => {
+        setValue('');
+    }, [data]);
+    // const [value, setValue] = React.useState(null);    
     return (
         <Autocomplete
+            ref={ref}
             disablePortal
-            id="combo-box-demo"
+            id={id}
             options={dataParsed}
             sx={sxx}
             renderInput={(params) => <TextField {...params} helperText={hText} />}
-            onChange={(event, value) => onchange(event, value)}
-            // value={[]}
-            // defaultValue={[]}
+            onChange={handleChange}
+            value={value}
+        // defaultValue={[]}
         />
     );
 });
@@ -72,5 +82,6 @@ SelectInput.propTypes = {
     onchange: PropTypes.func,
     parse: PropTypes.bool,
     hText: PropTypes.string,
+    id: PropTypes.string,
 };
 export default SelectInput;

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import { forwardRef } from "react";
 import PropTypes from "prop-types";
 import { setListBilling, useSoftUIController } from "../../context";
@@ -10,7 +11,7 @@ const SoftButton = forwardRef(
     const [, dispatch] = useSoftUIController();
 
     return (
-      <div div onClick={() => { setListBilling(dispatch, rest.current) }}>
+      <div div onClick={() => { }}>
         <SoftButtonRoot
           {...rest}
           ref={ref}

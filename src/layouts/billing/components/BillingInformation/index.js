@@ -1,58 +1,68 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.0
-=========================================================
+/* eslint-disable react/jsx-filename-extension */
 
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
+import { Grid, TextareaAutosize, TextField } from "@mui/material";
 import Card from "@mui/material/Card";
-
-// Soft UI Dashboard React components
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
-
-// Billing page components
 import Bill from "layouts/billing/components/Bill";
+import './style.css'
+
 
 function BillingInformation() {
   return (
     <Card id="delete-account">
       <SoftBox pt={3} px={2}>
         <SoftTypography variant="h6" fontWeight="medium">
-          Billing Information
+          Case Management Progress Note
         </SoftTypography>
       </SoftBox>
       <SoftBox pt={1} pb={2} px={2}>
-        <SoftBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
-          <Bill
-            name="oliver liam"
-            company="viking burrito"
-            email="oliver@burrito.com"
-            vat="FRB1235476"
-          />
-          <Bill
-            name="lucas harper"
-            company="stone tech zone"
-            email="lucas@stone-tech.com"
-            vat="FRB1235476"
-          />
-          <Bill
-            name="ethan james"
-            company="fiber notion"
-            email="ethan@fiber.com"
-            vat="FRB1235476"
-            noGutter
-          />
-        </SoftBox>
+        <Grid container spacing={3} mt={1}>
+          <Grid item xs={0} md={0} ml={0} mr={0}>
+            <TextField id="pos" sx={{ width: 230 }} helperText="Client Name" />
+          </Grid>
+          <Grid item xs={0} md={0} ml={0} mr={0}>
+            <TextField id="cn" sx={{ width: 130 }} helperText="Client Number" />
+          </Grid>
+          <Grid item xs={0} md={0} ml={0} mr={0}>
+            <TextField id="cn" sx={{ width: 130 }} helperText="Provider Number" />
+          </Grid>
+          <Grid item xs={0} md={0} ml={0} mr={0}>
+            <TextField id="cn" sx={{ width: 130 }} helperText="Date of Service" />
+          </Grid>
+          <Grid item xs={0} md={0} ml={0} mr={0}>
+            <TextField id="cn" sx={{ width: 130 }} helperText="Service Code" />
+          </Grid>
+          <Grid item xs={0} md={0} ml={0} mr={0}>
+            <TextField id="cn" sx={{ width: 130 }} helperText="Setting" />
+          </Grid>
+          <Grid item xs={0} md={0} ml={0} mr={0}>
+            <TextField id="cn" sx={{ width: 130 }} helperText="Time Start" />
+          </Grid>
+          <Grid item xs={0} md={0} ml={0} mr={0}>
+            <TextField id="cn" sx={{ width: 130 }} helperText="Time End" />
+          </Grid>
+          <Grid item xs={0} md={0} ml={0} mr={0}>
+            <TextField id="cn" sx={{ width: 130 }} helperText="Minutes" />
+          </Grid>
+        </Grid>
+        <Grid container spacing={0} mt={3} bgcolor='#5b5c5ca3' >         
+          <Grid item xs={2} md={0} ml={0} mr={0}>
+            <SoftTypography variant="h6" color='black'>Domain</SoftTypography>
+          </Grid>
+          <Grid item xs={4} md={0} ml={0} mr={0}>
+            <SoftTypography variant="h6" color='black'>Description of Service(s)/Interventios</SoftTypography>
+          </Grid>
+          
+        </Grid>
+        <Grid container spacing={0} mt={0}  pr={0} >          
+          <Grid item xs={3} md={0} ml={0} mr={0}>
+            <TextField id="cn" sx={{ width: '100%', flexBasis:'10%' }}  />
+          </Grid>
+          <Grid item xs={10.5} md={0} ml={1} mr={0}>
+            <TextField id="cn" sx={{ width: '100%', flexBasis:'100%', fontSize:'xx-large' }} multiline minRows={10} style={{fontSize:'64px !important'}} />
+          </Grid>
+        </Grid>
       </SoftBox>
     </Card>
   );

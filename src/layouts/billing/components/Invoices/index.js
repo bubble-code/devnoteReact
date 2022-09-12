@@ -9,12 +9,14 @@ import SoftButton from "components/SoftButton";
 
 // Billing page components
 import Invoice from "layouts/billing/components/Invoice";
+import { useEffect } from "react";
 
 // eslint-disable-next-line react/prop-types
 function Invoices() {
   const [controller] = useSoftUIController();
-  const { listCM } = controller;
-  console.log(listCM);
+  const { listCM, listBilling } = controller;
+
+ 
   return (
     <Card id="delete-account" sx={{ height: "100%" }}>
       <SoftBox pt={2} px={2} display="flex" justifyContent="space-between" alignItems="center">
@@ -27,11 +29,11 @@ function Invoices() {
       </SoftBox>
       <SoftBox p={2}>
         <SoftBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
-        {listCM.map((item, index) => {
+          {listCM.map((item, index) => {
             // console.log(item);
             for (const key in item) {
               // console.log(item[key]);
-              return <Invoice key={key} date={key} id={`${item[key]} services`} price={item['total']} />
+              return <Invoice key={key} date={key} id={`${item[key]} services`} price={'0'} />
             }
           }
           )}

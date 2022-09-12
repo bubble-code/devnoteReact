@@ -140,7 +140,7 @@ function Table({ columns, rows }) {
         </MuiTable>
       </TableContainer>
     ),
-    [columns, rows]
+    [renderColumns, renderRows]
   );
 }
 

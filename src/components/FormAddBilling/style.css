@@ -6,6 +6,13 @@ div.Mui-disabled {
     color: #fff;
     font-size: 14px;
 }
-#min,#doc,#unit{
+
+#min,
+#doc,
+#unit {
     -webkit-text-fill-color: #fff !important;
+}
+
+#description {
+    width: 100% !important;
 }

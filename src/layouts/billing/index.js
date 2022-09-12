@@ -42,7 +42,8 @@ function Billing() {
                   <AddBillingForm />
                 </Grid>
                 <Grid item xs={12}>
-                  {(() => {
+                <FormAddBilling py={2} mb={2} headTitle={"Billing Invoice"} />
+                  {/*(() => {
                     switch (listBilling) {
                       case 0:
                         return <FormAddBilling py={2} mb={2} headTitle={"Billing Invoice"} />
@@ -50,7 +51,7 @@ function Billing() {
                         return <ViewTable py={2} mb={2} headTitle={"Hola"} />
                     }
                   })()
-                  }
+                */}
                 </Grid>
               </Grid>
             </Grid>

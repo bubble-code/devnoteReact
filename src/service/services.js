@@ -38,8 +38,8 @@ class DataService {
     // **********************************Billings****************************************************
     async listBillingOpenByCm({ cm, day = 0 }) {
         const collectionn = day ? collection(db, `${this._pathCM}/${cm}/openBilling/${day}/1`) : collection(db, `${this._pathCM}/${cm}/openBilling`);
-        // console.log(collectionn.id);
         const querySnapShot = query(collectionn);
+        // console.log(collectionn.id);
         const result = await getDocs(querySnapShot)
         return result.docs;
     }
@@ -74,6 +74,19 @@ class DataService {
         }
         return total;
     }
+    async createBilling({ data }) {
+        const { cm } = data;
+        try {
+            console.log(cm)
+            const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
+            await addDoc(collectionn, { ...data });
+            // await setDoc(collectionn, { u, c, p, t, d, f, e });
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    // **********************************Lists****************************************************
     async listActivedClients({ cm }) {
         const collectionn = collection(db, `${this._pathCM}/${cm}/activeClient`);
         const querySnapShot = query(collectionn);

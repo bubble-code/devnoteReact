@@ -17,7 +17,7 @@ import borders from "assets/theme/base/borders";
 import masterCardLogo from "assets/images/logos/mastercard.png";
 import visaLogo from "assets/images/logos/visa.png";
 
-function AddBillingForm() {
+function AddBillingForm() { 
   const [controller] = useSoftUIController();
   const { listBilling } = controller;
   const { borderWidth, borderColor } = borders;
@@ -30,7 +30,7 @@ function AddBillingForm() {
         </SoftTypography>
         <SoftBox display="flex" justifyContent="space-between" alignItems="left">
           <SoftBox mr={6}>
-            <SoftButton variant="gradient" color={listBilling === 0 ? "dark" : "light"} current={0}>
+            <SoftButton variant="gradient" color={"dark"} >
               <Icon sx={{ fontWeight: "bold" }}>add</Icon>
               &nbsp;Add Billing
             </SoftButton>

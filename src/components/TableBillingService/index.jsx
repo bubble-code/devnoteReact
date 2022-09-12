@@ -11,6 +11,8 @@ import team4 from "assets/images/team-4.jpg";
 import SoftBadge from "components/SoftBadge";
 // bilingData
 import DataService from "../../service/services";
+import { useSoftUIController, setListBilling } from "../../context";
+import SelectInput from "../../components/SelectInput";
 
 // Data
 import billiTable from "layouts/tables/data/billingTable";
@@ -18,52 +20,55 @@ import { columns } from "./colunmHead";
 import { TagClientName, Pos } from './TagClientName'
 
 function TableBillingService({ py, mb, headTitle }) {
-    const caseManagement = "Raulito";
     const [billingData, setBillingData] = useState([]);
+    const [controler, dispatch] = useSoftUIController();
+    const { listCM, listBilling } = controler;
+    const ref1 = React.useRef();
 
-    const loadBillingData = async () => {
-        const response = await DataService.listBilling({ cm: caseManagement });
-        // console.log(response);
-        const rows = response.map((item) => {
+    const loadBillingData = async (id, event, value) => {
+        const cM = value.label;
+        const response = await DataService.listBillingOpenByCm({ cm: value.label });
+        setListBilling(dispatch, { [cM]: response });
+        const rows = listBilling[cM]?.map((item) => {
+            const data = item.data();
             const row = {
-                ClientName: <TagClientName  name={item.Client_Name} email=" " />,
-                Pos: <Pos job={item.pos} org="" />,
+                ClientName: <TagClientName name={data.cn} email=" " />,
+                Pos: <Pos job={data.pos} org="" />,
                 ServiceDescription: (
-                    <SoftBadge variant="contained" badgeContent={item.sd} color="secondary" size="sm" container />
+                    <SoftBadge variant="contained" badgeContent={Object.values(data.description).join('/')} color="secondary" size="sm" container />
                 ),
                 StartTime: (
                     <SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth'>
-                        {item.start}
+                        {data.timeStart}
                     </SoftTypography>
                 ),
                 EndTime: (
                     <SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth'>
-                        {item.end}
+                        {data.timeEnd}
                     </SoftTypography>
                 ),
                 Units: (
-                    <SoftBadge variant="gradient" badgeContent={item.u} color="light" size="xl" container />
+                    <SoftBadge variant="gradient" badgeContent={data.units} color="light" size="xl" container />
                 ),
                 Min: (
-                    <SoftBadge variant="gradient" badgeContent={item.min} color="success" size="xs" container />
+                    <SoftBadge variant="gradient" badgeContent={data.min} color="success" size="xs" container />
                 )
             }
             return row;
         });
+
         setBillingData([...rows]);
 
     };
 
-    useEffect(() => {
-        loadBillingData();
-    }, []);
     const { rows } = billiTable;
     return (
         <SoftBox py={py}>
             <SoftBox mb={mb}>
-                <Card>
-                    <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-                        <SoftTypography variant="h6">Billing Service  {caseManagement}</SoftTypography>
+                <Card sx={{ minHeight: 250 }}>
+                    <SoftBox display="flex" justifyContent="start" alignItems="center" p={3}>
+                        <SoftTypography variant="h6" mr={5}>Billing Service </SoftTypography>
+                        <SelectInput data={listCM} onchange={loadBillingData} parse hText="Choice CM Name" ref={ref1} id='cm' />
                     </SoftBox>
                     <SoftBox
                         sx={{

@@ -38,7 +38,8 @@ function reducer(state, action) {
       return { ...state, layout: action.value };
     }
     case "LIST_BILLING": {
-      return { ...state, listBilling: action.value };
+      // console.log("action.value", action.value);
+      return { ...state, listBilling: { ...state.listBilling, ...action.value } };
     }
     case "LOAD_CM": {
       return { ...state, listCM: action.value };
@@ -63,7 +64,7 @@ function SoftUIControllerProvider({ children }) {
     openConfigurator: false,
     direction: "ltr",
     layout: "dashboard",
-    listBilling: 0,
+    listBilling: [],
     listCM: [],
     listActClient: [],
   };

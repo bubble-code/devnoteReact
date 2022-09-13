@@ -1,0 +1,25 @@
+.MuiInputBase-multiline>fieldset:nth-child(3)>legend:nth-child(1) {
+    font-size: 1rem;
+}
+
+.css-o2lmg7-MuiInputBase-input-MuiOutlinedInput-input.Mui-disabled {
+    -webkit-text-fill-color: azure !important;
+}
+
+/* .css-1obg3v7-MuiGrid-root{
+    flex-basis: 10% !important;
+} */
+#domain {
+    width: 50px;
+}
+
+.css-vvkucp-MuiInputBase-root-MuiOutlinedInput-root>textarea:nth-child(2) {
+    width: 0px !important;
+    margin: 0px !important;
+    padding: 0px !important;
+    border: 0px !important;
+}
+
+#sNote {
+    width: 100% !important;
+}

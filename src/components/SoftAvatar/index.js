@@ -21,8 +21,8 @@ import PropTypes from "prop-types";
 // Custom styles for SoftAvatar
 import SoftAvatarRoot from "components/SoftAvatar/SoftAvatarRoot";
 
-const SoftAvatar = forwardRef(({ bgColor, size, shadow, ...rest }, ref) => (
-  <SoftAvatarRoot ref={ref} ownerState={{ shadow, bgColor, size }} {...rest} />
+const SoftAvatar = forwardRef(({ bgColor, size, shadow, shapeColor, ...rest }, ref) => (
+  <SoftAvatarRoot ref={ref} ownerState={{ shadow, bgColor, size, shapeColor }} {...rest} />
 ));
 
 // Setting default values for the props of SoftAvatar
@@ -47,6 +47,7 @@ SoftAvatar.propTypes = {
   ]),
   size: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl", "xxl"]),
   shadow: PropTypes.oneOf(["none", "xs", "sm", "md", "lg", "xl", "xxl", "inset"]),
+  shapeColor: PropTypes.string,
 };
 
 export default SoftAvatar;

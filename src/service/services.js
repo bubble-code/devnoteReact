@@ -35,7 +35,12 @@ class DataService {
         const result = await getDocs(querySnapShot)
         return result.docs;
     }
-    // **********************************Billings****************************************************
+    async listActivedClients({ cm }) {
+        const collectionn = collection(db, `${this._pathCM}/${cm}/activeClient`);
+        const querySnapShot = query(collectionn);
+        const result = await getDocs(querySnapShot)
+        return result.docs;
+    }
     async listBillingOpenByCm({ cm, day = 0 }) {
         const collectionn = day ? collection(db, `${this._pathCM}/${cm}/openBilling/${day}/1`) : collection(db, `${this._pathCM}/${cm}/openBilling`);
         const querySnapShot = query(collectionn);
@@ -43,6 +48,24 @@ class DataService {
         const result = await getDocs(querySnapShot)
         return result.docs;
     }
+    // **********************************Billings****************************************************
+    async getServiceById({ cm, id }) {
+        const docRef = doc(db, `${this._pathCM}/${cm}/openBilling/`, `${id}`);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            return { ...docSnap.data(), id: docSnap.id };
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("Document with id: ", id, " does not exist!");
+        }
+    }
+    async updateSerNote({ cm, id, data }) {
+        const docRef = doc(db, `${this._pathCM}/${cm}/openBilling/`, `${id}`);
+        await updateDoc(docRef, data);
+    }
+
+
 
     async listBilling({ cm }) {
         const billingsOpen = await this.listBillingOpenByCm({ cm });
@@ -59,6 +82,8 @@ class DataService {
         }
         );
     }
+
+
     async totalUnits({ cm, day }) {
         let total = 0;
         try {
@@ -74,6 +99,9 @@ class DataService {
         }
         return total;
     }
+
+
+
     async createBilling({ data }) {
         const { cm } = data;
         try {
@@ -87,12 +115,7 @@ class DataService {
         }
     }
     // **********************************Lists****************************************************
-    async listActivedClients({ cm }) {
-        const collectionn = collection(db, `${this._pathCM}/${cm}/activeClient`);
-        const querySnapShot = query(collectionn);
-        const result = await getDocs(querySnapShot)
-        return result.docs;
-    }
+
 }
 
 

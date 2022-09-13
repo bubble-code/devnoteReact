@@ -17,10 +17,9 @@ const top100Films = [
 ];
 
 const parseData = (data) => {
-    // console.log("data", data);
     return data.map((item) => {
-        for (const key in item) {
-            return { label: key };
+        for (let key in item) {
+            return { label: key, pNumber: item['pNumber'], sCode: item['sCode'] }
         }
     });
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /**
 =========================================================
 * Soft UI Dashboard React - v4.0.0
@@ -37,7 +38,7 @@ import colors from "assets/theme/base/colors";
 import typography from "assets/theme/base/typography";
 import borders from "assets/theme/base/borders";
 
-function Table({ columns, rows }) {
+function Table({ columns, rows, onClientClick }) {
   const { light } = colors;
   const { size, fontWeightBold } = typography;
   const { borderWidth } = borders;
@@ -79,7 +80,9 @@ function Table({ columns, rows }) {
   });
 
   const renderRows = rows.map((row, key) => {
-    const rowKey = `row-${key}`;
+    const rowKey = row['key'];
+    const caseM = row['CM'];
+    // const rowKey = `row-${key}`;
 
     const tableRow = columns.map(({ name, align }) => {
       let template;
@@ -126,7 +129,7 @@ function Table({ columns, rows }) {
       return template;
     });
 
-    return <TableRow key={rowKey}>{tableRow}</TableRow>;
+    return <TableRow key={rowKey} onClick={() => onClientClick({ id: rowKey, cmm: caseM })} >{tableRow}</TableRow>;
   });
 
   return useMemo(

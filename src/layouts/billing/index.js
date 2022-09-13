@@ -13,17 +13,16 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 
 // Billing page components
-import AddBillingForm from "layouts/billing/components/PaymentMethod";
+import AddBillingForm from "../../layouts/billing/components/PaymentMethod";
 import Invoices from "layouts/billing/components/Invoices";
-import BillingInformation from "layouts/billing/components/BillingInformation";
+import WriteNote from "../billing/components/WriteNote/WriteNote";
 import Transactions from "layouts/billing/components/Transactions";
 import ViewTable from "../../components/Table";
 import DataService from '../../service/services'
-import TableBillingService from "components/TableBillingService";
+import TableBillingService from "../../components/TableBillingService";
 
 function Billing() {
   const [context, dispatch] = useSoftUIController();
-  const { listBilling } = context;
   const { data, loading, error } = useFetch();
 
   useEffect(() => {
@@ -42,16 +41,7 @@ function Billing() {
                   <AddBillingForm />
                 </Grid>
                 <Grid item xs={12}>
-                <FormAddBilling py={2} mb={2} headTitle={"Billing Invoice"} />
-                  {/*(() => {
-                    switch (listBilling) {
-                      case 0:
-                        return <FormAddBilling py={2} mb={2} headTitle={"Billing Invoice"} />
-                      default:
-                        return <ViewTable py={2} mb={2} headTitle={"Hola"} />
-                    }
-                  })()
-                */}
+                  <FormAddBilling py={2} mb={2} headTitle={"Billing Invoice"} />
                 </Grid>
               </Grid>
             </Grid>
@@ -69,7 +59,7 @@ function Billing() {
         <SoftBox my={2}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={7}>
-              <BillingInformation />
+              <WriteNote />
             </Grid>
             <Grid item xs={12} md={5}>
               <Transactions />

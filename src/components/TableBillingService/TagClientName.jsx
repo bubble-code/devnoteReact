@@ -3,12 +3,13 @@ import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import SoftAvatar from "components/SoftAvatar";
 import SoftBadge from "components/SoftBadge";
+import { Avatar } from "@mui/material";
 
-export function TagClientName({ image, name, email }) {
+export function TagClientName({ image, name, email, shapeColor }) {
   return (
     <SoftBox display="flex" alignItems="center" px={1} py={0.5}>
       <SoftBox mr={2}>
-        <SoftAvatar src={image} alt={name} size="sm" variant="rounded" />
+        <SoftAvatar src={image} alt={name} size="sm" variant="rounded" shapeColor={shapeColor} />
       </SoftBox>
       <SoftBox display="flex" flexDirection="column">
         <SoftTypography variant="button" fontWeight="medium">

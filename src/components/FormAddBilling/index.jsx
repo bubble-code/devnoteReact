@@ -42,16 +42,17 @@ function FormAddBilling({ py, mb, headTitle }) {
 
 
     const handleChangeCmName = async (id, event, value) => {
+        console.log(value);
         const request = await DataService.listActivedClients({ cm: value.label })
         const listActClient = request.map((item) => {
-            return { label: item.id }
+            return { label: item.id, cnumb: item.data().cnumb }
         });
-        setDataForm(dataForm => ({ ...dataForm, [id]: value.label }));
+        setDataForm(dataForm => ({ ...dataForm, [id]: value.label, ['pNumber']: value.pNumber, ['sCode']: value.sCode }));
         setactClinet(listActClient);
         setButtonIsActive(!buttonActive())
     };
     function handleChangeNameClient(id, event, value) {
-        setDataForm(dataForm => ({ ...dataForm, [id]: value.label }));
+        setDataForm(dataForm => ({ ...dataForm, [id]: value.label, ['cnumb']: value.cnumb }));
         setButtonIsActive(!buttonActive())
     }
     function handleChangeTime(value) {
@@ -71,20 +72,22 @@ function FormAddBilling({ py, mb, headTitle }) {
                 return 1;
             case diff >= 23 && diff <= 37:
                 return 2;
-            case diff >= 53 && diff <= 67:
+            case diff >= 38 && diff <= 52:
                 return 3;
-            case diff >= 68 && diff <= 82:
+            case diff >= 53 && diff <= 67:
                 return 4;
-            case diff >= 83 && diff <= 97:
+            case diff >= 68 && diff <= 82:
                 return 5;
-            case diff >= 98 && diff <= 112:
+            case diff >= 83 && diff <= 97:
                 return 6;
-            case diff >= 113 && diff <= 127:
+            case diff >= 98 && diff <= 112:
                 return 7;
-            case diff >= 128 && diff <= 142:
+            case diff >= 113 && diff <= 127:
                 return 8;
-            default:
+            case diff >= 128 && diff <= 142:
                 return 9;
+            default:
+                return 10;
         }
     };
     const duration = () => {
@@ -93,7 +96,7 @@ function FormAddBilling({ py, mb, headTitle }) {
     const submitForm = async () => {
         const descriptionSplit = dataForm.description.split("/").map((item) => item.trim());
         const descriptionObject = Object.assign({}, descriptionSplit);
-        await DataService.createBilling({ data: { ...dataForm, ['description']: descriptionObject, ['min']: duration(), ['units']: countUnits() } });
+        await DataService.createBilling({ data: { ...dataForm, ['description']: descriptionObject, ['min']: duration(), ['units']: countUnits(), ['status']: 'open' } });
         setDataForm({ ...dataForm, ...formObject });
         setButtonIsActive(buttonActive())
     };

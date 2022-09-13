@@ -47,6 +47,9 @@ function reducer(state, action) {
     case "LOAD_ACTCLIENT": {
       return { ...state, listActClient: action.value };
     }
+    case "CURRENT_CL_NOTE": {
+      return { ...state, currentClToNote: action.value };
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -67,6 +70,7 @@ function SoftUIControllerProvider({ children }) {
     listBilling: [],
     listCM: [],
     listActClient: [],
+    currentClToNote: {},
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);
@@ -104,6 +108,7 @@ const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
 const setListBilling = (dispatch, value) => dispatch({ type: "LIST_BILLING", value });
 const setLoadListCm = (dispatch, value) => dispatch({ type: "LOAD_CM", value });
 const setLoadActiClient = (dispatch, value) => dispatch({ type: "LOAD_ACTCLIENT", value });
+const setCurrentClToNote = (dispatch, value) => dispatch({ type: "CURRENT_CL_NOTE", value });
 
 export {
   SoftUIControllerProvider,
@@ -119,4 +124,5 @@ export {
   setListBilling,
   setLoadListCm,
   setLoadActiClient,
+  setCurrentClToNote
 };

@@ -12,13 +12,13 @@ export function useFetch() {
         setLoading(true);
         try {
             const listCm = await DataService.listCM();
-            // console.log(total);
             const listBillings = Promise.all(listCm.map(async (cm) => {
                 const objectReturn = {}
                 const list = await DataService.listBillingOpenByCm({ cm: cm.id });
-                let total = await DataService.totalUnits({ cm: "Raulito", day: "25-07-22" });
                 objectReturn[cm.id] = list.length;
-                objectReturn['total'] = total;
+                objectReturn['pNumber'] = cm.data().pNumber;
+                objectReturn['sCode'] = cm.data().sCode;
+                console.log(cm.data().sCode);
                 return objectReturn;
             }))
             listBillings.then((list) => {

@@ -19,7 +19,7 @@ import { styled } from "@mui/material/styles";
 
 export default styled(Avatar)(({ theme, ownerState }) => {
   const { palette, functions, typography, boxShadows } = theme;
-  const { shadow, bgColor, size } = ownerState;
+  const { shadow, bgColor, size, shapeColor } = ownerState;
 
   const { gradients, transparent } = palette;
   const { pxToRem, linearGradient } = functions;
@@ -84,5 +84,6 @@ export default styled(Avatar)(({ theme, ownerState }) => {
     fontWeight: fontWeightBold,
     boxShadow: boxShadows[shadow],
     ...sizeValue,
+    color: shapeColor,
   };
 });

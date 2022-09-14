@@ -30,6 +30,7 @@ export default styled(Box)(({ theme, ownerState }) => {
     "error",
     "dark",
     "light",
+    "palettePastel",
   ];
 
   const validColors = [

@@ -1,21 +1,4 @@
-/* eslint-disable react/jsx-filename-extension */
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
-import { Grid, TextField } from "@mui/material";
+/* eslint-disable react/jsx-filename-extension */ 
 import Card from "@mui/material/Card";
 // import Divider from "@mui/material/Divider";
 import Icon from "@mui/material/Icon";
@@ -23,28 +6,27 @@ import Icon from "@mui/material/Icon";
 // Soft UI Dashboard React components
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
+import TabHelperNotes from "../../TabHelperNotes/TabHelperNotes";
 
 // Billing page components
 import Transaction from "layouts/billing/components/Transaction";
 
-function Transactions() {
+function ContainerHelperNotes() {
   return (
-    <Card sx={{ height: "100%" }}>
-      <SoftBox display="flex" justifyContent="space-between" alignItems="center" pt={3} px={2}>
+    <Card sx={{ height: "100%" }} >
+      <SoftBox display="flex" justifyContent="space-between" alignItems="left" pt={3} px={2}>
         <SoftTypography variant="h6" fontWeight="medium" textTransform="capitalize">
-          Your Tranlation&apos;s
+          Helper Notes Create
         </SoftTypography>
       </SoftBox>
-      <Grid container spacing={0} mt={0} pr={0} >
-        <Grid item xs={12} md={0} ml={1} mr={1} mt={4}>
-          <TextField id="service" fullWidth multiline minRows={10} onChange={() => { }} />
-        </Grid>
-      </Grid>
+      <SoftBox container mr={2} justifyContent='left' alignItems={'start'} flexDirection='column' >
+        <TabHelperNotes />
+      </SoftBox>
     </Card>
   );
 }
 
-export default Transactions;
+export default ContainerHelperNotes;
 
 
 // <Card sx={{ height: "100%" }}>

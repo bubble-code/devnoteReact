@@ -1,5 +1,5 @@
 import { db } from "./firebase";
-import { collection, getDoc, getDocs, onSnapshot, doc, query, addDoc, setDoc, deleteDoc, updateDoc } from 'firebase/firestore'
+import { collection, getDoc, getDocs, onSnapshot, doc, query, addDoc, setDoc, deleteDoc, updateDoc, where } from 'firebase/firestore'
 
 
 class DataService {
@@ -43,8 +43,14 @@ class DataService {
     }
     async listBillingOpenByCm({ cm, day = 0 }) {
         const collectionn = day ? collection(db, `${this._pathCM}/${cm}/openBilling/${day}/1`) : collection(db, `${this._pathCM}/${cm}/openBilling`);
-        const querySnapShot = query(collectionn);
+        const querySnapShot = query(collectionn, where("status", "==", "open"));
         // console.log(collectionn.id);
+        const result = await getDocs(querySnapShot)
+        return result.docs;
+    }
+    async listNoteByClient({ cm, name }) {
+        const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
+        const querySnapShot = query(collectionn, where('status', '==', 'completed'), where("cn", "==", `${name}`));
         const result = await getDocs(querySnapShot)
         return result.docs;
     }
@@ -105,7 +111,7 @@ class DataService {
     async createBilling({ data }) {
         const { cm } = data;
         try {
-            console.log(cm)
+            // console.log(cm)
             const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
             await addDoc(collectionn, { ...data });
             // await setDoc(collectionn, { u, c, p, t, d, f, e });

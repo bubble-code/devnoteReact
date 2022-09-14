@@ -23,7 +23,7 @@ import { async } from "@firebase/util";
 function TableBillingService({ py, mb, headTitle }) {
     const [billingData, setBillingData] = useState([]);
     const [controler, dispatch] = useSoftUIController();
-    const { listCM, listBilling } = controler;
+    const { listCM, listBilling, currentClToNote } = controler;
     const ref1 = React.useRef();
 
     const loadBillingData = async (id, event, value) => {
@@ -31,10 +31,11 @@ function TableBillingService({ py, mb, headTitle }) {
         const response = await DataService.listBillingOpenByCm({ cm: value.label });
         setListBilling(dispatch, { [cM]: response });
         const rows = listBilling[cM]?.map((item) => {
+            console.log("item", item.id, currentClToNote.id);
             const data = item.data();
             const row = {
                 key: item.id,
-                ClientName: <TagClientName name={data.cn} email=" " shapeColor={data.status === 'completed' ? 'green' : '#80808047'} />,
+                ClientName: <TagClientName name={data.cn} email=" " id={item.id} />,
                 Pos: <Pos job={data.pos} org="" />,
                 ServiceDescription: (
                     <SoftBadge variant="contained" badgeContent={Object.values(data.description).join('/')} color="secondary" size="sm" container />

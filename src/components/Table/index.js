@@ -28,7 +28,7 @@ function ViewTable({ py, mb, headTitle }) {
                             },
                         }}
                     >
-                        <Table columns={columns} rows={rows} />
+                        <Table columns={columns} rows={rows} /> 
                     </SoftBox>
                 </Card>
             </SoftBox>

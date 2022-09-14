@@ -16,7 +16,7 @@ import Footer from "examples/Footer";
 import AddBillingForm from "../../layouts/billing/components/PaymentMethod";
 import Invoices from "layouts/billing/components/Invoices";
 import WriteNote from "../billing/components/WriteNote/WriteNote";
-import Transactions from "layouts/billing/components/Transactions";
+import ContainerHelperNotes from "./components/ContainerHelperNote";
 import ViewTable from "../../components/Table";
 import DataService from '../../service/services'
 import TableBillingService from "../../components/TableBillingService";
@@ -62,7 +62,7 @@ function Billing() {
               <WriteNote />
             </Grid>
             <Grid item xs={12} md={5}>
-              <Transactions />
+              <ContainerHelperNotes />
             </Grid>
           </Grid>
         </SoftBox>

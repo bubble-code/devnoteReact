@@ -98,7 +98,7 @@ function FormAddBilling({ py, mb, headTitle }) {
         const descriptionObject = Object.assign({}, descriptionSplit);
         await DataService.createBilling({ data: { ...dataForm, ['description']: descriptionObject, ['min']: duration(), ['units']: countUnits(), ['status']: 'open' } });
         setDataForm({ ...dataForm, ...formObject });
-        setButtonIsActive(buttonActive())
+        setButtonIsActive(false)
     };
     function buttonActive() {
         return (!!dataForm.description.length && !!dataForm.timeStart.length)

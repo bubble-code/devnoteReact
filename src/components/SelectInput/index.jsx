@@ -1,22 +1,9 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { forwardRef, useEffect, useRef } from "react";
-
-// prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
-
-// Custom styles for SoftInput
 import { Box, Autocomplete, TextField } from "@mui/material";
 
-
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-const top100Films = [
-    { label: 'The Shawshank Redemption' },
-    { label: 'The Godfather' },
-    { label: 'The Godfather: Part II' },
-
-];
-
-const parseData = (data) => {
+function parseData(data) {
     return data.map((item) => {
         for (let key in item) {
             return { label: key, pNumber: item['pNumber'], sCode: item['sCode'] }
@@ -46,6 +33,8 @@ const SelectInput = forwardRef(({ data, sxx = { width: 250 }, onchange, parse, h
             renderInput={(params) => <TextField {...params} helperText={hText} />}
             onChange={handleChange}
             value={value}
+            color='#000000'
+            style={{ color: '#000000' }}
         // defaultValue={[]}
         />
     );
@@ -76,7 +65,7 @@ const SelectInput = forwardRef(({ data, sxx = { width: 250 }, onchange, parse, h
 // };
 
 SelectInput.propTypes = {
-    data: PropTypes.array,
+    data: PropTypes.any,
     sxx: PropTypes.object,
     onchange: PropTypes.func,
     parse: PropTypes.bool,

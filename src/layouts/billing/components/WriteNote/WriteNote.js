@@ -2,6 +2,7 @@
 import React from "react";
 import { useSoftUIController, setCurrentClToNote, setListBilling } from "../../../../context";
 import Dataservice from '../../../../service/services'
+import { useSaveNote } from "../../../../service/fetchHoo";
 import { Box, Button, Grid, Icon, TextareaAutosize, TextField } from "@mui/material";
 import Card from "@mui/material/Card";
 import SoftBox from "../../../../components/SoftBox";
@@ -16,6 +17,7 @@ function WriteNote() {
   const [formData, setFormData] = React.useState({});
   const [controler, dispatch] = useSoftUIController();
   const { currentClToNote } = controler;
+  const { datas, error, loading, saveData } = useSaveNote();
   const description = currentClToNote.description ? Object.values(currentClToNote.description).join('/') : '';
   const initialValues = {
     sNote: '',
@@ -33,11 +35,14 @@ function WriteNote() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    Dataservice.updateSerNote({ cm: currentClToNote.cm, id: currentClToNote.id, data: { ...formData, ['status']: 'completed' } })
-      .then((response) => {
-        Dataservice.listBillingOpenByCm({ cm: currentClToNote.cm }).then((res) => {
-          setListBilling(dispatch, { [cM]: response });
-        })
+    saveData({ cm: currentClToNote.cm, id: currentClToNote.id, data: { ...formData, ['status']: 'completed' } })
+    if (error) {
+      console.log(error)
+    }
+    else {
+      Dataservice.listBillingOpenByCm({ cm: currentClToNote.cm }).then((res) => {
+        console.log(res)
+        setListBilling(dispatch, { [cm]: [...res] });
         setFormData(initialValues);
         setCurrentClToNote(dispatch, {
           status: '',
@@ -53,14 +58,17 @@ function WriteNote() {
           cn: '',
           min: '',
           cnumb: '',
-          cm: '',
+          tcm: '',
           domain: '',
           id: '',
           outComeS: '',
           nStep: '',
         });
+
       })
+    }
   }
+
   return (
     <Card id="delete-account">
       <SoftBox pt={3} px={2}>
@@ -71,7 +79,7 @@ function WriteNote() {
       <SoftBox pt={1} pb={2} px={2}>
         <Grid container spacing={3} mt={1}>
           <Grid item xs={0} md={0} ml={0} mr={0}>
-            <TextField id="cn" sx={{ width: 230 }} helperText="Client Name" value={currentClToNote.cn} disabled />
+            <TextField id="tcn" sx={{ width: 230 }} helperText="Client Name" value={currentClToNote.cn} disabled color="light" />
           </Grid>
           <Grid item xs={0} md={0} ml={0} mr={0}>
             <TextField id="cnumb" sx={{ width: 130 }} helperText="Client Number" value={currentClToNote.cnumb} disabled />
@@ -86,7 +94,7 @@ function WriteNote() {
             <TextField id="sCode" sx={{ width: 130 }} helperText="Service Code" value={currentClToNote.sCode} disabled />
           </Grid>
           <Grid item xs={0} md={0} ml={0} mr={0}>
-            <TextField id="pos" sx={{ width: 130 }} helperText="Setting" value={currentClToNote.pos} disabled />
+            <TextField id="tpos" sx={{ width: 130 }} helperText="Setting" value={currentClToNote.pos} disabled />
           </Grid>
           <Grid item xs={0} md={0} ml={0} mr={0}>
             <TextField id="tStart" sx={{ width: 130 }} helperText="Time Start" value={currentClToNote.timeStart} disabled />
@@ -113,7 +121,7 @@ function WriteNote() {
           <SoftTypography variant="h6" color='black'>Description of Service(s)/Interventios</SoftTypography>
         </SoftBox>
         <Grid container spacing={0} mt={0} pr={0} justifyContent={'space-between'}>
-          <SoftBox sx={{width:'100%'}}>
+          <SoftBox sx={{ width: '100%' }}>
             <TextareaAutosize id="sNote" sx={{ width: '100%' }} minRows={15} onChange={handleChange} style={{ fontSize: '1.2rem' }} value={formData['sNote']} />
           </SoftBox>
           <SoftBox display='flex' width='100%' >

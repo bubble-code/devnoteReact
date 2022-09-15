@@ -5,7 +5,7 @@ import { createContext, useContext, useReducer, useMemo } from "react";
 import PropTypes from "prop-types";
 
 // The Soft UI Dashboard PRO Material main context
-const SoftUI = createContext(null);
+export const SoftUI = createContext(null);
 
 // Setting custom name for the context which is visible on react dev tools
 SoftUI.displayName = "MainContext";
@@ -39,7 +39,7 @@ function reducer(state, action) {
     }
     case "LIST_BILLING": {
       // console.log("action.value", action.value);
-      return { ...state, listBilling: { ...state.listBilling, ...action.value } };
+      return { ...state, listBilling: action.value  };
     }
     case "LOAD_CM": {
       return { ...state, listCM: action.value };

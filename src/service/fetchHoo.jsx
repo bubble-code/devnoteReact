@@ -1,7 +1,6 @@
-import { async } from "@firebase/util";
-import { Construction } from "@mui/icons-material";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
 import DataService from './services'
+import { useSoftUIController, setListBilling, SoftUI } from "../context/index";
 
 export function useFetch() {
     const [data, setData] = useState([]);
@@ -42,4 +41,56 @@ export function useFetch() {
 
 
     return { data, loading, error };
+}
+
+export function useSaveNote() {
+    const [datas, setData] = useState();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const saveData = useCallback(async ({ cm, id, data }) => {
+        setLoading(true);
+        try {
+            const request = await DataService.updateSerNote({ cm, id, data });
+            setData(true);
+        } catch (error) {
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    return { datas, loading, error, saveData };
+}
+
+export function useLoadSerOpen({ cmm }) {
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    // const [context, dispatch] = useContext(SoftUI);
+
+
+
+    const loadData = useCallback(async () => {
+        if (cmm) {
+            setLoading(true);
+            try {
+                const list = await DataService.listBillingOpenByCm({ cm: cmm });
+                setData(list);
+                // setListBilling(dispatch, { [cmm]: list });
+            } catch (error) {
+                setError(error);
+            } finally {
+                setLoading(false);
+            }
+        } else {
+            setData([]);
+        }
+    }, [cmm]);
+
+    useEffect(() => {
+        loadData();
+    }, [loadData]);
+
+    return { data, loading, error, loadData };
 }

@@ -1,76 +1,38 @@
 /* eslint-disable react/jsx-filename-extension */
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Card from '@mui/material/Card';
 import SoftTypography from "components/SoftTypography";
 import SoftBox from "components/SoftBox";
 import Table from "../../examples/Tables/Table";
-import PropTypes from "prop-types";
-import team2 from "assets/images/team-2.jpg";
-import team3 from "assets/images/team-3.jpg";
-import team4 from "assets/images/team-4.jpg";
-import SoftBadge from "components/SoftBadge";
-// bilingData
 import DataService from "../../service/services";
-import { useSoftUIController, setListBilling, setCurrentClToNote } from "../../context";
 import SelectInput from "../../components/SelectInput";
-
-// Data
-import billiTable from "layouts/tables/data/billingTable";
+import { useSoftUIController, setCurrentClToNote, setListBilling } from "../../context";
+import PropTypes from "prop-types";
 import { columns } from "./colunmHead";
-import { TagClientName, Pos } from './TagClientName'
-import { async } from "@firebase/util";
+import { useLoadSerOpen } from "../../service/fetchHoo";
 
 function TableBillingService({ py, mb, headTitle }) {
-    const [billingData, setBillingData] = useState([]);
+    const [caseManager, setCaseManager] = useState('');
     const [controler, dispatch] = useSoftUIController();
-    const { listCM, listBilling, currentClToNote } = controler;
+    const { listCM } = controler;
     const ref1 = React.useRef();
 
-    const loadBillingData = async (id, event, value) => {
-        const cM = value.label;
-        const response = await DataService.listBillingOpenByCm({ cm: value.label });
-        setListBilling(dispatch, { [cM]: response });
-        const rows = listBilling[cM]?.map((item) => {
-            console.log("item", item.id, currentClToNote.id);
-            const data = item.data();
-            const row = {
-                key: item.id,
-                ClientName: <TagClientName name={data.cn} email=" " id={item.id} />,
-                Pos: <Pos job={data.pos} org="" />,
-                ServiceDescription: (
-                    <SoftBadge variant="contained" badgeContent={Object.values(data.description).join('/')} color="secondary" size="sm" container />
-                ),
-                StartTime: (
-                    <SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth'>
-                        {data.timeStart}
-                    </SoftTypography>
-                ),
-                EndTime: (
-                    <SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth'>
-                        {data.timeEnd}
-                    </SoftTypography>
-                ),
-                Units: (
-                    <SoftBadge variant="gradient" badgeContent={data.units} color="light" size="xl" container />
-                ),
-                Min: (
-                    <SoftBadge variant="gradient" badgeContent={data.min} color="success" size="xs" container />
-                ),
-                CM: cM,
-            }
-            return row;
-        });
 
-        setBillingData([...rows]);
-
-    };
 
     async function setCurrentClForNote({ id, cmm }) {
         const res = await DataService.getServiceById({ cm: cmm, id: id });
         setCurrentClToNote(dispatch, res);
     }
 
-    const { rows } = billiTable;
+    async function loadBillingData(id, event, value) {
+        const cM = value.label;
+        DataService.listBillingOpenByCm({ cm: cM }).then((res) => {
+
+            setListBilling(dispatch, { [cM]: res });
+            setCaseManager(cM);
+        });
+    }
+
     return (
         <SoftBox py={py}>
             <SoftBox mb={mb}>
@@ -89,13 +51,15 @@ function TableBillingService({ py, mb, headTitle }) {
                             },
                         }}
                     >
-                        <Table columns={columns} rows={billingData} onClientClick={setCurrentClForNote} />
+                        {/**/}
+                        <Table columns={columns} cmm={caseManager} onClientClick={setCurrentClForNote} />
                     </SoftBox>
                 </Card>
             </SoftBox>
         </SoftBox>
     );
 }
+
 TableBillingService.propTypes = {
     py: PropTypes.number,
     mb: PropTypes.number,

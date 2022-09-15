@@ -23,3 +23,8 @@
 #sNote {
     width: 100% !important;
 }
+
+#tcn, #cnumb,#pNumber,#dSer,#sCode,#tpos,#tStart,#tEnd,#mn,#units {
+    color: white !important;
+    -webkit-text-fill-color: white !important;
+}

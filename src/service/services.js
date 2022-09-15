@@ -41,8 +41,8 @@ class DataService {
         const result = await getDocs(querySnapShot)
         return result.docs;
     }
-    async listBillingOpenByCm({ cm, day = 0 }) {
-        const collectionn = day ? collection(db, `${this._pathCM}/${cm}/openBilling/${day}/1`) : collection(db, `${this._pathCM}/${cm}/openBilling`);
+    async listBillingOpenByCm({ cm }) {
+        const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
         const querySnapShot = query(collectionn, where("status", "==", "open"));
         // console.log(collectionn.id);
         const result = await getDocs(querySnapShot)
@@ -111,11 +111,9 @@ class DataService {
     async createBilling({ data }) {
         const { cm } = data;
         try {
-            // console.log(cm)
             const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
             await addDoc(collectionn, { ...data });
-            // await setDoc(collectionn, { u, c, p, t, d, f, e });
-
+            return true;
         } catch (error) {
             console.log(error);
         }

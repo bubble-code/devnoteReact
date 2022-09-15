@@ -1,29 +1,8 @@
 /* eslint-disable react/jsx-filename-extension */
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-import { useMemo } from "react";
-
-// prop-types is a library for typechecking of props
+import { useCallback, useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
-
-// uuid is a library for generating unique id
 import { v4 as uuidv4 } from "uuid";
-
-// @mui material components
-import { Table as MuiTable } from "@mui/material";
+import { CircularProgress, Table as MuiTable } from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
@@ -38,10 +17,66 @@ import colors from "assets/theme/base/colors";
 import typography from "assets/theme/base/typography";
 import borders from "assets/theme/base/borders";
 
-function Table({ columns, rows, onClientClick }) {
+import { useLoadSerOpen } from '../../../service/fetchHoo';
+import { useSoftUIController, setListBilling } from '../../../context';
+
+import { TagClientName } from "components/TableBillingService/TagClientName";
+import { Pos } from "components/TableBillingService/TagClientName";
+import SoftBadge from "components/SoftBadge";
+
+
+
+
+function Table({ columns, onClientClick, cmm }) {
+  const { data: dt, loading, error } = useLoadSerOpen({ cmm });
+  const [context, dispatch] = useSoftUIController();
+  const { listBilling } = context;
+  const [rows, setRows] = useState([]);
   const { light } = colors;
   const { size, fontWeightBold } = typography;
   const { borderWidth } = borders;
+
+  const renderCurrent = useCallback(({ dt }) => {
+    let rende = dt.map((item) => {
+      const data = item.data();
+      const row = {
+        key: item.id,
+        ClientName: <TagClientName name={data.cn} email=" " id={item.id} opacity={1} />,
+        Pos: <Pos job={data.pos} org="" />,
+        ServiceDescription: (
+          <SoftBadge variant="contained" badgeContent={Object.values(data.description).join(' / ')}
+            color="palettePastel" size="sm" container wordSpacing='0.1rem' />
+        ),
+        StartTime: (
+          <SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth'>
+            {data.timeStart}
+          </SoftTypography>
+        ),
+        EndTime: (
+          <SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth'>
+            {data.timeEnd}
+          </SoftTypography>
+        ),
+        Units: (
+          <SoftBadge variant="gradient" badgeContent={data.units} color="light" size="xl" container />
+        ),
+        Min: (
+          <SoftBadge variant="gradient" badgeContent={data.min} color="success" size="xs" container />
+        ),
+        CM: cmm,
+      };
+      return row;
+    });
+    setRows(rende);
+    // setListBilling(dispatch, { [cmm]: rende });
+
+  }, [cmm]);
+
+
+
+  useEffect(() => {
+    renderCurrent({ dt });
+  }, [dt, renderCurrent]);
 
   const renderColumns = columns.map(({ name, align, width }, key) => {
     let pl;
@@ -71,7 +106,7 @@ function Table({ columns, rows, onClientClick }) {
         fontSize={size.xxs}
         fontWeight={fontWeightBold}
         color="secondary"
-        opacity={0.7}
+        opacity={1}
         borderBottom={`${borderWidth[1]} solid ${light.main}`}
       >
         {name.toUpperCase()}
@@ -134,16 +169,18 @@ function Table({ columns, rows, onClientClick }) {
 
   return useMemo(
     () => (
-      <TableContainer>
+      <TableContainer sx={{ minHeight: 200 }}>
         <MuiTable>
           <SoftBox component="thead">
             <TableRow>{renderColumns}</TableRow>
           </SoftBox>
-          <TableBody>{renderRows}</TableBody>
+          {loading ? <TableBody></TableBody> : <TableBody>{renderRows}</TableBody>}
         </MuiTable>
+        {loading && <SoftBox display='flex' justifyContent='center' alignItems='center' mt={7} > <CircularProgress /></SoftBox>}
+        {!dt.length && <SoftBox display='flex' justifyContent='center' alignItems='center' mt={7} > <SoftTypography variant="h6" fontWeight="medium" opacity={0.5}>No Data</SoftTypography></SoftBox>}
       </TableContainer>
     ),
-    [renderColumns, renderRows]
+    [dt.length, loading, renderColumns, renderRows]
   );
 }
 

@@ -41,7 +41,7 @@ const colors = {
   },
 
   secondary: {
-    main: "#8392ab",
+    main: "#32363c",
     focus: "#96a2b8",
   },
 
@@ -71,7 +71,7 @@ const colors = {
   },
 
   dark: {
-    main: "#344767",
+    main: "#0d0e0f",
     focus: "#344767",
   },
 
@@ -275,8 +275,8 @@ const colors = {
       text: "#bd0000",
     },
     palettePastel: {
-      background: "#000000",
-      text: "#000000",
+      background: "#6a778d",
+      text: "#ffffff",
     },
     light: {
       background: "#ffffff",

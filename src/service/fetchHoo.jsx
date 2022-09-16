@@ -94,3 +94,60 @@ export function useLoadSerOpen({ cmm }) {
 
     return { data, loading, error, loadData };
 }
+export function useNotesByCliet({ cmm, client }) {
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const loadData = useCallback(async () => {
+        if (cmm) {
+            setLoading(true);
+            try {
+                const list = await DataService.listNoteByClient({ cm: cmm, name: client });
+                setData(list);
+            } catch (error) {
+                setError(error);
+            } finally {
+                setLoading(false);
+            }
+        } else {
+            setData([]);
+        }
+    }, [cmm, client]);
+    useEffect(() => {
+        loadData();
+    }, [loadData]);
+
+    return { data, loading, error };
+}
+
+export function useSearchHelperNotes() {
+    const [value, setValue] = useState('');
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const loadData = useCallback(async () => {
+        if (value.length > 4) {
+            try {
+                setLoading(true);
+                const list = await DataService.searchHelper({ value });
+                console.log(list);
+                setData(list);
+            } catch (error) {
+                setError(error);
+                setLoading(true);
+            } finally {
+                setLoading(false);
+            }
+        }
+    }, [value]);
+
+    useEffect(() => {
+        if (value.length > 4) {
+            loadData();
+        }
+    }, [loadData, value]);
+
+    return { setValue, data, loading, error };
+}

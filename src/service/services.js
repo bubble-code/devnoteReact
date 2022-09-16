@@ -44,11 +44,12 @@ class DataService {
     async listBillingOpenByCm({ cm }) {
         const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
         const querySnapShot = query(collectionn, where("status", "==", "open"));
-        // console.log(collectionn.id);
         const result = await getDocs(querySnapShot)
+        // console.log(result.docs);
         return result.docs;
     }
     async listNoteByClient({ cm, name }) {
+        // console.log(name);
         const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
         const querySnapShot = query(collectionn, where('status', '==', 'completed'), where("cn", "==", `${name}`));
         const result = await getDocs(querySnapShot)
@@ -119,6 +120,17 @@ class DataService {
         }
     }
     // **********************************Lists****************************************************
+    // #region Search
+    async searchHelper({ value }) {
+        console.log(value);
+        const collectionn = collection(db, `${this._pathCM}/${value}/activeClient`);
+        const querySnapShot = query(collectionn);
+        const result = await getDocs(querySnapShot);
+        return result.docs;
+    }
+
+    // #endregion
+
 
 }
 

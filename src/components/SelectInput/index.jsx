@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
 import React, { forwardRef, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
@@ -65,7 +66,7 @@ const SelectInput = forwardRef(({ data, sxx = { width: 250 }, onchange, parse, h
 // };
 
 SelectInput.propTypes = {
-    data: PropTypes.any,
+    // data: PropTypes.any,
     sxx: PropTypes.object,
     onchange: PropTypes.func,
     parse: PropTypes.bool,

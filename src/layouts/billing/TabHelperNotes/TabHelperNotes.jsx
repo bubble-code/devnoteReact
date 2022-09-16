@@ -1,15 +1,14 @@
 import React from "react";
-import { Box, Grid, Tab, TextareaAutosize } from "@mui/material";
+import { Box, Grid, Tab } from "@mui/material";
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import SoftTypography from "components/SoftTypography";
-import SoftInput from "components/SoftInput";
 import TableHistory from "../components/TableHistory/TableHistory";
+import SearchHelperNotes from "../components/Search/Search";
 
 
 function TabHelperNotes() {
-    const [value, setValue] = React.useState('one');
+    const [value, setValue] = React.useState('1');
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -31,10 +30,7 @@ function TabHelperNotes() {
                 </Grid>
             </TabPanel>
             <TabPanel value="2">
-                <SoftInput
-                    placeholder="Type here..."
-                    icon={{ component: "search", direction: "left" }}
-                />
+                <SearchHelperNotes />
             </TabPanel>
             <TabPanel value="3">Item Three</TabPanel>
         </TabContext>

@@ -7,16 +7,22 @@ import Table from "../../examples/Tables/Table";
 import DataService from "../../service/services";
 import SelectInput from "../../components/SelectInput";
 import { useSoftUIController, setCurrentClToNote, setListBilling } from "../../context";
+import { useDispatch } from 'react-redux';
+import { fectListBilling } from '../../redux/actions/actions'
 import PropTypes from "prop-types";
 import { columns } from "./colunmHead";
-import { useLoadSerOpen } from "../../service/fetchHoo";
+import SoftButton from "components/SoftButton";
 
 function TableBillingService({ py, mb, headTitle }) {
     const [caseManager, setCaseManager] = useState('');
     const [controler, dispatch] = useSoftUIController();
     const { listCM } = controler;
     const ref1 = React.useRef();
+    const dispatchRedux = useDispatch();
 
+    function fectListB({ caseManager }) {
+        dispatchRedux(fectListBilling({ caseManager }))
+    }
 
 
     async function setCurrentClForNote({ id, cmm }) {
@@ -26,11 +32,14 @@ function TableBillingService({ py, mb, headTitle }) {
 
     async function loadBillingData(id, event, value) {
         const cM = value.label;
-        DataService.listBillingOpenByCm({ cm: cM }).then((res) => {
+        setCaseManager(cM);
 
-            setListBilling(dispatch, { [cM]: res });
-            setCaseManager(cM);
-        });
+    }
+    function reloadTable() {
+        const ccm = caseManager;
+        console.log(ccm);
+        setCaseManager('');
+        // (() => setCaseManager(ccm))();
     }
 
     return (
@@ -40,6 +49,7 @@ function TableBillingService({ py, mb, headTitle }) {
                     <SoftBox display="flex" justifyContent="start" alignItems="center" p={3}>
                         <SoftTypography variant="h6" mr={5}>{headTitle} </SoftTypography>
                         <SelectInput data={listCM} onchange={loadBillingData} parse hText="Choice CM Name" ref={ref1} id='cm' />
+                        <SoftButton onClick={reloadTable} variant="contained" color="primary" ml={2}>Reload</SoftButton>
                     </SoftBox>
                     <SoftBox
                         sx={{

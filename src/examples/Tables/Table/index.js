@@ -23,6 +23,8 @@ import { useSoftUIController, setListBilling } from '../../../context';
 import { TagClientName } from "components/TableBillingService/TagClientName";
 import { Pos } from "components/TableBillingService/TagClientName";
 import SoftBadge from "components/SoftBadge";
+import { useDispatch } from "react-redux";
+import { fectListBilling } from '../../../redux/actions/actions'
 
 
 
@@ -35,6 +37,7 @@ function Table({ columns, onClientClick, cmm }) {
   const { light } = colors;
   const { size, fontWeightBold } = typography;
   const { borderWidth } = borders;
+  const dispatchRedux = useDispatch();
 
   const renderCurrent = useCallback(({ dt }) => {
     let rende = dt.map((item) => {
@@ -76,7 +79,8 @@ function Table({ columns, onClientClick, cmm }) {
 
   useEffect(() => {
     renderCurrent({ dt });
-  }, [dt, renderCurrent]);
+    dispatchRedux(fectListBilling({ cm: cmm }))
+  }, [cmm, dispatchRedux, dt, renderCurrent]);
 
   const renderColumns = columns.map(({ name, align, width }, key) => {
     let pl;

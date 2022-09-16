@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from "react";
 import { useSoftUIController, setCurrentClToNote, setListBilling } from "../../../../context";
-import Dataservice from '../../../../service/services'
+import DataService from '../../../../service/services'
 import { useSaveNote } from "../../../../service/fetchHoo";
 import { Box, Button, Grid, Icon, TextareaAutosize, TextField } from "@mui/material";
 import Card from "@mui/material/Card";
@@ -40,7 +40,7 @@ function WriteNote() {
       console.log(error)
     }
     else {
-      Dataservice.listBillingOpenByCm({ cm: currentClToNote.cm }).then((res) => {
+      DataService.listBillingOpenByCm({ cm: currentClToNote.cm }).then((res) => {
         console.log(res)
         setListBilling(dispatch, { [cm]: [...res] });
         setFormData(initialValues);

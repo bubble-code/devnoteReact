@@ -5,8 +5,8 @@ import axios from 'axios'
 
 const _pathCM = "/CM/cm/cm";
 
-export function setListBillingLoad() {
-    return { type: "LIST_BILLING_LOAD" };
+export function setListBillingLoad(loading) {
+    return { type: "LIST_BILLING_LOAD", loading };
 }
 export function setListBillingFail(error) {
     return { type: "LIST_BILLING_FAIL", error: error }

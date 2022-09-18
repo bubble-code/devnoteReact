@@ -37,7 +37,7 @@ function TableBillingService({ py, mb, headTitle }) {
     }
     function reloadTable() {
         const ccm = caseManager;
-        console.log(ccm);
+        // console.log(ccm);
         setCaseManager('');
         // (() => setCaseManager(ccm))();
     }

@@ -42,7 +42,7 @@ function FormAddBilling({ py, mb, headTitle }) {
 
 
     const handleChangeCmName = async (id, event, value) => {
-        console.log(value);
+        // console.log(value);
         const request = await DataService.listActivedClients({ cm: value.label })
         const listActClient = request.map((item) => {
             return { label: item.id, cnumb: item.data().cnumb }
@@ -56,7 +56,7 @@ function FormAddBilling({ py, mb, headTitle }) {
         setButtonIsActive(!buttonActive())
     }
     function handleChangeTime(value) {
-        console.log(`${value.$D}-${value.$M}-${value.$y}`);
+        // console.log(`${value.$D}-${value.$M}-${value.$y}`);
         setDataForm(dataForm => ({ ...dataForm, ["fecha"]: `${value.$D}-${value.$M + 1}-${value.$y}` }));
         setButtonIsActive(!buttonActive())
     }

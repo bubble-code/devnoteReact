@@ -57,13 +57,13 @@ function Configurator() {
     }
 
     // The event listener that's calling the handleDisabled function when resizing the window.
-    window.addEventListener("resize", handleDisabled);
+    // window.addEventListener("resize", handleDisabled);
 
     // Call the handleDisabled function to set the state with the initial value.
-    handleDisabled();
+    // handleDisabled();
 
     // Remove event listener on cleanup
-    return () => window.removeEventListener("resize", handleDisabled);
+    // return () => window.removeEventListener("resize", handleDisabled);
   }, []);
 
   const handleCloseConfigurator = () => setOpenConfigurator(dispatch, false);

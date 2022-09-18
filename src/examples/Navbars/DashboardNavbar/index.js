@@ -61,13 +61,13 @@ function DashboardNavbar({ absolute, light, isMini }) {
      The event listener that's calling the handleTransparentNavbar function when 
      scrolling the window.
     */
-    window.addEventListener("scroll", handleTransparentNavbar);
+    // window.addEventListener("scroll", handleTransparentNavbar);
 
     // Call the handleTransparentNavbar function to set the state with the initial value.
-    handleTransparentNavbar();
+    // handleTransparentNavbar();
 
     // Remove event listener on cleanup
-    return () => window.removeEventListener("scroll", handleTransparentNavbar);
+    // return () => window.removeEventListener("scroll", handleTransparentNavbar);
   }, [dispatch, fixedNavbar]);
 
   //#region Navbar menu dispatch functions

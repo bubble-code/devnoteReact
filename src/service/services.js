@@ -42,19 +42,15 @@ class DataService {
         return result.docs;
     }
     async listBillingOpenByCm({ cm }) {
-        const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
-        const querySnapShot = query(collectionn, where("status", "==", "open"));
-        const result = await getDocs(querySnapShot)
-        // console.log(result.docs);
-        return result.docs;
+        if (cm) {
+            const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
+            const querySnapShot = query(collectionn, where("status", "==", "open"));
+            const result = await getDocs(querySnapShot)
+            // console.log(result.docs);
+            return result.docs;
+        }
     }
-    async listNoteByClient({ cm, name }) {
-        // console.log(name);
-        const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
-        const querySnapShot = query(collectionn, where('status', '==', 'completed'), where("cn", "==", `${name}`));
-        const result = await getDocs(querySnapShot)
-        return result.docs;
-    }
+
     // **********************************Billings****************************************************
     async getServiceById({ cm, id }) {
         const docRef = doc(db, `${this._pathCM}/${cm}/openBilling/`, `${id}`);
@@ -121,12 +117,48 @@ class DataService {
     }
     // **********************************Lists****************************************************
     // #region Search
-    async searchHelper({ value }) {
-        console.log(value);
-        const collectionn = collection(db, `${this._pathCM}/${value}/activeClient`);
-        const querySnapShot = query(collectionn);
-        const result = await getDocs(querySnapShot);
+    async listNoteByClient({ cm, name }) {
+        // console.log(name);
+        const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
+        const querySnapShot = query(collectionn, where('status', '==', 'completed'), where("cn", "==", `${name}`));
+        const result = await getDocs(querySnapShot)
         return result.docs;
+    }
+
+    async searchHelper({ value }) {
+        // console.log(value);
+        const resultFinal = [];
+        const listCMa = await this.listCM();
+        // console.log(listCMa);
+        const prevResult = Promise.allSettled(listCMa.map(async (item) => {
+            const collectionn = collection(db, `${this._pathCM}/${item.id}/openBilling`);
+            const querySnapShot = query(collectionn, where('status', '==', 'completed'));
+            const result = await getDocs(querySnapShot);
+            return result.docs;
+        })
+        ).then((result) => {
+            result.forEach((item2) => {
+                // console.log("result", item2);
+                if (item2.status === "fulfilled") {
+                    // resultFinal.push(
+                    item2.value.map((item) => {
+                        Object.values(item.data().description).forEach((item3) => {
+                            // console.log(item3);
+                            if (item3.toLowerCase().includes(value.toLowerCase())) {
+                                resultFinal.push(item.data());
+                            }
+                        });
+                    })
+                }
+            });
+            // console.log("resultFinal", resultFinal);
+            return resultFinal;
+        }).catch((error) => {
+            console.log(error);
+            return [];
+        });
+        // console.log("Result Final", prevResult);
+        return prevResult;
     }
 
     // #endregion

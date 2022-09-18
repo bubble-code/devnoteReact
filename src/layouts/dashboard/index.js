@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import { useEffect, useState } from "react";
 import DataService from '../../service/services';
 import Grid from "@mui/material/Grid";
@@ -37,7 +38,7 @@ function Dashboard() {
     const res = [];
     const response = await DataService.listCM();
     response.forEach((element) => {
-      console.log(element.id);
+      // console.log(element.id);
       res.push(
         <Grid item xs={12} sm={6} xl={3}>
           <MiniStatisticsCard

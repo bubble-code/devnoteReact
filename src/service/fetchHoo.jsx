@@ -1,6 +1,10 @@
-import { useState, useEffect, useCallback, useContext } from "react";
-import DataService from './services'
-import { useSoftUIController, setListBilling, SoftUI } from "../context/index";
+import { useState, useEffect, useCallback, useRef, useReducer } from "react";
+import DataService from './services';
+import { useDispatch } from 'react-redux';
+import { setListBillingLoad, setListBillingSuccess } from '../redux/actions/actions'
+// import { listNotesReducer } from '../redux/reducers/reducer';
+// import {} from 'firebase/firestore';
+
 
 export function useFetch() {
     const [data, setData] = useState([]);
@@ -17,7 +21,7 @@ export function useFetch() {
                 objectReturn[cm.id] = list.length;
                 objectReturn['pNumber'] = cm.data().pNumber;
                 objectReturn['sCode'] = cm.data().sCode;
-                console.log(cm.data().sCode);
+                // console.log(cm.data().sCode);
                 return objectReturn;
             }))
             listBillings.then((list) => {
@@ -121,33 +125,108 @@ export function useNotesByCliet({ cmm, client }) {
     return { data, loading, error };
 }
 
-export function useSearchHelperNotes() {
-    const [value, setValue] = useState('');
+export function useSearchHelperNotes(query) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const dispatch = useDispatch();
 
     const loadData = useCallback(async () => {
-        if (value.length > 4) {
-            try {
-                setLoading(true);
-                const list = await DataService.searchHelper({ value });
-                console.log(list);
-                setData(list);
-            } catch (error) {
-                setError(error);
-                setLoading(true);
-            } finally {
-                setLoading(false);
-            }
+        setLoading(true);
+        try {
+            const list = await DataService.searchHelper({ value: query });
+            setData(list);
+            dispatch(setListBillingSuccess(list));
+        } catch (error) {
+            setError(error);
+        } finally {
+            setLoading(false);
         }
-    }, [value]);
+    }, [dispatch, query]);
 
     useEffect(() => {
-        if (value.length > 4) {
+        if (query.length > 4) {
             loadData();
         }
-    }, [loadData, value]);
+    }, [loadData, query.length]);
 
-    return { setValue, data, loading, error };
+    return { data, loading, error };
+    // dispatch({ type: 'success', payload: data });
+
+}
+
+// -----------------------------------------------------------
+// -----------------------------------------------------------
+// -----------------------------------------------------------
+function useFirestoreQuery(query) {
+    // Our initial state
+    // Start with an "idle" status if query is falsy, as that means hook consumer is
+    // waiting on required data before creating the query object.
+    // Example: useFirestoreQuery(uid && firestore.collection("profiles").doc(uid))
+    const initialState = {
+        status: query ? "loading" : "idle",
+        data: undefined,
+        error: undefined,
+    };
+    // Setup our state and actions
+    const [state, dispatch] = useReducer(reducer, initialState);
+    // Get cached Firestore query object with useMemoCompare (https://usehooks.com/useMemoCompare)
+    // Needed because firestore.collection("profiles").doc(uid) will always being a new object reference
+    // causing effect to run -> state change -> rerender -> effect runs -> etc ...
+    // This is nicer than requiring hook consumer to always memoize query with useMemo.
+    const queryCached = useMemoCompare(query, (prevQuery) => {
+        // Use built-in Firestore isEqual method to determine if "equal"
+        return prevQuery && query && query.isEqual(prevQuery);
+    });
+    useEffect(() => {
+        // Return early if query is falsy and reset to "idle" status in case
+        // we're coming from "success" or "error" status due to query change.
+        if (!queryCached) {
+            dispatch({ type: "idle" });
+            return;
+        }
+        dispatch({ type: "loading" });
+        // Subscribe to query with onSnapshot
+        // Will unsubscribe on cleanup since this returns an unsubscribe function
+        return queryCached.onSnapshot(
+            (response) => {
+                // Get data for collection or doc
+                const data = response.docs
+                    ? getCollectionData(response)
+                    : getDocData(response);
+                dispatch({ type: "success", payload: data });
+            },
+            (error) => {
+                dispatch({ type: "error", payload: error });
+            }
+        );
+    }, [queryCached]); // Only run effect if queryCached changes
+    return state;
+}
+// Get doc data and merge doc.id
+function getDocData(doc) {
+    return doc.exists === true ? { id: doc.id, ...doc.data() } : null;
+}
+// Get array of doc data from collection
+function getCollectionData(collection) {
+    return collection.docs.map(getDocData);
+}
+// -----------------------------------------------------------
+function useMemoCompare(next, compare) {
+    // Ref for storing previous value
+    const previousRef = useRef();
+    const previous = previousRef.current;
+    // Pass previous and next value to compare function
+    // to determine whether to consider them equal.
+    const isEqual = compare(previous, next);
+    // If not equal update previousRef to next value.
+    // We only update if not equal so that this hook continues to return
+    // the same old value if compare keeps returning true.
+    useEffect(() => {
+        if (!isEqual) {
+            previousRef.current = next;
+        }
+    });
+    // Finally, if equal then return the previous value
+    return isEqual ? previous : next;
 }

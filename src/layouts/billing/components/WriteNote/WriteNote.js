@@ -41,7 +41,7 @@ function WriteNote() {
     }
     else {
       DataService.listBillingOpenByCm({ cm: currentClToNote.cm }).then((res) => {
-        console.log(res)
+        // console.log(res)
         setListBilling(dispatch, { [cm]: [...res] });
         setFormData(initialValues);
         setCurrentClToNote(dispatch, {

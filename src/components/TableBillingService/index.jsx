@@ -8,22 +8,16 @@ import DataService from "../../service/services";
 import SelectInput from "../../components/SelectInput";
 import { useSoftUIController, setCurrentClToNote, setListBilling } from "../../context";
 import { useDispatch } from 'react-redux';
-import { fectListBilling } from '../../redux/actions/actions'
+// import { fectListBilling } from '../../redux/actions/actions'
 import PropTypes from "prop-types";
-import { columns } from "./colunmHead";
 import SoftButton from "components/SoftButton";
 
 function TableBillingService({ py, mb, headTitle }) {
+    const dispatchRedux = useDispatch();
     const [caseManager, setCaseManager] = useState('');
     const [controler, dispatch] = useSoftUIController();
     const { listCM } = controler;
     const ref1 = React.useRef();
-    const dispatchRedux = useDispatch();
-
-    function fectListB({ caseManager }) {
-        dispatchRedux(fectListBilling({ caseManager }))
-    }
-
 
     async function setCurrentClForNote({ id, cmm }) {
         const res = await DataService.getServiceById({ cm: cmm, id: id });
@@ -32,14 +26,18 @@ function TableBillingService({ py, mb, headTitle }) {
 
     async function loadBillingData(id, event, value) {
         const cM = value.label;
+        dispatchRedux({ type: "LIST_SERVICES_BY_CM_LOAD" });
+        const res = await DataService.listBillingOpenByCm({ cm: cM });
+        dispatchRedux({ type: 'LIST_SERVICES_BY_CM_SUCCESS', value: res });
+        // dispatchRedux(fectListBilling({ cm: cM }));
         setCaseManager(cM);
 
     }
-    function reloadTable() {
+    async function reloadTable() {
         const ccm = caseManager;
-        // console.log(ccm);
-        setCaseManager('');
-        // (() => setCaseManager(ccm))();
+        dispatchRedux({ type: "LIST_SERVICES_BY_CM_LOAD" });
+        const res = await DataService.listBillingOpenByCm({ cm: ccm });
+        dispatchRedux({ type: 'LIST_SERVICES_BY_CM_SUCCESS', value: res });
     }
 
     return (
@@ -62,7 +60,7 @@ function TableBillingService({ py, mb, headTitle }) {
                         }}
                     >
                         {/**/}
-                        <Table columns={columns} cmm={caseManager} onClientClick={setCurrentClForNote} />
+                        <Table onClientClick={setCurrentClForNote} />
                     </SoftBox>
                 </Card>
             </SoftBox>
@@ -73,8 +71,6 @@ function TableBillingService({ py, mb, headTitle }) {
 TableBillingService.propTypes = {
     py: PropTypes.number,
     mb: PropTypes.number,
-    columns: PropTypes.array,
-    rows: PropTypes.array,
     headTitle: PropTypes.string
 };
 

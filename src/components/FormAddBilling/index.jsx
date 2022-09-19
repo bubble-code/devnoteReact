@@ -100,7 +100,7 @@ function FormAddBilling({ py, mb, headTitle }) {
         setDataForm({ ...dataForm, ...formObject });
         setButtonIsActive(false)
     };
-    function buttonActive() {
+    function buttonActive() { 
         return (!!dataForm.description.length && !!dataForm.timeStart.length)
     }
     return (

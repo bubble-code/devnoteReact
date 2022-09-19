@@ -6,38 +6,25 @@ import { CircularProgress, Table as MuiTable } from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
-
-// Soft UI Dashboard React components
 import SoftBox from "components/SoftBox";
 import SoftAvatar from "components/SoftAvatar";
 import SoftTypography from "components/SoftTypography";
-
-// Soft UI Dashboard React base styles
 import colors from "assets/theme/base/colors";
 import typography from "assets/theme/base/typography";
 import borders from "assets/theme/base/borders";
-
-import { useLoadSerOpen } from '../../../service/fetchHoo';
-import { useSoftUIController, setListBilling } from '../../../context';
-
 import { TagClientName } from "components/TableBillingService/TagClientName";
 import { Pos } from "components/TableBillingService/TagClientName";
 import SoftBadge from "components/SoftBadge";
-import { useDispatch } from "react-redux";
-import { fectListBilling } from '../../../redux/actions/actions'
+import { useSelector } from "react-redux";
+import { columns } from "../../../components/TableBillingService/colunmHead";
 
-
-
-
-function Table({ columns, onClientClick, cmm }) {
-  const { data: dt, loading, error } = useLoadSerOpen({ cmm });
-  const [context, dispatch] = useSoftUIController();
-  const { listBilling } = context;
+function Table({ onClientClick }) {
+  const listServiceState = useSelector(state => state.listServiByCM);
+  const { cm, data, loading } = listServiceState;
   const [rows, setRows] = useState([]);
   const { light } = colors;
   const { size, fontWeightBold } = typography;
   const { borderWidth } = borders;
-  const dispatchRedux = useDispatch();
 
   const renderCurrent = useCallback(({ dt }) => {
     let rende = dt.map((item) => {
@@ -66,21 +53,18 @@ function Table({ columns, onClientClick, cmm }) {
         Min: (
           <SoftBadge variant="gradient" badgeContent={data.min} color="success" size="xs" container />
         ),
-        CM: cmm,
+        CM: data.cm,
       };
       return row;
     });
     setRows(rende);
-    // setListBilling(dispatch, { [cmm]: rende });
-
-  }, [cmm]);
+  }, []);
 
 
 
   useEffect(() => {
-    renderCurrent({ dt });
-    dispatchRedux(fectListBilling({ cm: cmm }))
-  }, [cmm, dispatchRedux, dt, renderCurrent]);
+    renderCurrent({ dt: data });
+  }, [data, renderCurrent]);
 
   const renderColumns = columns.map(({ name, align, width }, key) => {
     let pl;
@@ -181,23 +165,16 @@ function Table({ columns, onClientClick, cmm }) {
           {loading ? <TableBody></TableBody> : <TableBody>{renderRows}</TableBody>}
         </MuiTable>
         {loading && <SoftBox display='flex' justifyContent='center' alignItems='center' mt={7} > <CircularProgress /></SoftBox>}
-        {!dt.length && <SoftBox display='flex' justifyContent='center' alignItems='center' mt={7} > <SoftTypography variant="h6" fontWeight="medium" opacity={0.5}>No Data</SoftTypography></SoftBox>}
+        {!data.length && <SoftBox display='flex' justifyContent='center' alignItems='center' mt={7} > <SoftTypography variant="h6" fontWeight="medium" opacity={0.5}>No Data</SoftTypography></SoftBox>}
       </TableContainer>
     ),
-    [dt.length, loading, renderColumns, renderRows]
+    [loading, data.length, renderColumns, renderRows]
   );
 }
 
-// Setting default values for the props of Table
-Table.defaultProps = {
-  columns: [],
-  rows: [{}],
-};
-
 // Typechecking props for the Table
 Table.propTypes = {
-  columns: PropTypes.arrayOf(PropTypes.object),
-  rows: PropTypes.arrayOf(PropTypes.object),
+  onClientClick: PropTypes.func.isRequired,
 };
 
 export default Table;

@@ -81,30 +81,30 @@ function WriteNote() {
           <Grid item xs={0} md={0} ml={0} mr={0}>
             <TextField id="tcn" sx={{ width: 230 }} helperText="Client Name" value={currentClToNote.cn} disabled color="light" />
           </Grid>
-          <Grid item xs={0} md={0} ml={0} mr={0}>
+          {/*<Grid item xs={0} md={0} ml={0} mr={0}>
             <TextField id="cnumb" sx={{ width: 130 }} helperText="Client Number" value={currentClToNote.cnumb} disabled />
-          </Grid>
-          <Grid item xs={0} md={0} ml={0} mr={0}>
+  </Grid>*/}
+          {/*<Grid item xs={0} md={0} ml={0} mr={0}>
             <TextField id="pNumber" sx={{ width: 130 }} helperText="Provider Number" value={currentClToNote.pNumber} disabled />
-          </Grid>
+          </Grid>*/}
           <Grid item xs={0} md={0} ml={0} mr={0}>
             <TextField id="dSer" sx={{ width: 130 }} helperText="Date of Service" value={currentClToNote.fecha} disabled />
           </Grid>
-          <Grid item xs={0} md={0} ml={0} mr={0}>
+          {/*<Grid item xs={0} md={0} ml={0} mr={0}>
             <TextField id="sCode" sx={{ width: 130 }} helperText="Service Code" value={currentClToNote.sCode} disabled />
-          </Grid>
+          </Grid>*/}
           <Grid item xs={0} md={0} ml={0} mr={0}>
             <TextField id="tpos" sx={{ width: 130 }} helperText="Setting" value={currentClToNote.pos} disabled />
           </Grid>
           <Grid item xs={0} md={0} ml={0} mr={0}>
             <TextField id="tStart" sx={{ width: 130 }} helperText="Time Start" value={currentClToNote.timeStart} disabled />
           </Grid>
-          <Grid item xs={0} md={0} ml={0} mr={0}>
+          {/*<Grid item xs={0} md={0} ml={0} mr={0}>
             <TextField id="tEnd" sx={{ width: 130 }} helperText="Time End" value={currentClToNote.timeEnd} disabled />
           </Grid>
           <Grid item xs={0} md={0} ml={0} mr={0}>
             <TextField id="mn" sx={{ width: 130 }} helperText="Minutes" value={currentClToNote.min} disabled />
-          </Grid>
+          </Grid>*/}
           <Grid item xs={0} md={0} ml={0} mr={0}>
             <TextField id="units" sx={{ width: 130 }} helperText="Unitis" value={currentClToNote.units} disabled />
           </Grid>

@@ -14,11 +14,9 @@ import { v4 as uuidv4 } from "uuid";
 // Soft UI Dashboard React components
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
-import { column } from './colomn'
-import DataService from "../../../../service/services";
-import { useSoftUIController } from "../../../../context/index";
-import { useNotesByCliet } from '../../../../service/fetchHoo'
-import { useSelector } from 'react-redux'
+import { column } from './colomn';
+import { useSelector } from 'react-redux';
+import moment from "moment";
 
 
 
@@ -71,7 +69,11 @@ function TablesSearchRender() {
     // const { cn, cm } = currentClToNote;
     // const { data, loading, error } = useNotesByCliet({ cmm: cm, client: cn });
     let rows = [];
-    dataSearch.forEach((item) => {
+    const orderData = dataSearch.sort((a, b) => {
+        // console.log('a, b', moment(a.data().fecha, "DD-MM-YYYY"), moment(b.data().fecha, "DD-MM-YYYY"));
+        return moment(a.fecha, "DD-MM-YYYY") - moment(b.fecha, "DD-MM-YYYY");
+    });
+    orderData.forEach((item) => {
         rows.push({
             description: (
                 <SoftBox bgColor='grey-400' borderRadius='md' px={1} display='flex' justifyContent='space-between' sx={{ width: '550px' }} >

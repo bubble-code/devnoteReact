@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Card from '@mui/material/Card';
 import SoftBox from "components/SoftBox";
-import TableRender from "./TableRender";
+import TableRender, { HistoryTimeLineRender } from "./TableRender";
 // bilingData
 // Data
 // import billiTable from "layouts/tables/data/billingTable";
@@ -31,7 +31,9 @@ function TableHistory() {
                             }
                         }}
                     >
+                        {/*<HistoryTimeLineRender />*/}
                         <TableRender />
+                        
                     </SoftBox>
                 </Card>
             </SoftBox>

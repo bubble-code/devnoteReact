@@ -145,7 +145,7 @@ export function useSearchHelperNotes(query) {
     }, [dispatch, query]);
 
     useEffect(() => {
-        if (query.length > 4) {
+        if (query.length > 3) {
             loadData();
         }
     }, [loadData, query.length]);

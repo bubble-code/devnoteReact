@@ -66,7 +66,7 @@ const SelectInput = forwardRef(({ data, sxx = { width: 250 }, onchange, parse, h
 // };
 
 SelectInput.propTypes = {
-    // data: PropTypes.any,
+    data: PropTypes.object,
     sxx: PropTypes.object,
     onchange: PropTypes.func,
     parse: PropTypes.bool,

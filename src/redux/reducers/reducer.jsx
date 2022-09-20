@@ -15,6 +15,11 @@ const initialStateLisServices = {
     error: null,
     loading: false,
 }
+const initStateCurrentClToNote = {
+    currentClient: {},
+    error: null,
+    loading: false,
+};
 
 export function listServicesByCMReducer(state = initialState, action) {
     // console.log('action', action);
@@ -84,6 +89,31 @@ export function listServicesByCMReducer2(state = initialStateLisServices, action
                 loading: false,
                 cm: action.cm,
                 data: [],
+                error: null,
+            };
+        default:
+            return state;
+    }
+}
+export function currentClToNoteReducer(state = initStateCurrentClToNote, action) {
+    // console.log('action', action);
+    switch (action.type) {
+        case "CURRENT_CL_TO_NOTE_LOAD": 
+            return {
+                loading: true,
+                currentClient: {},
+                error: null,
+            };
+        case "CURRENT_CL_TO_NOTE_FAIL":
+            return {
+                loading: false,
+                currentClient: {},
+                error: action.error,
+            };
+        case "CURRENT_CL_TO_NOTE_SUCCESS":
+            return {
+                loading: false,
+                currentClient: action.value,
                 error: null,
             };
         default:

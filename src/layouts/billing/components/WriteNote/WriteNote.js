@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useSoftUIController, setCurrentClToNote, setListBilling } from "../../../../context";
 import DataService from '../../../../service/services'
 import { useSaveNote } from "../../../../service/fetchHoo";
@@ -15,6 +16,7 @@ import SoftInput from "components/SoftInput";
 
 function WriteNote() {
   const [formData, setFormData] = React.useState({});
+  const dispatchRedux = useDispatch();
   const [controler, dispatch] = useSoftUIController();
   const { currentClToNote } = controler;
   const { datas, error, loading, saveData } = useSaveNote();
@@ -36,36 +38,29 @@ function WriteNote() {
   function handleSubmit(e) {
     e.preventDefault();
     saveData({ cm: currentClToNote.cm, id: currentClToNote.id, data: { ...formData, ['status']: 'completed' } })
-    if (error) {
-      console.log(error)
-    }
-    else {
-      DataService.listBillingOpenByCm({ cm: currentClToNote.cm }).then((res) => {
-        // console.log(res)
-        setListBilling(dispatch, { [cm]: [...res] });
-        setFormData(initialValues);
-        setCurrentClToNote(dispatch, {
-          status: '',
-          timeEnd: '',
-          timeStart: '',
-          pNumber: '',
-          sNote: '',
-          pos: '',
-          sCode: '',
-          units: '',
-          fecha: '',
-          description: {},
-          cn: '',
-          min: '',
-          cnumb: '',
-          tcm: '',
-          domain: '',
-          id: '',
-          outComeS: '',
-          nStep: '',
-        });
-
-      })
+    if (!error) {
+      dispatchRedux({ type: 'CURRENT_CL_TO_NOTE_SUCCESS', value: {} })
+      setFormData(initialValues);
+      setCurrentClToNote(dispatch, {
+        status: '',
+        timeEnd: '',
+        timeStart: '',
+        pNumber: '',
+        sNote: '',
+        pos: '',
+        sCode: '',
+        units: '',
+        fecha: '',
+        description: {},
+        cn: '',
+        min: '',
+        cnumb: '',
+        tcm: '',
+        domain: '',
+        id: '',
+        outComeS: '',
+        nStep: '',
+      });
     }
   }
 
@@ -81,30 +76,15 @@ function WriteNote() {
           <Grid item xs={0} md={0} ml={0} mr={0}>
             <TextField id="tcn" sx={{ width: 230 }} helperText="Client Name" value={currentClToNote.cn} disabled color="light" />
           </Grid>
-          {/*<Grid item xs={0} md={0} ml={0} mr={0}>
-            <TextField id="cnumb" sx={{ width: 130 }} helperText="Client Number" value={currentClToNote.cnumb} disabled />
-  </Grid>*/}
-          {/*<Grid item xs={0} md={0} ml={0} mr={0}>
-            <TextField id="pNumber" sx={{ width: 130 }} helperText="Provider Number" value={currentClToNote.pNumber} disabled />
-          </Grid>*/}
           <Grid item xs={0} md={0} ml={0} mr={0}>
             <TextField id="dSer" sx={{ width: 130 }} helperText="Date of Service" value={currentClToNote.fecha} disabled />
           </Grid>
-          {/*<Grid item xs={0} md={0} ml={0} mr={0}>
-            <TextField id="sCode" sx={{ width: 130 }} helperText="Service Code" value={currentClToNote.sCode} disabled />
-          </Grid>*/}
           <Grid item xs={0} md={0} ml={0} mr={0}>
             <TextField id="tpos" sx={{ width: 130 }} helperText="Setting" value={currentClToNote.pos} disabled />
           </Grid>
           <Grid item xs={0} md={0} ml={0} mr={0}>
             <TextField id="tStart" sx={{ width: 130 }} helperText="Time Start" value={currentClToNote.timeStart} disabled />
           </Grid>
-          {/*<Grid item xs={0} md={0} ml={0} mr={0}>
-            <TextField id="tEnd" sx={{ width: 130 }} helperText="Time End" value={currentClToNote.timeEnd} disabled />
-          </Grid>
-          <Grid item xs={0} md={0} ml={0} mr={0}>
-            <TextField id="mn" sx={{ width: 130 }} helperText="Minutes" value={currentClToNote.min} disabled />
-          </Grid>*/}
           <Grid item xs={0} md={0} ml={0} mr={0}>
             <TextField id="units" sx={{ width: 130 }} helperText="Unitis" value={currentClToNote.units} disabled />
           </Grid>

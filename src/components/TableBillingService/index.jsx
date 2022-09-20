@@ -8,7 +8,7 @@ import DataService from "../../service/services";
 import SelectInput from "../../components/SelectInput";
 import { useSoftUIController, setCurrentClToNote, setListBilling } from "../../context";
 import { useDispatch } from 'react-redux';
-// import { fectListBilling } from '../../redux/actions/actions'
+import { fectListServsByCM, fectCurrentClToNote } from '../../redux/actions/actions'
 import PropTypes from "prop-types";
 import SoftButton from "components/SoftButton";
 
@@ -20,24 +20,18 @@ function TableBillingService({ py, mb, headTitle }) {
     const ref1 = React.useRef();
 
     async function setCurrentClForNote({ id, cmm }) {
+        dispatchRedux(fectCurrentClToNote({ cm: cmm, id }));
         const res = await DataService.getServiceById({ cm: cmm, id: id });
         setCurrentClToNote(dispatch, res);
     }
 
     async function loadBillingData(id, event, value) {
         const cM = value.label;
-        dispatchRedux({ type: "LIST_SERVICES_BY_CM_LOAD" });
-        const res = await DataService.listBillingOpenByCm({ cm: cM });
-        dispatchRedux({ type: 'LIST_SERVICES_BY_CM_SUCCESS', value: res });
-        // dispatchRedux(fectListBilling({ cm: cM }));
+        dispatchRedux(fectListServsByCM({ cm: cM }));
         setCaseManager(cM);
-
     }
     async function reloadTable() {
-        const ccm = caseManager;
-        dispatchRedux({ type: "LIST_SERVICES_BY_CM_LOAD" });
-        const res = await DataService.listBillingOpenByCm({ cm: ccm });
-        dispatchRedux({ type: 'LIST_SERVICES_BY_CM_SUCCESS', value: res });
+        dispatchRedux(fectListServsByCM({ cm: caseManager }));
     }
 
     return (

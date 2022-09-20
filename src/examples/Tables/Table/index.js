@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-filename-extension */
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 import { CircularProgress, Table as MuiTable } from "@mui/material";
@@ -20,51 +20,41 @@ import { columns } from "../../../components/TableBillingService/colunmHead";
 
 function Table({ onClientClick }) {
   const listServiceState = useSelector(state => state.listServiByCM);
-  const { cm, data, loading } = listServiceState;
-  const [rows, setRows] = useState([]);
+  const { data, loading } = listServiceState;
   const { light } = colors;
   const { size, fontWeightBold } = typography;
   const { borderWidth } = borders;
 
-  const renderCurrent = useCallback(({ dt }) => {
-    let rende = dt.map((item) => {
-      const data = item.data();
-      const row = {
-        key: item.id,
-        ClientName: <TagClientName name={data.cn} email=" " id={item.id} opacity={1} />,
-        Pos: <Pos job={data.pos} org="" />,
-        ServiceDescription: (
-          <SoftBadge variant="contained" badgeContent={Object.values(data.description).join(' / ')}
-            color="palettePastel" size="sm" container wordSpacing='0.1rem' />
-        ),
-        StartTime: (
-          <SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth'>
-            {data.timeStart}
-          </SoftTypography>
-        ),
-        EndTime: (
-          <SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth'>
-            {data.timeEnd}
-          </SoftTypography>
-        ),
-        Units: (
-          <SoftBadge variant="gradient" badgeContent={data.units} color="light" size="xl" container />
-        ),
-        Min: (
-          <SoftBadge variant="gradient" badgeContent={data.min} color="success" size="xs" container />
-        ),
-        CM: data.cm,
-      };
-      return row;
-    });
-    setRows(rende);
-  }, []);
-
-
-
-  useEffect(() => {
-    renderCurrent({ dt: data });
-  }, [data, renderCurrent]);
+  let rows = data.map((item) => {
+    const data = item.data();
+    const row = {
+      key: item.id,
+      ClientName: <TagClientName name={data.cn} id={item.id} opacity={1} />,
+      Pos: <Pos job={data.pos} />,
+      ServiceDescription: (
+        <SoftBadge variant="contained" badgeContent={Object.values(data.description).join(' / ')}
+          color="palettePastel" size="sm" container wordSpacing='0.1rem' />
+      ),
+      StartTime: (
+        <SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth'>
+          {data.timeStart}
+        </SoftTypography>
+      ),
+      EndTime: (
+        <SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth'>
+          {data.timeEnd}
+        </SoftTypography>
+      ),
+      Units: (
+        <SoftBadge variant="gradient" badgeContent={data.units} color="light" size="xl" container />
+      ),
+      Min: (
+        <SoftBadge variant="gradient" badgeContent={data.min} color="success" size="xs" container />
+      ),
+      CM: data.cm,
+    };
+    return row;
+  });
 
   const renderColumns = columns.map(({ name, align, width }, key) => {
     let pl;
@@ -105,7 +95,6 @@ function Table({ onClientClick }) {
   const renderRows = rows.map((row, key) => {
     const rowKey = row['key'];
     const caseM = row['CM'];
-    // const rowKey = `row-${key}`;
 
     const tableRow = columns.map(({ name, align }) => {
       let template;

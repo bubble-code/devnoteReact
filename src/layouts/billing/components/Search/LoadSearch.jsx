@@ -5,7 +5,7 @@ import { PropTypes } from 'prop-types';
 import { CircularProgress } from "@mui/material";
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
-import TableSearch from "./TableSearch";
+import TableRender from "./TableSearcRender";
 
 function LoadSearch({ value }) {
     const dispatch = useDispatch();
@@ -16,11 +16,27 @@ function LoadSearch({ value }) {
     }, [data, dispatch, value]);
 
     return (
-        <SoftBox>
+        <SoftBox
+            sx={{
+                minHeight: 250, width: 'auto', height: 'auto', overflow: 'auto',
+                "& .MuiTableRow-root:not(:last-child)": {
+                    "& td": {
+                        borderBottom: ({ borders: { borderWidth, borderColor } }) =>
+                            `${borderWidth[1]} solid ${borderColor}`
+                    },
+                },
+                ".MuiBox-root": {
+                    " & span": {
+                        width: "inherit",
+                        textAlign: 'justify',
+                    }
+                }
+            }}
+        >
             <SoftTypography>{value}</SoftTypography>
             {loading && <CircularProgress />}
             {error && <SoftTypography>{error.message}</SoftTypography>}
-            {data && <TableSearch />}
+            {data && < TableRender />}
         </SoftBox>
     );
 }

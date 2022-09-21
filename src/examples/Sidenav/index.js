@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import { useEffect } from "react";
 import { useLocation, NavLink } from "react-router-dom";
 import PropTypes from "prop-types";

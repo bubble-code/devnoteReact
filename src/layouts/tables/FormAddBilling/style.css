@@ -2,7 +2,7 @@ div.Mui-disabled {
     border: 1px solid #000;
     overflow: hidden;
     border-radius: 4px;
-    background: linear-gradient(310deg, #141727, #3a416f) !important;
+    background: linear-gradient(310deg, #141727, #406f3a) !important;
     color: #fff;
     font-size: 14px;
 }

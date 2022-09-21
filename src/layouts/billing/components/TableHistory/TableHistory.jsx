@@ -12,32 +12,29 @@ import SoftTypography from "components/SoftTypography";
 function TableHistory() {
 
     return (
-        <SoftBox >
-            <SoftBox >
-                <Card sx={{ minHeight: 250 }}>
-                    <SoftBox
-                        sx={{
-                            "& .MuiTableRow-root:not(:last-child)": {
-                                "& td": {
-                                    borderBottom: ({ borders: { borderWidth, borderColor } }) =>
-                                        `${borderWidth[1]} solid ${borderColor}`
-                                },
-                            },
-                            ".MuiBox-root": {
-                                " & span": {
-                                    width: "inherit",
-                                    textAlign: 'justify',
-                                }
-                            }
-                        }}
-                    >
-                        {/*<HistoryTimeLineRender />*/}
-                        <TableRender />
-                        
-                    </SoftBox>
-                </Card>
+        <Card sx={{ minHeight: 250 }}>
+            <SoftBox
+                sx={{
+                    "& .MuiTableRow-root:not(:last-child)": {
+                        "& td": {
+                            borderBottom: ({ borders: { borderWidth, borderColor } }) =>
+                                `${borderWidth[1]} solid ${borderColor}`
+                        },
+                    },
+                    ".MuiBox-root": {
+                        lineHeight: 1,
+                        " & span": {
+                            width: "inherit",
+                            textAlign: 'justify',
+                        }
+                    }
+                }}
+            >
+                {/*<HistoryTimeLineRender />*/}
+                <TableRender />
+
             </SoftBox>
-        </SoftBox>
+        </Card>
     );
 }
 // TableHistory.propTypes = {

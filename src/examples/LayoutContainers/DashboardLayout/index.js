@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -11,7 +12,7 @@ function DashboardLayout({ children }) {
 
   useEffect(() => {
     setLayout(dispatch, "dashboard");
-  }, [pathname]);
+  }, [dispatch, pathname]);
 
   return (
     <SoftBox

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /**
 =========================================================
 * Soft UI Dashboard React - v4.0.0
@@ -33,6 +34,7 @@ function PageLayout({ background, children }) {
 
   useEffect(() => {
     setLayout(dispatch, "page");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   return (

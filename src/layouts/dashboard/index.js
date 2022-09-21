@@ -2,32 +2,14 @@
 import { useEffect, useState } from "react";
 import DataService from '../../service/services';
 import Grid from "@mui/material/Grid";
-import Icon from "@mui/material/Icon";
 import SoftBox from "components/SoftBox";
-import SoftTypography from "components/SoftTypography";
-
-// Soft UI Dashboard React examples
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
-// import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import MiniStatisticsCard from "../../examples/Cards/StatisticsCards/MiniStatisticsCard/index";
-// import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniStatisticsCard";
-import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
-import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
-
-// Soft UI Dashboard React base styles
 import typography from "assets/theme/base/typography";
-
-// Dashboard layout components
-import BuildByDevelopers from "layouts/dashboard/components/BuildByDevelopers";
-import WorkWithTheRockets from "layouts/dashboard/components/WorkWithTheRockets";
-import Projects from "layouts/dashboard/components/Projects";
-import OrderOverview from "layouts/dashboard/components/OrderOverview";
-
-// Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
-import gradientLineChartData from "layouts/dashboard/data/gradientLineChartData";
+import { Fragment } from "react";
 
 function Dashboard() {
   const [cm, setCm] = useState([]);
@@ -60,8 +42,7 @@ function Dashboard() {
 
 
   return (
-    <DashboardLayout>
-      <DashboardNavbar />
+    <Fragment>
       <SoftBox py={3}>
         <SoftBox mb={3}>
           <Grid container spacing={3}>
@@ -124,7 +105,7 @@ function Dashboard() {
         </Grid>*/}
       </SoftBox>
       <Footer />
-    </DashboardLayout>
+    </Fragment>
   );
 }
 

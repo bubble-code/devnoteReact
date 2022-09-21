@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 // @mui material components
 import Tooltip from "@mui/material/Tooltip";
 

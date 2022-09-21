@@ -1,3 +1,3 @@
 export const column = [
-    { name: 'description', aling: 'left' }
+    { name: 'description', aling: 'left' },
 ] 

@@ -24,7 +24,7 @@ function TabHelperNotes() {
                 </TabList>
             </Box>
             <TabPanel value="1" >
-                <Grid item md={0} ml={0} mr={1} mt={4}>
+                <Grid item md={0} ml={0} mr={0} mt={0}>
                     <TableHistory />
 
                 </Grid>

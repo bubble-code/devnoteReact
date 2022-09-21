@@ -16,7 +16,7 @@ import { CircularProgress } from "@mui/material";
 
 function TableRender() {
     const { currentClient } = useSelector(state => state.currentClToNote);
-    const { cm, cn } = currentClient; 
+    const { cm, cn } = currentClient;
     const { data, loading, error } = useNotesByCliet({ cmm: cm, client: cn });
 
     let rows = [];
@@ -26,14 +26,14 @@ function TableRender() {
     orderData.map((item, index) => {
         const { fecha, sNote, description } = item.data();
         rows.push(
-            <Accordion>
+            <Accordion  >
                 <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
+                    // expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
-                    id={index}
+                    id={index} sx={{ width: '450px', paddingLeft: 1 }}
                 >
-                    <SoftBox bgColor='grey-200' borderRadius='md' px={2} display='flex' justifyContent='space-between' sx={{ width: '550px' }} >
-                        <SoftTypography variant="h6" color='black'>{fecha.slice(0, -5)}</SoftTypography>
+                    <SoftBox bgColor='grey-200' borderRadius='md' display='flex' justifyContent='space-between' sx={{ width: '100%' }} px={1} >
+                        <SoftTypography variant="h6" color='black' >{fecha.slice(0, -5)}</SoftTypography>
                         <SoftTypography variant="h6" color='black'>{Object.values(description).join(' / ')}</SoftTypography>
                     </SoftBox>
                 </AccordionSummary>
@@ -48,9 +48,9 @@ function TableRender() {
 
         );
     });
-
+    // bgColor='grey-400' display='flex' justifyContent='space-between' flexDirection='column' sx={{ width: '420px' }}
     return (
-        <SoftBox display='flex' justifyContent='center' flexDirection='column' alignItems='center'>
+        <SoftBox display='flex' justifyContent='center' flexDirection='column' alignItems='center' >
             {loading ? <SoftBox><CircularProgress /></SoftBox> : rows}
         </SoftBox>
     );

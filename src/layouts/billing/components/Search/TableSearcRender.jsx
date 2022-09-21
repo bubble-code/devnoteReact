@@ -76,21 +76,25 @@ function TablesSearchRender() {
     orderData.forEach((item) => {
         rows.push({
             description: (
-                <SoftBox bgColor='grey-400' borderRadius='md' px={1} display='flex' justifyContent='space-between' sx={{ width: '550px' }} >
-                    <SoftBox>
-                        <SoftTypography variant="caption" color='black' mr={1}>{item.fecha}</SoftTypography>
+                <SoftBox bgColor='grey-400' display='flex' justifyContent='space-between' flexDirection='column' sx={{ width: '420px' }}>
+                    <SoftBox borderRadius='md' px={1} display='flex' justifyContent='space-between' >
+                        <SoftBox>
+                            <SoftTypography variant="caption" color='black' mr={1}>{item.fecha}</SoftTypography>
+                        </SoftBox>
+                        <SoftBox>
+                            <SoftTypography variant="caption" color='black'>{item.cm}</SoftTypography>
+                        </SoftBox>
+                        <SoftBox>
+                            <SoftTypography variant="caption" color='black'>{item.cn}</SoftTypography>
+                        </SoftBox>
                     </SoftBox>
-                    <SoftBox>
-                        <SoftTypography variant="caption" color='black' >{Object.values(item.description).join(' / ')}</SoftTypography>
-                    </SoftBox>
-                    <SoftBox>
-                        <SoftTypography variant="caption" color='black'>{item.cm}</SoftTypography>
-                    </SoftBox>
-                    <SoftBox>
-                        <SoftTypography variant="caption" color='black'>{item.cn}</SoftTypography>
+                    <SoftBox container>
+                        <SoftBox>
+                            <SoftTypography variant="caption" color='black' >{Object.values(item.description).join(' / ')}</SoftTypography>
+                        </SoftBox>
                     </SoftBox>
                 </SoftBox>
-            ),
+            )
         });
         rows.push({
             description: (
@@ -121,7 +125,7 @@ function TablesSearchRender() {
                         variant="button"
                         fontWeight="regular"
                         color="secondary"
-                        sx={{ display: "inline-block", width: "max-content" }}
+                        sx={{ display: "inline-block", width: "inherit" }}
                     >
                         {row[name]}
                     </SoftTypography>

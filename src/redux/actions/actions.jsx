@@ -39,3 +39,11 @@ export function fectCurrentClToNote({ cm, id }) {
         dispatch({ type: 'CURRENT_CL_TO_NOTE_SUCCESS', value: res });
     }
 }
+
+export function fectListCM() {
+    return async (dispatch) => {
+        dispatch({ type: "LIST_CM_LOAD" });
+        const res = await DataService.listCM();
+        dispatch({ type: 'LIST_CM_SUCCESS', value: res });
+    }
+}

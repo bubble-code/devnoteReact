@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import PropTypes from "prop-types";

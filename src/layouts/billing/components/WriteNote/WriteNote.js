@@ -102,7 +102,7 @@ function WriteNote() {
         </SoftBox>
         <Grid container spacing={0} mt={0} pr={0} justifyContent={'space-between'}>
           <SoftBox sx={{ width: '100%' }}>
-            <TextareaAutosize id="sNote" sx={{ width: '100%' }} minRows={15} onChange={handleChange} style={{ fontSize: '1.2rem' }} value={formData['sNote']} />
+            <TextareaAutosize id="sNote" sx={{ width: '100%' }} minRows={15} onChange={handleChange} style={{ fontSize: '1.2rem', lineHeight: 1.5, textAlign: 'justify' }} value={formData['sNote']} />
           </SoftBox>
           <SoftBox display='flex' width='100%' >
             <SoftBox sx={{ width: '50%' }} mr={4}>
@@ -111,7 +111,7 @@ function WriteNote() {
             </SoftBox>
             <SoftBox sx={{ width: '50%' }}>
               <SoftTypography variant="h6" color='grey'>Next Step</SoftTypography>
-              <TextareaAutosize id="nStep" minRows={5} onChange={handleChange} style={{ fontSize: '1.2rem', width: '100%' }} value={formData['nStep']} />
+              <TextareaAutosize id="nStep" minRows={5} onChange={handleChange} style={{ fontSize: '1.2rem', width: '100%', lineHeight: 1.5, textAlign: 'justify' }} value={formData['nStep']} />
             </SoftBox>
           </SoftBox>
         </Grid>

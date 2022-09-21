@@ -7,7 +7,7 @@ import LoadSearch from "./LoadSearch";
 function SearchHelperNotes() {
     const [criteria, setCriteria] = useState('');
     return (
-        <SoftBox>
+        <SoftBox container>
             <SoftInput
                 placeholder="Type here..."
                 icon={{ component: "search", direction: "left" }}

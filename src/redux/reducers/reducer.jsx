@@ -98,7 +98,7 @@ export function listServicesByCMReducer2(state = initialStateLisServices, action
 export function currentClToNoteReducer(state = initStateCurrentClToNote, action) {
     // console.log('action', action);
     switch (action.type) {
-        case "CURRENT_CL_TO_NOTE_LOAD": 
+        case "CURRENT_CL_TO_NOTE_LOAD":
             return {
                 loading: true,
                 currentClient: {},
@@ -114,6 +114,32 @@ export function currentClToNoteReducer(state = initStateCurrentClToNote, action)
             return {
                 loading: false,
                 currentClient: action.value,
+                error: null,
+            };
+        default:
+            return state;
+    }
+}
+
+export function listCMReducer(state = initialState, action) {
+    // console.log('action', action);
+    switch (action.type) {
+        case "LIST_CM_LOAD":
+            return {
+                loading: true,
+                data: [],
+                error: null,
+            };
+        case "LIST_CM_FAIL":
+            return {
+                loading: false,
+                data: [],
+                error: action.error,
+            };
+        case "LIST_CM_SUCCESS":
+            return {
+                loading: false,
+                data: action.value,
                 error: null,
             };
         default:

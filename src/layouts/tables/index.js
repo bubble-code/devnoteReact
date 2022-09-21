@@ -1,64 +1,21 @@
+/* eslint-disable react/jsx-filename-extension */
 import Card from "@mui/material/Card";
 import SoftBox from "components/SoftBox";
-import SoftTypography from "components/SoftTypography";
-
-// Soft UI Dashboard React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import Table from "examples/Tables/Table";
-
-// Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
+import FormAddBilling from "./FormAddBilling";
+import AddBillingForm from "layouts/billing/components/PaymentMethod";
+import Invoice from "layouts/billing/components/Invoice";
 
 function Tables() {
-  const { columns, rows } = authorsTableData;
-  const { columns: prCols, rows: prRows } = projectsTableData;
 
   return (
-    <DashboardLayout>
-      <DashboardNavbar />
-      <SoftBox py={3}>
-        <SoftBox mb={3}>
-          <Card>
-            <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-              <SoftTypography variant="h6">Authors table</SoftTypography>
-            </SoftBox>
-            <SoftBox
-              sx={{
-                "& .MuiTableRow-root:not(:last-child)": {
-                  "& td": {
-                    borderBottom: ({ borders: { borderWidth, borderColor } }) =>
-                      `${borderWidth[1]} solid ${borderColor}`,
-                  },
-                },
-              }}
-            >
-              <Table columns={columns} rows={rows} />
-            </SoftBox>
-          </Card>
-        </SoftBox>
-        <Card>
-          <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-            <SoftTypography variant="h6">Projects table</SoftTypography>
-          </SoftBox>
-          <SoftBox
-            sx={{
-              "& .MuiTableRow-root:not(:last-child)": {
-                "& td": {
-                  borderBottom: ({ borders: { borderWidth, borderColor } }) =>
-                    `${borderWidth[1]} solid ${borderColor}`,
-                },
-              },
-            }}
-          >
-            <Table columns={prCols} rows={prRows} />
-          </SoftBox>
-        </Card>
+    <SoftBox mb={3} mt={3}>
+      <SoftBox mb={3} mt={3}>
+        <AddBillingForm />
       </SoftBox>
-      <Footer />
-    </DashboardLayout>
+      <Card>
+        <FormAddBilling headTitle={"Billing Invoice"} />
+      </Card>
+    </SoftBox>
   );
 }
 

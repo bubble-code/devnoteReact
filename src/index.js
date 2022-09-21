@@ -3,17 +3,21 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { store } from './redux/store'
-import { BrowserRouter } from "react-router-dom";
-import App from "App";
-
-// Soft UI Dashboard React Context Provider
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import App from "./App";
 import { SoftUIControllerProvider } from "context";
+import routes from "./routes/routes";
+import { getRoutes } from './routes/renderRoutes';
 
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
       <SoftUIControllerProvider>
-        <App />
+        <Routes>
+          <Route path="/" element={<App />} >
+            {getRoutes(routes)}
+          </Route>
+        </Routes>
       </SoftUIControllerProvider>
     </Provider>
   </BrowserRouter>,

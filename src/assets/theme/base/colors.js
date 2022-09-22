@@ -16,8 +16,8 @@ const colors = {
   },
 
   white: {
-    main: "#ffffff",
-    focus: "#ffffff",
+    main: "#ffffffd4",
+    focus: "#ffffffd4",
     mio: "#0c0c0c"
   },
 
@@ -276,7 +276,7 @@ const colors = {
     },
     palettePastel: {
       background: "#6a778d",
-      text: "#ffffff",
+      text: "#ffffffd4",
     },
     light: {
       background: "#ffffff",

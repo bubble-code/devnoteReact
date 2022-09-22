@@ -6,9 +6,9 @@ import { Box, Autocomplete, TextField } from "@mui/material";
 
 function parseData(data) {
     return data.map((item) => {
-        for (let key in item) {
-            return { label: key, pNumber: item['pNumber'], sCode: item['sCode'] }
-        }
+        // for (let key in item) {
+        return { label: item.id, pNumber: item.data()['pNumber'], sCode: item.data()['sCode'] }
+        // }
     });
 }
 

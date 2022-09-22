@@ -20,6 +20,11 @@ const initStateCurrentClToNote = {
     error: null,
     loading: false,
 };
+const initStateListCM = {
+    listCMs: [],
+    error: null,
+    loading: false,
+};
 
 export function listServicesByCMReducer(state = initialState, action) {
     // console.log('action', action);
@@ -121,25 +126,25 @@ export function currentClToNoteReducer(state = initStateCurrentClToNote, action)
     }
 }
 
-export function listCMReducer(state = initialState, action) {
+export function listCMReducer(state = initStateListCM, action) {
     // console.log('action', action);
     switch (action.type) {
         case "LIST_CM_LOAD":
             return {
                 loading: true,
-                data: [],
+                listCMs: [],
                 error: null,
             };
         case "LIST_CM_FAIL":
             return {
                 loading: false,
-                data: [],
+                listCMs: [],
                 error: action.error,
             };
         case "LIST_CM_SUCCESS":
             return {
                 loading: false,
-                data: action.value,
+                listCMs: action.value,
                 error: null,
             };
         default:

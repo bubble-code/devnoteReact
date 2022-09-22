@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-filename-extension */ 
+/* eslint-disable react/jsx-filename-extension */
 import Card from "@mui/material/Card";
 // import Divider from "@mui/material/Divider";
 import Icon from "@mui/material/Icon";
@@ -13,9 +13,9 @@ import Transaction from "layouts/billing/components/Transaction";
 
 function ContainerHelperNotes() {
   return (
-    <Card sx={{ height: "100%" }} >
+    <Card sx={{ height: "100%", backgroundColor: "#ffffffd4" }} >
       <SoftBox display="flex" justifyContent="space-between" alignItems="left" pt={3} px={2}>
-        <SoftTypography variant="h6" fontWeight="medium" textTransform="capitalize">
+        <SoftTypography variant="h6" fontWeight="medium" sx={{ fontFamily: "Amethysta", textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '0.08rem' }}>
           Helper Notes Create
         </SoftTypography>
       </SoftBox>

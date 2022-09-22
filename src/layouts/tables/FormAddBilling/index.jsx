@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState, useRef } from "react";
+import { useSelector } from 'react-redux';
 import PropTypes from "prop-types";
-import { useSoftUIController } from "context";
 import "./style.css";
 import SoftBox from "../../../components/SoftBox";
 import SelectInput from "../../../components/SelectInput";
@@ -14,14 +14,15 @@ import { countUnits, duration, formInitialData } from '../data/funt';
 
 
 function FormAddBilling({ headTitle }) {
-    const [actClinet, setactClinet] = React.useState([]);
-    const [dataForm, setDataForm] = React.useState(formInitialData);
-    const [controler] = useSoftUIController();
-    const { listCM } = controler;
-    const ref = React.useRef();
-    const ref1 = React.useRef();
+    const CMRedux = useSelector(state => state.listCM);
+    const { listCMs } = CMRedux;
+    const [actClinet, setactClinet] = useState([]);
+    const [dataForm, setDataForm] = useState(formInitialData);
+    const ref = useRef();
+    const ref1 = useRef();
 
-
+    const durationTime = duration({ tEnd: dataForm.timeEnd, tStart: dataForm.timeStart });
+    const countUnitsTime = countUnits({ tEnd: dataForm.timeEnd, tStart: dataForm.timeStart });
     const handleChangeCmName = async (id, event, value) => {
         const request = await DataService.listActivedClients({ cm: value.label })
         const listActClient = request.map((item) => {
@@ -43,7 +44,7 @@ function FormAddBilling({ headTitle }) {
     const submitForm = async () => {
         const descriptionSplit = dataForm.description.split("/").map((item) => item.trim());
         const descriptionObject = Object.assign({}, descriptionSplit);
-        await DataService.createBilling({ data: { ...dataForm, ['description']: descriptionObject, ['min']: duration(), ['units']: countUnits(), ['status']: 'open' } });
+        await DataService.createBilling({ data: { ...dataForm, ['description']: descriptionObject, ['min']: durationTime, ['units']: countUnitsTime, ['status']: 'open' } });
         setDataForm({ ...dataForm, ...formInitialData });
     };
 
@@ -54,7 +55,7 @@ function FormAddBilling({ headTitle }) {
             </SoftBox>
             <SoftBox display="flex" alignItems="center" mt={2} flexWrap='wrap'>
                 <SoftBox mr={2}>
-                    <SelectInput data={listCM} onchange={handleChangeCmName} parse hText="Choice CM Name" ref={ref1} id='cm' />
+                    <SelectInput data={listCMs} onchange={handleChangeCmName} parse hText="Choice CM Name" ref={ref1} id='cm' />
                 </SoftBox>
                 <SoftBox mr={2}>
                     <SelectInput data={actClinet} sxx={{ width: 230 }} onchange={handleChangeNameClient} hText="Type Name Client" ref={ref} id='cn' />
@@ -71,11 +72,11 @@ function FormAddBilling({ headTitle }) {
                     <p style={{ fontSize: '0.7rem' }}>doc</p>
                 </SoftBox>
                 <SoftBox ml={3} display='flex' flexDirection='column' justifyContent="center" alignItems="center">
-                    <SoftTypography variant="h6" sx={{ fontWeight: '300', fontFamily: "Amethysta", fontSize: '1.4rem' }}>{duration({ tEnd: dataForm.timeEnd, tStart: dataForm.timeStart })}</SoftTypography>
+                    <SoftTypography variant="h6" sx={{ fontWeight: '300', fontFamily: "Amethysta", fontSize: '1.4rem' }}>{durationTime}</SoftTypography>
                     <p style={{ fontSize: '0.7rem' }}>min</p>
                 </SoftBox>
                 <SoftBox ml={3} display='flex' flexDirection='column' justifyContent="center" alignItems="center">
-                    <SoftTypography variant="h6" sx={{ fontWeight: '300', fontFamily: "Amethysta", fontSize: '1.4rem' }}>{countUnits({ tEnd: dataForm.timeEnd, tStart: dataForm.timeStart })}</SoftTypography>
+                    <SoftTypography variant="h6" sx={{ fontWeight: '300', fontFamily: "Amethysta", fontSize: '1.4rem' }}>{countUnitsTime}</SoftTypography>
                     <p style={{ fontSize: '0.7rem' }}>units</p>
                 </SoftBox>
             </SoftBox>

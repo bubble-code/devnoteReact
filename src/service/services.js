@@ -13,16 +13,9 @@ class DataService {
     _collectionAgencias = "/CM/agencias/listagencias";
     _collectionCM = "/CM/cm/cm";
     _pathCM = "/CM/cm/cm";
-    // _pathJobs = "jobs";
 
-
-    // **********************************Add a new machine to hall****************************************************
-    // async addMachine({ comunidad, salon, data }) {
-    //     const { plaza, noMaquina, permiso, denominacion, observacion } = data;
-    //     const collectionn = doc(db, `${this._pathComunidades}/${comunidad}/Salones/${salon}/Maquinas`, plaza);
-    //     await setDoc(collectionn, { noMaquina, permiso, denominacion, observacion });
-    // }
-
+    // ********************************** LIST ****************************************************
+    // #region LIST
     async listAgencias() {
         const collectionn = collection(db, `${this._collectionAgencias}`);
         const querySnapShot = query(collectionn);
@@ -50,26 +43,6 @@ class DataService {
             return result.docs;
         }
     }
-
-    // **********************************Billings****************************************************
-    async getServiceById({ cm, id }) {
-        const docRef = doc(db, `${this._pathCM}/${cm}/openBilling/`, `${id}`);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-            return { ...docSnap.data(), id: docSnap.id };
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("Document with id: ", id, " does not exist!");
-        }
-    }
-    async updateSerNote({ cm, id, data }) {
-        const docRef = doc(db, `${this._pathCM}/${cm}/openBilling/`, `${id}`);
-        await updateDoc(docRef, data);
-    }
-
-
-
     async listBilling({ cm }) {
         const billingsOpen = await this.listBillingOpenByCm({ cm });
         const response = [];
@@ -85,7 +58,56 @@ class DataService {
         }
         );
     }
+    async listNoteByClient({ cm, name }) {
+        // console.log(name);
+        const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
+        const querySnapShot = query(collectionn, where('status', '==', 'completed'), where("cn", "==", `${name}`));
+        const result = await getDocs(querySnapShot)
+        return result.docs;
+    }
+    //#endregion
 
+    // ********************************** CRUD Billings****************************************************
+    // #region CRUD Billings
+    async createBilling({ data }) {
+        const { cm } = data;
+        try {
+            const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
+            await addDoc(collectionn, { ...data });
+            return true;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    async updateSerNote({ cm, id, data }) {
+        const docRef = doc(db, `${this._pathCM}/${cm}/openBilling/`, `${id}`);
+        await updateDoc(docRef, data);
+    }
+
+    async deleteService({ cm, id }) {
+        const docRef = doc(db, `${this._pathCM}/${cm}/openBilling/`, `${id}`);
+        await deleteDoc(docRef);
+    }
+
+    // #endregion
+
+
+    // ********************************** GETS ****************************************************
+    // #region GETS
+    async getServiceById({ cm, id }) {
+        if (id) {
+            const docRef = doc(db, `${this._pathCM}/${cm}/openBilling/`, `${id}`);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                return { ...docSnap.data(), id: docSnap.id };
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("Document with id: ", id, " does not exist!");
+            }
+        } else {
+            return {}
+        }
+    }
 
     async totalUnits({ cm, day }) {
         let total = 0;
@@ -102,28 +124,11 @@ class DataService {
         }
         return total;
     }
+    // #endregion 
 
-
-
-    async createBilling({ data }) {
-        const { cm } = data;
-        try {
-            const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
-            await addDoc(collectionn, { ...data });
-            return true;
-        } catch (error) {
-            console.log(error);
-        }
-    }
     // **********************************Lists****************************************************
     // #region Search
-    async listNoteByClient({ cm, name }) {
-        // console.log(name);
-        const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
-        const querySnapShot = query(collectionn, where('status', '==', 'completed'), where("cn", "==", `${name}`));
-        const result = await getDocs(querySnapShot)
-        return result.docs;
-    }
+
 
     async searchHelper({ value }) {
         // console.log(value);

@@ -8,17 +8,11 @@ import SoftTypography from "components/SoftTypography";
 import TableRender from "./TableSearcRender";
 
 function LoadSearch({ value }) {
-    const dispatch = useDispatch();
     const { data, loading, error } = useSearchHelperNotes(value);
-    useEffect(() => {
-        // console.log(value);
-        dispatch({ type: 'success', payload: data });
-    }, [data, dispatch, value]);
-
     return (
         <SoftBox
             sx={{
-                minHeight: 250, width: 'auto', height: 'auto', overflow: 'auto',
+                minHeight: 250, width: '100%', height: 'auto', overflow: 'auto',
                 "& .MuiTableRow-root:not(:last-child)": {
                     "& td": {
                         borderBottom: ({ borders: { borderWidth, borderColor } }) =>
@@ -36,7 +30,7 @@ function LoadSearch({ value }) {
             <SoftTypography>{value}</SoftTypography>
             {loading && <CircularProgress />}
             {error && <SoftTypography>{error.message}</SoftTypography>}
-            {data && < TableRender />}
+            {data && < TableRender respData={data} />}
         </SoftBox>
     );
 }

@@ -30,11 +30,16 @@ function TableRender() {
                 <AccordionSummary
                     // expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
-                    id={index} sx={{ width: '450px', paddingLeft: 1 }}
+                    id={index}
+                    style={{ width: '100%' }}
                 >
-                    <SoftBox bgColor='grey-200' borderRadius='md' display='flex' justifyContent='space-between' sx={{ width: '100%' }} px={1} >
-                        <SoftTypography variant="h6" color='black' >{fecha.slice(0, -5)}</SoftTypography>
-                        <SoftTypography variant="h6" color='black'>{Object.values(description).join(' / ')}</SoftTypography>
+                    <SoftBox bgColor='grey-100' borderRadius='md' display='flex' justifyContent='space-between' alignItems='center' sx={{ width: '100%' }}   >
+                        <SoftBox bgColor='grey-400' borderRadius='md' px={1}>
+                            <SoftTypography color='black' sx={{ fontFamily: "Amethysta", textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '0.08rem' }}>{fecha.slice(0, -5)}</SoftTypography>
+                        </SoftBox>
+                        <SoftBox borderRadius='md' px={1.5} style={{ background: 'rgba(161, 88, 88,0.80)' }}>
+                            <SoftTypography color='white' sx={{ fontFamily: "Amethysta", fontSize: '0.9rem', letterSpacing: '0.06rem' }}>{Object.values(description).join(' / ')}</SoftTypography>
+                        </SoftBox>
                     </SoftBox>
                 </AccordionSummary>
                 <AccordionDetails>

@@ -9,17 +9,33 @@ import TableRow from "@mui/material/TableRow";
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import SoftBadge from "components/SoftBadge";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fectCurrentClToNote } from "../../../redux/actions/actions";
 import renderByDate from './funct/funtiHelper';
 import { columns } from "../../../components/TableBillingService/colunmHead";
+import { useDeleteService } from '../../../service/fetchHoo'
 
-function Table({ onClientClick }) {
+function TableRender() {
+  const dispatchRedux = useDispatch();
   const listServiceState = useSelector(state => state.listServiByCM);
   const { data, loading } = listServiceState;
+  const { error, delteItem, loading: load } = useDeleteService();
 
+
+  const deleteItem = useCallback(({ id, cm }) => {
+    console.log({ id, cm });
+    delteItem({ id, cm });
+    if (!error) {
+      dispatchRedux(fectCurrentClToNote({ cm, id }));
+    }
+  }, [delteItem, dispatchRedux, error]);
+
+  const setCurrentClForNote = useCallback(({ id, cmm }) => {
+    dispatchRedux(fectCurrentClToNote({ cm: cmm, id }));
+  }, [dispatchRedux]);
 
   const renderAcordeonServiceByDate = useCallback(() => {
-    const group = renderByDate(data);
+    const group = renderByDate({ data, handleDelete: deleteItem, setCurrentService: setCurrentClForNote });
     return Object.keys(group).map((key) => {
       return (
         <Accordion key={uuidv4()}>
@@ -67,7 +83,7 @@ function Table({ onClientClick }) {
                       );
                     });
 
-                    return <TableRow key={rowKey} onClick={() => onClientClick({ id: rowKey, cmm: caseM })} >{tableRow}</TableRow>;
+                    return <TableRow key={rowKey} >{tableRow}</TableRow>;
                   })}
                 </TableBody>
               </MuiTable>
@@ -76,7 +92,7 @@ function Table({ onClientClick }) {
         </Accordion>
       );
     });
-  }, [data, onClientClick]);
+  }, [data, deleteItem, setCurrentClForNote]);
   return useMemo(
     () => (
       <SoftBox>
@@ -91,9 +107,4 @@ function Table({ onClientClick }) {
   );
 }
 
-// Typechecking props for the Table
-Table.propTypes = {
-  onClientClick: PropTypes.func.isRequired,
-};
-
-export default Table;
+export default TableRender;

@@ -28,7 +28,7 @@ function WriteNote() {
     nStep: '',
   };
 
-  const stringTime = currentClToNote.timeStart ? moment(currentClToNote.timeStart, "HHmm").format("HH:mm") : null;
+  const stringTime = currentClToNote.timeStart ? moment(currentClToNote.timeStart, "HHmm").format("HH:mm A") : null;
 
   function handleChange(e) {
     setFormData({

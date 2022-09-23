@@ -10,7 +10,6 @@ import SoftTypography from "components/SoftTypography";
 // import { TagClientName, Pos } from './TagClientName'
 
 function TableHistory() {
-
     return (
         <Card sx={{ minHeight: 250 }}>
             <SoftBox

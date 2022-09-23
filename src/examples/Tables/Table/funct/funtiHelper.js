@@ -7,8 +7,11 @@ import borders from "assets/theme/base/borders";
 import { TagClientName } from "components/TableBillingService/TagClientName";
 import { Pos } from "components/TableBillingService/TagClientName";
 import SoftBadge from "components/SoftBadge";
+import DeleteRounded from '@mui/icons-material/DeleteRounded';
+import { pink } from '@mui/material/colors';
 import SoftTypography from "components/SoftTypography";
 import moment from "moment";
+import { IconButton, Tooltip } from "@mui/material";
 
 
 
@@ -73,8 +76,11 @@ function sortByTime(data) {
 
 }
 
+function formatTime(time) {
+    return moment(time, "HHmm").format("HH:mm A");
+}
 
-export default function renderByDate(data) {
+export default function renderByDate({ data, handleDelete, setCurrentService }) {
     const group = groupByDate(data);
     const groupSort = sortByTime(group);
     const rows = [];
@@ -88,7 +94,7 @@ export default function renderByDate(data) {
             const { id, pos, description, timeEnd, timeStart, units, min, cm, cn } = servicio;
             rows[fecha].push({
                 key: id,
-                ClientName: <TagClientName name={cn} id={id} opacity={1} />,
+                ClientName: <SoftBox onClick={() => setCurrentService({ id, cm })}><TagClientName name={cn} id={id} opacity={1} /></SoftBox>,
                 Pos: <Pos job={pos} />,
                 ServiceDescription: (
                     <SoftBadge variant="contained" badgeContent={Object.values(description).join(' / ')}
@@ -96,12 +102,12 @@ export default function renderByDate(data) {
                 ),
                 StartTime: (
                     <SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth'>
-                        {timeStart}
+                        {formatTime(timeStart)}
                     </SoftTypography>
                 ),
                 EndTime: (
                     <SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth'>
-                        {timeEnd}
+                        {formatTime(timeEnd)}
                     </SoftTypography>
                 ),
                 Units: (
@@ -111,6 +117,10 @@ export default function renderByDate(data) {
                     <SoftBadge variant="gradient" badgeContent={min} color="success" size="xs" container />
                 ),
                 CM: cm,
+                Action: (<Tooltip title="Delete"><IconButton>
+                    <DeleteRounded sx={{ color: pink[500], cursor: 'pointer' }} fontSize="small" onClick={() => handleDelete({ id, cm })} />
+                </IconButton></Tooltip>
+                ),
             });
 
         });

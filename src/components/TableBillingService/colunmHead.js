@@ -7,5 +7,6 @@ export const columns = [
     { name: "Min", align: "left" },
     { name: "Doc", align: "left" },
     { name: "Units", align: "center" },
+    { name: "Action", align: "center" },
 ]
 

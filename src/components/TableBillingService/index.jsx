@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Card from '@mui/material/Card';
 import SoftTypography from "components/SoftTypography";
 import SoftBox from "components/SoftBox";
-import Table from "../../examples/Tables/Table";
+import TableRender from "../../examples/Tables/Table";
 import SelectInput from "../../components/SelectInput";
 import { useDispatch, useSelector } from 'react-redux';
 import { fectListServsByCM, fectCurrentClToNote } from '../../redux/actions/actions'
@@ -15,13 +15,7 @@ function TableBillingService({ py, mb, headTitle }) {
     const CMRedux = useSelector(state => state.listCM);
     const { listCMs } = CMRedux;
     const [caseManager, setCaseManager] = useState('');
-    // const [controler, dispatch] = useSoftUIController();
-    // const { listCM } = controler;
     const ref1 = React.useRef();
-
-    async function setCurrentClForNote({ id, cmm }) {
-        dispatchRedux(fectCurrentClToNote({ cm: cmm, id }));
-    }
 
     async function loadBillingData(id, event, value) {
         const cM = value.label;
@@ -51,7 +45,7 @@ function TableBillingService({ py, mb, headTitle }) {
                     }}
                     >
                         {/**/}
-                        <Table onClientClick={setCurrentClForNote} />
+                        <TableRender />
                     </SoftBox>
                 </Card>
             </SoftBox>

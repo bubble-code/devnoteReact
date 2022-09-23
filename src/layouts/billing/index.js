@@ -1,21 +1,12 @@
 /* eslint-disable react/jsx-filename-extension */
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import Grid from "@mui/material/Grid";
 import SoftBox from "components/SoftBox";
-import { useSoftUIController, setLoadListCm } from '../../context';
-import { useFetch } from "../../service/fetchHoo";
 import WriteNote from "../billing/components/WriteNote/WriteNote";
 import ContainerHelperNotes from "./components/ContainerHelperNote";
 import TableBillingService from "../../components/TableBillingService";
 
 function Billing() {
-  const [context, dispatch] = useSoftUIController();
-  const { data, loading, error } = useFetch();
-
-  useEffect(() => {
-    setLoadListCm(dispatch, data);
-  }, [data, dispatch]);
-
   return (
     <Fragment>
       <SoftBox mt={2}>

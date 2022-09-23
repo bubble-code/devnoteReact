@@ -129,20 +129,18 @@ export function useSearchHelperNotes(query) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const dispatch = useDispatch();
 
     const loadData = useCallback(async () => {
         setLoading(true);
         try {
             const list = await DataService.searchHelper({ value: query });
             setData(list);
-            dispatch(setListBillingSuccess(list));
         } catch (error) {
             setError(error);
         } finally {
             setLoading(false);
         }
-    }, [dispatch, query]);
+    }, [query]);
 
     useEffect(() => {
         if (query.length > 2) {
@@ -151,7 +149,24 @@ export function useSearchHelperNotes(query) {
     }, [loadData, query.length]);
 
     return { data, loading, error };
-    // dispatch({ type: 'success', payload: data });
+
+}
+export function useDeleteService() {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const delteItem = useCallback(async ({ cm, id }) => {
+        setLoading(true);
+        try {
+            const list = await DataService.deleteService({ cm, id });
+        } catch (error) {
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    return { loading, error, delteItem };
 
 }
 
@@ -230,3 +245,4 @@ function useMemoCompare(next, compare) {
     // Finally, if equal then return the previous value
     return isEqual ? previous : next;
 }
+

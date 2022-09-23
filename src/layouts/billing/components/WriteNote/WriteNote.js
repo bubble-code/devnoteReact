@@ -12,6 +12,7 @@ import SoftButton from "components/SoftButton";
 import SoftInput from "components/SoftInput";
 import SoftBadge from "components/SoftBadge";
 import moment from "moment";
+import { grey } from "@mui/material/colors";
 
 
 function WriteNote() {
@@ -47,7 +48,7 @@ function WriteNote() {
   }
 
   return (
-    <Card id="delete-account">
+    <SoftBox bgColor={grey[500]}>
       <SoftBox pt={3} px={2}>
         <SoftTypography variant="h6" fontWeight="medium" sx={{ fontFamily: "Amethysta", textTransform: 'uppercase', fontSize: '0.8rem' }}>
           Case Management Progress Note
@@ -116,7 +117,7 @@ function WriteNote() {
           </SoftButton>
         </SoftBox>
       </SoftBox>
-    </Card >
+    </SoftBox >
   );
 }
 

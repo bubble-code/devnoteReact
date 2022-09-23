@@ -10,8 +10,8 @@ import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import SoftBadge from "components/SoftBadge";
 import { useSelector, useDispatch } from "react-redux";
-import { fectCurrentClToNote } from "../../../redux/actions/actions";
-import renderByDate from './funct/funtiHelper';
+import { fectListServsByCM } from "../../../redux/actions/actions";
+import useRenderByDate from './funct/funtiHelper';
 import { columns } from "../../../components/TableBillingService/colunmHead";
 import { useDeleteService } from '../../../service/fetchHoo'
 
@@ -22,20 +22,18 @@ function TableRender() {
   const { error, delteItem, loading: load } = useDeleteService();
 
 
-  const deleteItem = useCallback(({ id, cm }) => {
+  const deleteItemFromTable = ({ id, cm }) => {
     console.log({ id, cm });
     delteItem({ id, cm });
     if (!error) {
-      dispatchRedux(fectCurrentClToNote({ cm, id }));
+      dispatchRedux(fectListServsByCM({ cm }));
     }
-  }, [delteItem, dispatchRedux, error]);
+  };
 
-  const setCurrentClForNote = useCallback(({ id, cmm }) => {
-    dispatchRedux(fectCurrentClToNote({ cm: cmm, id }));
-  }, [dispatchRedux]);
+
+  const group = useRenderByDate({ data, handleDelete: deleteItemFromTable });
 
   const renderAcordeonServiceByDate = useCallback(() => {
-    const group = renderByDate({ data, handleDelete: deleteItem, setCurrentService: setCurrentClForNote });
     return Object.keys(group).map((key) => {
       return (
         <Accordion key={uuidv4()}>
@@ -92,7 +90,7 @@ function TableRender() {
         </Accordion>
       );
     });
-  }, [data, deleteItem, setCurrentClForNote]);
+  }, [group]);
   return useMemo(
     () => (
       <SoftBox>

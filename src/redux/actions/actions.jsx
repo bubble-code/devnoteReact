@@ -32,7 +32,7 @@ export function fectListServsByCM({ cm }) {
     }
 }
 
-export function fectCurrentClToNote({ cm, id }) {
+export function fectCurrentClToNote({ cm, id }) { 
     return async (dispatch) => {
         dispatch({ type: "CURRENT_CL_TO_NOTE_LOAD" });
         const res = await DataService.getServiceById({ cm, id });

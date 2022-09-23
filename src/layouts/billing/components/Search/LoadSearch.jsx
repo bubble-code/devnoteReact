@@ -27,8 +27,7 @@ function LoadSearch({ value }) {
                 }
             }}
         >
-            <SoftTypography>{value}</SoftTypography>
-            {loading && <CircularProgress />}
+            <SoftBox style={{ minHeight: '50px' }}>{loading && <CircularProgress />}</SoftBox>
             {error && <SoftTypography>{error.message}</SoftTypography>}
             {data && < TableRender respData={data} />}
         </SoftBox>

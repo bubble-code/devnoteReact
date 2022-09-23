@@ -12,12 +12,16 @@ import { pink } from '@mui/material/colors';
 import SoftTypography from "components/SoftTypography";
 import moment from "moment";
 import { IconButton, Tooltip } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { fectCurrentClToNote } from "../../../../redux/actions/actions";
+import { useDeleteService } from '../../../../service/fetchHoo'
 
 
 
 const { light } = colors;
 const { size, fontWeightBold } = typography;
 const { borderWidth } = borders;
+
 
 export const renderColumns = columns.map(({ name, align, width }, key) => {
     let pl;
@@ -80,10 +84,25 @@ function formatTime(time) {
     return moment(time, "HHmm").format("HH:mm A");
 }
 
-export default function renderByDate({ data, handleDelete, setCurrentService }) {
+function useDeleteServiceFromTable({ id, cm }) {
+    const dispatchRedux = useDispatch();
+    console.log({ id, cm });
+    const { error, delteItem, loading: load } = useDeleteService();
+    delteItem({ id, cm });
+    if (!error) {
+        dispatchRedux(fectCurrentClToNote({ cm, id }));
+    }
+}
+export default function useRenderByDate({ data, handleDelete }) {
+    const dispatchRedux = useDispatch();
     const group = groupByDate(data);
     const groupSort = sortByTime(group);
     const rows = [];
+
+    const setCurrentClForNote = ({ id, cm }) => {
+        dispatchRedux(fectCurrentClToNote({ cm, id }));
+    };
+
     Object.keys(groupSort).forEach((fecha) => {
         if (!rows[fecha]) {
             rows[fecha] = [];
@@ -94,11 +113,15 @@ export default function renderByDate({ data, handleDelete, setCurrentService }) 
             const { id, pos, description, timeEnd, timeStart, units, min, cm, cn } = servicio;
             rows[fecha].push({
                 key: id,
-                ClientName: <SoftBox onClick={() => setCurrentService({ id, cm })}><TagClientName name={cn} id={id} opacity={1} /></SoftBox>,
-                Pos: <Pos job={pos} />,
+                ClientName: <SoftBox onClick={() => setCurrentClForNote({ id, cm })} style={{ cursor: 'default' }}><TagClientName name={cn} id={id} opacity={1} /></SoftBox>,
+                Pos: <SoftBox onClick={() => setCurrentClForNote({ id, cm })} style={{ cursor: 'default' }}>
+                    <Pos job={pos} />,
+                </SoftBox>,
                 ServiceDescription: (
-                    <SoftBadge variant="contained" badgeContent={Object.values(description).join(' / ')}
-                        color="palettePastel" size="sm" container wordSpacing='0.1rem' />
+                    <SoftBox onClick={() => setCurrentClForNote({ id, cm })} style={{ cursor: 'default' }}>
+                        <SoftBadge variant="contained" badgeContent={Object.values(description).join(' / ')}
+                            color="palettePastel" size="sm" container wordSpacing='0.1rem' />
+                    </SoftBox>
                 ),
                 StartTime: (
                     <SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth'>

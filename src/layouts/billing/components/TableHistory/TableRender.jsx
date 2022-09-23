@@ -12,6 +12,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import './style.css'
 import { CircularProgress } from "@mui/material";
+import { grey } from '@mui/material/colors';
 
 
 function TableRender() {
@@ -26,25 +27,26 @@ function TableRender() {
     orderData.map((item, index) => {
         const { fecha, sNote, description } = item.data();
         rows.push(
-            <Accordion  >
+            <Accordion style={{ background: grey[400] }} >
                 <AccordionSummary
                     // expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id={index}
                     style={{ width: '100%' }}
                 >
-                    <SoftBox bgColor='grey-100' borderRadius='md' display='flex' justifyContent='space-between' alignItems='center' sx={{ width: '100%' }}   >
-                        <SoftBox bgColor='grey-400' borderRadius='md' px={1}>
-                            <SoftTypography color='black' sx={{ fontFamily: "Amethysta", textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '0.08rem' }}>{fecha.slice(0, -5)}</SoftTypography>
+                    <SoftBox bgColor='grey-400' borderRadius='md' display='flex' justifyContent='space-between' alignItems='center' sx={{ width: '100%' }}
+                        style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }} >
+                        <SoftBox  borderRadius='md' px={1} style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }}>
+                            <SoftTypography color='black' sx={{ fontFamily: "inherit", textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '0.08rem' }}>{fecha.slice(0, -5)}</SoftTypography>
                         </SoftBox>
-                        <SoftBox borderRadius='md' px={1.5} style={{ background: 'rgba(161, 88, 88,0.80)' }}>
-                            <SoftTypography color='white' sx={{ fontFamily: "Amethysta", fontSize: '0.9rem', letterSpacing: '0.06rem' }}>{Object.values(description).join(' / ')}</SoftTypography>
+                        <SoftBox borderRadius='md' px={1.5} style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }}>
+                            <SoftTypography color='black' sx={{ fontFamily: "inherit", textTransform: 'uppercase', fontSize: '0.7rem', letterSpacing: '0.07rem' }}>{Object.values(description).join(' / ')}</SoftTypography>
                         </SoftBox>
                     </SoftBox>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <SoftBox container>
-                        <SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth'  >
+                    <SoftBox container >
+                        <SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth' style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }} >
                             {sNote}
                         </SoftTypography>
                     </SoftBox>

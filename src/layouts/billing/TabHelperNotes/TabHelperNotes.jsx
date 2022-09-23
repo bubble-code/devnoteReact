@@ -5,6 +5,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import TableHistory from "../components/TableHistory/TableHistory";
 import SearchHelperNotes from "../components/Search/Search";
+import { grey } from '@mui/material/colors';
 
 
 function TabHelperNotes() {
@@ -15,9 +16,9 @@ function TabHelperNotes() {
     };
 
     return (
-        <TabContext value={value}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }} ml={2}>
-                <TabList onChange={handleChange} aria-label="lab API tabs example">
+        <TabContext value={value}  >
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }} ml={2} >
+                <TabList onChange={handleChange} style={{ background: grey[400] }}>
                     <Tab label="History Client" value="1" />
                     <Tab label="Search" value="2" />
                     <Tab label="Create" value="3" />

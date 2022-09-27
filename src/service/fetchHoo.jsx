@@ -66,6 +66,28 @@ export function useSaveNote() {
 
     return { datas, loading, error, saveData };
 }
+export function useListCLients() {
+    const [lisClients, setListClients] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const loadData = useCallback(async ({ cm }) => {
+        if (!cm) return;
+        setLoading(true);
+        try {
+            const list = await DataService.listClient({ cm });
+            // console.log('list', list);
+            setListClients(list);
+        } catch (error) {
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+
+    return { lisClients, loading, error, loadData };
+}
 
 export function useLoadSerOpen({ cmm }) {
     const [data, setData] = useState([]);

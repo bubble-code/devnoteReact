@@ -29,6 +29,13 @@ class DataService {
         return result.docs.map((item) => ({ label: item.id, pNumber: item.data()['pNumber'], sCode: item.data()['sCode'] }));
     }
 
+    async listClient({ cm }) {
+        const collectionn = collection(db, `${this._pathCM}/${cm}/activeClient`);
+        const querySnapShot = query(collectionn);
+        const result = await getDocs(querySnapShot)
+        return result.docs.map((item) => ({ name: item.id, ...item.data() }));
+    }
+
     async listActivedClients({ cm }) {
         const collectionn = collection(db, `${this._pathCM}/${cm}/activeClient`);
         const querySnapShot = query(collectionn);

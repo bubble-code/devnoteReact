@@ -4,39 +4,27 @@ import React, { forwardRef, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { Box, Autocomplete, TextField } from "@mui/material";
 
-function parseData(data) {
-    return data.map((item) => {
-        // for (let key in item) {
-        return { label: item.id, pNumber: item.data()['pNumber'], sCode: item.data()['sCode'] }
-        // }
-    });
-}
 
-const SelectInput = forwardRef(({ data, sxx = { width: 250 }, onchange, parse, hText, id }, ref) => {
-    const dataParsed = parse ? parseData(data) : data;
-    // console.log(ref);
-    const [value, setValue] = React.useState({ label: '' });
+
+const SelectInput = forwardRef(({ data, sxx = { width: 250 }, onchange, parse, hText, id, currentCM, ...rest }, ref) => {
     const handleChange = (event, newValue) => {
-        setValue(newValue);
         onchange(id, event, newValue);
-    }
-    useEffect(() => {
-        setValue('');
-    }, [data]);
-    // const [value, setValue] = React.useState(null);    
+    };
+
     return (
         <Autocomplete
             ref={ref}
             disablePortal
             id={id}
-            options={dataParsed}
+            options={data}
             sx={sxx}
             renderInput={(params) => <TextField {...params} helperText={hText} />}
             onChange={handleChange}
-            value={value}
+            value={currentCM}
             color='#000000'
             style={{ color: '#000000' }}
-        // defaultValue={[]}
+            // defaultValue={[]}
+            {...rest}
         />
     );
 });

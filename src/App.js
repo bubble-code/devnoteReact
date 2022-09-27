@@ -24,7 +24,7 @@ export default function App() {
       <DashboardLayout>
         <DashboardNavbar />
         <Outlet />
-        <Footer />
+        {/*<Footer />*/}
       </DashboardLayout>
     </ThemeProvider>
   );

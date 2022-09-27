@@ -28,10 +28,10 @@ function TablesSearchRender({ respData }) {
                         aria-controls="panel2bh-content"
                         id={index}
                         style={{ width: '100%' }}
-                    ><SoftBox display="flex" justifyContent="space-between" flexDirection='column' sx={{ width: '100%' }}>
-                            <SoftBox display="flex" justifyContent="space-between" borderRadius='sm' px={0} style={{ textAlign: 'center' }}>
-                                <SoftBox borderRadius='sm' px={1} mt={1} mb={1} style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }}>
-                                    <SoftTypography color='black' sx={{ fontFamily: "inherit", textTransform: 'uppercase', fontSize: '0.6rem', letterSpacing: '0.08rem' }}>{fecha.slice(0, -5)}</SoftTypography>
+                    ><SoftBox display="flex"  justifyContent="space-between" flexDirection='column' sx={{ width: '100%' }} borderRadius='md'>
+                            <SoftBox display="flex" justifyContent="space-between" borderRadius='md' px={0} style={{ textAlign: 'center' }}>
+                                <SoftBox borderRadius='md' px={1} mt={1} mb={1} style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }}>
+                                    <SoftTypography color='black' sx={{ fontFamily: "inherit", textTransform: 'uppercase', fontSize: '0.9rem', letterSpacing: '0.08rem' }}>{fecha.slice(0, -5)}</SoftTypography>
                                 </SoftBox>
                                 <SoftBox borderRadius='sm' px={1} mt={1} mb={1} >
                                     <SoftTypography color='black' sx={{ fontFamily: 'inherit', fontSize: '0.8rem', letterSpacing: '0.05rem', textTransform: 'uppercase' }}>{Object.values(description).join(' / ')}</SoftTypography>
@@ -39,7 +39,7 @@ function TablesSearchRender({ respData }) {
                             </SoftBox>
                             <SoftBox borderRadius='md' display='flex' justifyContent='space-between' alignItems='center' sx={{ width: '100%' }} style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }} >
                                 <SoftBox bgColor={blue[50]} borderRadius='sm' px={1} >
-                                    <SoftTypography color='black' sx={{ textTransform: 'uppercase', fontSize: '0.6rem', letterSpacing: '0.08rem' }} style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }}>{cm}</SoftTypography>
+                                    <SoftTypography color='black' sx={{ textTransform: 'uppercase', fontSize: '0.7rem', letterSpacing: '0.08rem' }} style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }}>{cm}</SoftTypography>
                                 </SoftBox>
                                 <SoftBox bgColor={blue[50]} borderRadius='sm' px={1} >
                                     <SoftTypography color='black' sx={{ textTransform: 'uppercase', fontSize: '0.6rem', letterSpacing: '0.08rem' }} style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }}>{cn}</SoftTypography>

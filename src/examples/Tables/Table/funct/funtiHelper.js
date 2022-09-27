@@ -71,6 +71,15 @@ function groupByDate(data) {
     }, {});
 }
 
+function sortByDate(data) {
+    const objectSort = {};
+    Object.keys(data).sort((a, b) => moment(a, "DDMMYYYY").diff(moment(b, "DDMMYYYY"))).forEach((key) => {
+        objectSort[key] = data[key];
+    });
+    return objectSort;
+}
+
+
 function sortByTime(data) {
     const objectSort = {};
     Object.keys(data).forEach((key) => {
@@ -96,7 +105,8 @@ function useDeleteServiceFromTable({ id, cm }) {
 export default function useRenderByDate({ data, handleDelete }) {
     const dispatchRedux = useDispatch();
     const group = groupByDate(data);
-    const groupSort = sortByTime(group);
+    const sort = sortByDate(group)
+    const groupSort = sortByTime(sort);
     const rows = [];
 
     const setCurrentClForNote = ({ id, cm }) => {
@@ -115,7 +125,7 @@ export default function useRenderByDate({ data, handleDelete }) {
                 key: id,
                 ClientName: <SoftBox onClick={() => setCurrentClForNote({ id, cm })} style={{ cursor: 'default' }}><TagClientName name={cn} id={id} opacity={1} /></SoftBox>,
                 Pos: <SoftBox onClick={() => setCurrentClForNote({ id, cm })} style={{ cursor: 'default' }}>
-                    <Pos job={pos} />,
+                    <Pos job={pos} />
                 </SoftBox>,
                 ServiceDescription: (
                     <SoftBox onClick={() => setCurrentClForNote({ id, cm })} style={{ cursor: 'default' }}>

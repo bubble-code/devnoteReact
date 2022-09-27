@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fectListServsByCM, fectCurrentClToNote } from '../../redux/actions/actions'
 import PropTypes from "prop-types";
 import SoftButton from "components/SoftButton";
+import { grey } from '@mui/material/colors';
 
 function TableBillingService({ py, mb, headTitle }) {
     const dispatchRedux = useDispatch();
@@ -27,12 +28,12 @@ function TableBillingService({ py, mb, headTitle }) {
     }
 
     return (
-        <SoftBox py={py}>
+        <SoftBox py={py} bgColor={grey[600]} borderRadius='md'>
             <SoftBox mb={mb}>
-                <Card sx={{ minHeight: 250 }}>
+                <Card sx={{ minHeight: 250 }} >
                     <SoftBox display="flex" justifyContent="start" alignItems="center" p={3}>
                         <SoftTypography variant="h6" mr={5} sx={{ fontFamily: "Amethysta", textTransform: 'uppercase', fontSize: '0.8rem' }}>{headTitle} </SoftTypography>
-                        <SelectInput data={listCMs} onchange={loadBillingData} parse hText="Choice CM Name" ref={ref1} id='cm' />
+                        <SelectInput data={listCMs} onchange={loadBillingData} hText="Choice CM Name" ref={ref1} id='cm' />
                         <SoftButton onClick={reloadTable} variant="contained" color="primary" ml={2}>Reload</SoftButton>
                     </SoftBox>
                     <SoftBox sx={{

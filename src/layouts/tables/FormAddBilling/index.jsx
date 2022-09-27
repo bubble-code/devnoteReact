@@ -55,7 +55,7 @@ function FormAddBilling({ headTitle }) {
             </SoftBox>
             <SoftBox display="flex" alignItems="center" mt={2} flexWrap='wrap'>
                 <SoftBox mr={2}>
-                    <SelectInput data={listCMs} onchange={handleChangeCmName} parse hText="Choice CM Name" ref={ref1} id='cm' />
+                    <SelectInput data={listCMs} onchange={handleChangeCmName}  hText="Choice CM Name" ref={ref1} id='cm' />
                 </SoftBox>
                 <SoftBox mr={2}>
                     <SelectInput data={actClinet} sxx={{ width: 230 }} onchange={handleChangeNameClient} hText="Type Name Client" ref={ref} id='cn' />

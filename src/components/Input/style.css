@@ -1,0 +1,17 @@
+#esta {
+    margin-left: 5px;
+    max-height: 35px;
+    /* border: solid 1px   red; */
+}
+
+#esta>div.MuiInputBase-root:nth-child(1) {
+    color: #6EC177;
+    /* border: #3f6643 solid 1px !important; */
+    /* border-width: 1px;
+    border-style: solid; */
+    border-radius: 100px;
+    min-width: 20px;
+    max-height: 30px;
+    justify-content: end;
+    /* background: #6EC177 !important; */
+}

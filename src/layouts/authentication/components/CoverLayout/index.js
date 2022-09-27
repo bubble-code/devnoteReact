@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /**
 =========================================================
 * Soft UI Dashboard React - v4.0.0

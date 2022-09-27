@@ -3,6 +3,7 @@ import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
 import Billing from "layouts/billing";
 import Profile from "layouts/profile";
+import ClientContainer from "layouts/client/Cliente";
 
 // Soft UI Dashboard React icons
 import Office from "examples/Icons/Office";
@@ -51,6 +52,15 @@ const routes = [
     component: <Profile />,
     noCollapse: true,
   },
+  {
+    type: "collapse",
+    name: "Client",
+    key: "client",
+    route: "/client",
+    icon: <CustomerSupport size="12px" />,
+    component: <ClientContainer />,
+    noCollapse: true,
+  }
   // {
   //   type: "collapse",
   //   name: "Sign In",

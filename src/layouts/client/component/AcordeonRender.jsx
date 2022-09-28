@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import SoftBadge from "components/SoftBadge";
+import SoftTypographyRoot from "components/SoftTypography/SoftTypographyRoot";
 
 function AcordeonRender({ data, icon, ...rest }) {
 
@@ -47,18 +48,24 @@ function AcordeonRender({ data, icon, ...rest }) {
                         <SoftBadge
                             badgeContent={'1'}
                             color="error"
-                        // variant="dot"
                         />
                     </SoftBox>
                 </AccordionSummary>
-                <AccordionDetails>
-                    <SoftBox>
+                <AccordionDetails style={{ width: '100%', border: 'solid 1px red' }}>
+                    <SoftBox display='flex' justifyContent='space-between' >
                         <SoftBox>
-                            <Avatar alt={item.name} {...stringAvatar(item.name)} />
+                            <SoftBox>
+                                <Avatar alt={item.name} {...stringAvatar(item.name)} />
+                            </SoftBox>
+                            <SoftBox>
+                                <SoftTypography variant="button" fontWeight="regular" textTransform='capitalize' color='blue'>
+                                    {item.name}
+                                </SoftTypography>
+                            </SoftBox>
                         </SoftBox>
                         <SoftBox>
-                            <SoftTypography variant="button" fontWeight="regular" textTransform='capitalize' color='blue'>
-                                {item.name}
+                            <SoftTypography variant="button" fontWeight="regular" textTransform='capitalize' color='blue' cursor='pointer' onClick={() => console.log('daledal')}>
+                                edit
                             </SoftTypography>
                         </SoftBox>
                     </SoftBox>
@@ -74,3 +81,7 @@ AcordeonRender.propTypes = {
     data: PropTypes.array,
     icon: PropTypes.element,
 };
+
+
+
+

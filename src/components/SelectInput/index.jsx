@@ -25,6 +25,7 @@ const SelectInput = forwardRef(({ data, sxx = { width: 250 }, onchange, parse, h
             style={{ color: '#000000' }}
             // defaultValue={[]}
             {...rest}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
         />
     );
 });

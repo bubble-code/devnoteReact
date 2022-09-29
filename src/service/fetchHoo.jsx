@@ -94,9 +94,6 @@ export function useLoadSerOpen({ cmm }) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     // const [context, dispatch] = useContext(SoftUI);
-
-
-
     const loadData = useCallback(async () => {
         if (cmm) {
             setLoading(true);
@@ -190,6 +187,24 @@ export function useDeleteService() {
 
     return { loading, error, delteItem };
 
+}
+
+export function useAddClient() {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const addClient = async ({ cm, data }) => {
+        setLoading(true);
+        try {
+            await DataService.addNewClient({ cm, data });
+        } catch (error) {
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { loading, error, addClient };
 }
 
 // -----------------------------------------------------------

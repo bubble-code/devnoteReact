@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useTheme } from '@mui/material/styles';
+import { useAddClient } from '../../../service/fetchHoo';
+
+// Components
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, useMediaQuery, Divider } from '@mui/material';
 import FormAdd from './FormAdd';
 import SoftBox from 'components/SoftBox';
 
@@ -15,22 +12,25 @@ import SoftBox from 'components/SoftBox';
 const defaultValues = {
     name: "",
     lastName: "",
-    age: 0,
-    os: "",
-    gender: '',
-    favoriteNumber: 0,
+    cnumb: "",
+    dob: "",
+    dxCode: "",
+    dataAssigned: "",
+    gender: ''
 };
 
 export default function ModalAddClient({ open, handleClose }) {
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
     const [formValues, setFormValues] = useState(defaultValues);
+    const { loading, error, addClient } = useAddClient();
+
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(formValues);
+        addClient({ cm: 'Lia', data: formValues });
         handleClose();
     };
-
     return (
         <SoftBox sx={{ height: '1200px' }}>
             <Dialog
@@ -41,6 +41,7 @@ export default function ModalAddClient({ open, handleClose }) {
             >
                 <DialogTitle >
                     {"Add New Client?"}
+                    <Divider color='grey' />
                 </DialogTitle>
                 <DialogContent>
                     <FormAdd handleClose={handleClose} submit={handleSubmit} values={formValues} setValue={setFormValues} />

@@ -97,6 +97,12 @@ class DataService {
         await deleteDoc(docRef);
     }
 
+    async addNewClient({ cm, data }) {
+        const { name, lastName } = data;
+        const docRef = doc(db, `${this._pathCM}/${cm}/activeClient/`, `${name} ${lastName}`);
+        await setDoc(docRef, data);
+    }
+
     // #endregion
 
 

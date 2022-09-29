@@ -33,7 +33,7 @@ function TableBillingService({ py, mb, headTitle }) {
                 <Card sx={{ minHeight: 250 }} >
                     <SoftBox display="flex" justifyContent="start" alignItems="center" p={3}>
                         <SoftTypography variant="h6" mr={5} sx={{ fontFamily: "Amethysta", textTransform: 'uppercase', fontSize: '0.8rem' }}>{headTitle} </SoftTypography>
-                        <SelectInput data={listCMs} onchange={loadBillingData} hText="Choice CM Name" ref={ref1} id='cm' />
+                        <SelectInput data={listCMs} onchange={loadBillingData} hText="Choice CM Name" ref={ref1} id='cm' /> 
                         <SoftButton onClick={reloadTable} variant="contained" color="primary" ml={2}>Reload</SoftButton>
                     </SoftBox>
                     <SoftBox sx={{

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import moment from "moment/moment";
 
 
 
 // Components
-import { Grid, TextField, FormControl, FormControlLabel, FormLabel, RadioGroup, Radio, Select, MenuItem, Slider, Button } from "@mui/material";
-import SelectInput from "@mui/material/Select/SelectInput";
+import { Grid, TextField, FormControl, FormControlLabel, FormLabel, RadioGroup, Radio, Select, MenuItem, Slider, Button, Divider } from "@mui/material";
+import SelectInput from '../../../components/SelectInput'
 import SoftTypography from "components/SoftTypography";
 import SoftBox from "components/SoftBox";
 import SoftButton from "components/SoftButton";
@@ -18,9 +18,6 @@ import SoftButton from "components/SoftButton";
 export default function FormAdd({ handleClose, submit, setValue, values }) {
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        setValue(Object.assign({}, values, { [name]: value }))
-    }
-    const handleSliderChange = (name) => (e, value) => {
         setValue(Object.assign({}, values, { [name]: value }))
     };
     return (
@@ -48,17 +45,17 @@ export default function FormAdd({ handleClose, submit, setValue, values }) {
                 </SoftBox>
                 <SoftBox width='50%' mr={1}>
                     <TextField
-                        name="clientNumber"
+                        name="cnumb"
                         // label="Client Number"
                         type="text"
-                        value={values.clientNumber}
+                        value={values.cnumb}
                         onChange={handleInputChange}
                         helperText="Client Number"
                     />
                 </SoftBox>
             </SoftBox>
-            <SoftBox display='flex' mt={2}>
-                <SoftBox width='50%'>
+            <SoftBox display='flex' mt={2} sx={{ width: '100%' }} justifyContent='space-between'>
+                <SoftBox width='50%' mr={1} sx={{ flexShrink: 5 }}>
                     <TextField
                         name="dob"
                         // label="Age"
@@ -66,9 +63,14 @@ export default function FormAdd({ handleClose, submit, setValue, values }) {
                         value={values.dob}
                         onChange={handleInputChange}
                         helperText="Enter DOB"
+                        format="MM/dd/yyyy"
+
                     />
                 </SoftBox>
-                <SoftBox width='50%'>
+                <SoftBox width='50%' mr={1} sx={{ flexShrink: 1 }}>
+                    <SelectInput hText="DxCode" data={[]} sxx={{ width: '100%' }} />
+                </SoftBox>
+                <SoftBox width='100%' sx={{ flexShrink: 5 }} mr={0} >
                     <TextField
                         name="dataAssigned"
                         // label="Age"
@@ -77,93 +79,44 @@ export default function FormAdd({ handleClose, submit, setValue, values }) {
                         onChange={handleInputChange}
                         helperText="Data Assigned"
                     />
-                    <SoftBox>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            value={values.dxCode}
-                            label="Age"
-                            name="dxCode"
-                            onChange={handleInputChange}
-                        >
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
-                        </Select>
-                    </SoftBox>
                 </SoftBox>
             </SoftBox>
-            <FormControl>
-                <FormLabel>Gender</FormLabel>
-                <RadioGroup
-                    name="gender"
-                    value={values.gender}
-                    onChange={handleInputChange}
-                    row
-                >
-                    <FormControlLabel
-                        key="male"
-                        value="male"
-                        control={<Radio size="small" />}
-                        label="Male"
-                    />
-                    <FormControlLabel
-                        key="female"
-                        value="female"
-                        control={<Radio size="small" />}
-                        label="Female"
-                    />
-                    <FormControlLabel
-                        key="other"
-                        value="other"
-                        control={<Radio size="small" />}
-                        label="Other"
-                    />
-                </RadioGroup>
-            </FormControl>
-            {/* <FormControl>
-                <Select name="os" value={values.os} onChange={handleInputChange}>
-                    <MenuItem key="mac" value="mac">Mac</MenuItem>
-                    <MenuItem key="windows" value="windows">Windows</MenuItem>
-                    <MenuItem key="linux" value="linux">Linux</MenuItem>
-                </Select>
-    </FormControl>
-            <div style={{ width: "400px" }}>
-                Favorite Number
-                <Slider
-                    value={values.favoriteNumber}
-                    onChange={handleSliderChange("favoriteNumber")}
-                    defaultValue={1}
-                    step={1}
-                    min={1}
-                    max={3}
-                    marks={[
-                        {
-                            value: 1,
-                            label: "1",
-                        },
-                        {
-                            value: 2,
-                            label: "2",
-                        },
-                        {
-                            value: 3,
-                            label: "3",
-                        },
-                    ]}
-                    valueLabelDisplay="off"
-                />
-            </div>*/}
-            <SoftBox display='flex' flexDirection='column'>
-                <SoftTypography key={'001'} id="ll">{values.name}</SoftTypography>
-                <SoftTypography key={'002'} id={'mm'}>{values.age}</SoftTypography>
+            <SoftBox display='flex' mt={2} ml={1} sx={{ width: '100%' }} justifyContent='space-between'>
+                <FormControl>
+                    <SoftTypography variant='caption'>Gender</SoftTypography>
+                    <RadioGroup
+                        name="gender"
+                        value={values.gender}
+                        onChange={handleInputChange}
+                        row
+                    >
+                        <SoftBox display='flex' ml={1}>
+                            <FormControlLabel
+                                key="male"
+                                value="male"
+                                control={<Radio size="small" style={{ border: 'solid 1px grey' }} />}
+                                label=<SoftTypography variant='caption'>Male</SoftTypography>
+                            />
+                            <FormControlLabel
+                                key="female"
+                                value="female"
+                                control={<Radio size="small" style={{ border: 'solid 1px grey' }} />}
+                                label=<SoftTypography variant='caption'>Female</SoftTypography>
+                            />
+                        </SoftBox>
+                    </RadioGroup>
+                </FormControl>
             </SoftBox>
-            <SoftButton autoFocus onClick={handleClose} >
-                Cancel
-            </SoftButton>
+            <Divider color='grey' />
+            <SoftBox display='flex' mt={2} justifyContent='end' >
+                <SoftButton autoFocus onClick={handleClose} >
+                    Cancel
+                </SoftButton>
 
-            <SoftButton onClick={handleClose} variant="contained" color="primary" type="submit">
-                Save
-            </SoftButton>
+                <SoftButton onClick={handleClose} variant="contained" color="primary" type="submit">
+                    Save
+                </SoftButton>
+            </SoftBox>
         </form>
     )
 }
@@ -173,5 +126,6 @@ FormAdd.propTypes = {
     handleClose: PropTypes.func,
     submit: PropTypes.func,
     setValue: PropTypes.func,
-    values: PropTypes.object
+    values: PropTypes.object,
+    reff: PropTypes.object
 };

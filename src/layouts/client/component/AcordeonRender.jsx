@@ -27,39 +27,44 @@ function AcordeonRender({ data, icon, ...rest }) {
         return color;
     }
 
-    function stringAvatar(name) {
+    function stringAvatar(name, lastName = '') {
         return {
             sx: {
                 bgcolor: stringToColor(name),
+                width: 24,
+                height: 24
             },
-            children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+            children: <SoftTypography variant="button" sx={{ fontSize: '0.7rem' }}>{`${name[0]}${lastName[0]}`}</SoftTypography>
         }
     }
-
     return (
-        data.map((item, index) => (
-            <Accordion key={uuidv4()}>
+        data.map((item, index) => {
+            const { name, lastName } = item;
+            return <Accordion key={uuidv4()}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                 >
                     <SoftBox display="flex" alignItems="center" color="palettePastel" size="sm" container wordSpacing='0.1rem' >
-                        <SoftBadge variant="button" badgeContent={item.name} color="palettePastel" size="sm" container wordSpacing='0.1rem' />
-                        <SoftBadge
-                            badgeContent={'1'}
-                            color="error"
-                        />
+                        <SoftBadge variant="button" badgeContent=<SoftTypography variant="button" sx={{ fontSize: '0.8rem', fontWeight:'400' }}>{`${name} ${lastName}`}</SoftTypography> color="palettePastel" size="sm" container wordSpacing='0.1rem' />
+                        <SoftBox>
+                            <Avatar  {...stringAvatar(item.name, item.lastName)} />
+                        </SoftBox>
                     </SoftBox>
                 </AccordionSummary>
-                <AccordionDetails style={{ width: '100%', border: 'solid 1px red' }}>
+                <AccordionDetails style={{ width: '100%' }}>
                     <SoftBox display='flex' justifyContent='space-between' >
                         <SoftBox>
                             <SoftBox>
-                                <Avatar alt={item.name} {...stringAvatar(item.name)} />
-                            </SoftBox>
-                            <SoftBox>
                                 <SoftTypography variant="button" fontWeight="regular" textTransform='capitalize' color='blue'>
-                                    {item.name}
+                                    {`${item.name} ${item.lastName}`}
+                                </SoftTypography>
+                            </SoftBox>
+                        </SoftBox>
+                        <SoftBox>
+                            <SoftBox display='flex' justifyContent='space-between' >
+                                <SoftTypography variant="button" fontWeight="regular" textTransform='capitalize' color='blue'>
+                                    {`Name: ${item["name"]}`}
                                 </SoftTypography>
                             </SoftBox>
                         </SoftBox>
@@ -71,7 +76,7 @@ function AcordeonRender({ data, icon, ...rest }) {
                     </SoftBox>
                 </AccordionDetails>
             </Accordion>
-        ))
+        })
     )
 }
 

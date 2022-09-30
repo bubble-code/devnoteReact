@@ -13,6 +13,7 @@ class DataService {
     _collectionAgencias = "/CM/agencias/listagencias";
     _collectionCM = "/CM/cm/cm";
     _pathCM = "/CM/cm/cm";
+    _pathDxCode = "/dxCode";
 
     // ********************************** LIST ****************************************************
     // #region LIST
@@ -101,6 +102,19 @@ class DataService {
         const { name, lastName } = data;
         const docRef = doc(db, `${this._pathCM}/${cm}/activeClient/`, `${name} ${lastName}`);
         await setDoc(docRef, data);
+    }
+    async addNewDxCode({ dxData }) {
+        try {
+            const { dxCode, dxDesx } = dxData;
+            const dxDescription = dxDesx.trim();
+            const docRef = doc(db, `${this._pathDxCode}`, `${dxCode}`);
+            await setDoc(docRef, { dxCode, dxDescription });
+            return true;
+
+        } catch (error) {
+            console.log('addNewDxCode', error);
+            return false;
+        }
     }
 
     // #endregion

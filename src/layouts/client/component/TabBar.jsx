@@ -12,6 +12,8 @@ import ModalAddClient from './ModalAddClient';
 import ListClient from './ListClient';
 import SoftBox from 'components/SoftBox';
 import TabAddClient from './TabAddClient';
+import tabs from '../tabs';
+import { v4 as uuidv4 } from 'uuid';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -74,9 +76,9 @@ export default function TabBarClient() {
         <SoftBox sx={{ width: '100%' }}>
             <SoftBox sx={{ borderBottom: 1, borderColor: 'divider', width: '50%' }}>
                 <Tabs value={value} onChange={handleChange} display='flex' sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'start', justifyContent: 'start' }}>
-                    <Tab label="List Clients" {...a11yProps(0)} sx={{ marginRight: '0.2rem', alignItems: 'start', textAlign: 'left' }} />
-                    <Tab label="Details" {...a11yProps(1)} />
-                    <Tab label="Add Client" {...a11yProps(2)} />
+                    {tabs().map((tab, index) => (
+                        <Tab label={tab.label} {...a11yProps(index)} key={uuidv4()} />
+                    ))}
                 </Tabs>
             </SoftBox>
             <TabPanel value={value} index={0}>

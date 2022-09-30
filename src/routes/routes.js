@@ -4,6 +4,7 @@ import Tables from "layouts/tables";
 import Billing from "layouts/billing";
 import Profile from "layouts/profile";
 import ClientContainer from "layouts/client/Cliente";
+import AdminLayout from "layouts/admin/admin"
 
 // Soft UI Dashboard React icons
 import Office from "examples/Icons/Office";
@@ -59,6 +60,15 @@ const routes = [
     route: "/client",
     icon: <CustomerSupport size="12px" />,
     component: <ClientContainer />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Admin",
+    key: "admin",
+    route: "/admin",
+    icon: <CustomerSupport size="12px" />,
+    component: <AdminLayout />,
     noCollapse: true,
   }
   // {

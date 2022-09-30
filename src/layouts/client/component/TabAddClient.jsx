@@ -107,7 +107,7 @@ export default function TabAddClient() {
                             helperText="Data Assigned"
                         />
                     </SoftBox>
-                    <SoftBox >
+                    <SoftBox display='flex' justifyContent='space-between'>
                         <FormControl>
                             <SoftTypography variant='caption'>Gender</SoftTypography>
                             <RadioGroup

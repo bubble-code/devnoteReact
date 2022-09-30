@@ -207,6 +207,23 @@ export function useAddClient() {
     return { loading, error, addClient };
 }
 
+export function useAddDxCode() {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const addDxCode = async ({ dxCode }) => {
+        setLoading(true);
+        try {
+            await DataService.addNewDxCode({ dxData: dxCode });
+        } catch (error) {
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { loading, error, addDxCode };
+}
 // -----------------------------------------------------------
 // -----------------------------------------------------------
 // -----------------------------------------------------------

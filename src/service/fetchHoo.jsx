@@ -89,6 +89,31 @@ export function useListCLients() {
     return { lisClients, loading, error, loadData };
 }
 
+export function useListServices() {
+    const [listServices, setListServices] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const loadData = useCallback(async () => {
+        setLoading(true);
+        try {
+            const list = await DataService.lisService();
+            // console.log('list', list);
+            setListServices(list);
+        } catch (error) {
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        loadData();
+    }, [loadData]);
+
+    return { listServices, loading, error };
+}
+
 export function useLoadSerOpen({ cmm }) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -224,6 +249,25 @@ export function useAddDxCode() {
 
     return { loading, error, addDxCode };
 }
+
+export function useAddService() {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const addService = async ({ serviceDx }) => {
+        setLoading(true);
+        try {
+            await DataService.addNewService({ serviceDx });
+        } catch (error) {
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { loading, error, addService };
+}
+
 // -----------------------------------------------------------
 // -----------------------------------------------------------
 // -----------------------------------------------------------

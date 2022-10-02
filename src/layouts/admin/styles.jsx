@@ -2,7 +2,7 @@ import { grey } from '@mui/material/colors';
 
 export function stylesCard() {
     return {
-        minHeight: 250, width: '20%', overflow: 'auto', border: `1px solid ${grey[400]}`, aligthItems: 'center', justifyContent: 'space-around', display: 'flex', paddingLeft: 1, paddingRight: 1, borderRadius: 1,
+        height: 250, minWidth: '280px', overflow: 'auto', border: `1px solid ${grey[400]}`, aligthItems: 'center', justifyContent: 'space-around', display: 'flex', paddingLeft: 1, paddingRight: 1, borderRadius: 1,
         // "& .MuiTableRow-root:not(:last-child)": {
         //     "& td": {
         //         borderBottom: ({ borders: { borderWidth, borderColor } }) =>
@@ -28,10 +28,16 @@ export function stylesCard() {
         },
         ".css-1thpukx": {
             height: 'auto',
-            width: "100% !important",
         },
         "form": {
             width: "100% !important",
+            height: '100% !important',
+            // "& .MuiBox-root": {
+            //     justifyContent: 'space-around',
+            //     display: 'flex',
+            //     flexDirection: 'column',
+            //     height: 'inherit'
+            // },
         },
         "input": {
             width: "100% !important",

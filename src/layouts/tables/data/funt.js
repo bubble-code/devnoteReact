@@ -31,7 +31,7 @@ export function duration({ tStart, tEnd }) {
 }
 
 export const formInitialData = {
-    "description": "",
+    "description": [],
     "timeStart": "",
     "timeEnd": "",
     "pos": "",

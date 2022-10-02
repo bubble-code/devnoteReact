@@ -4,3 +4,9 @@ export function initialValClients() {
         dxDesx: '',
     }
 }
+
+export function initialValService() {
+    return {
+        serviceDesx: '',
+    }
+}

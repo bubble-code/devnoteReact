@@ -14,6 +14,7 @@ class DataService {
     _collectionCM = "/CM/cm/cm";
     _pathCM = "/CM/cm/cm";
     _pathDxCode = "/dxCode";
+    _pathService = "/typeServices";
 
     // ********************************** LIST ****************************************************
     // #region LIST
@@ -29,51 +30,14 @@ class DataService {
         const result = await getDocs(querySnapShot)
         return result.docs.map((item) => ({ label: item.id, pNumber: item.data()['pNumber'], sCode: item.data()['sCode'] }));
     }
-
-    async listClient({ cm }) {
-        const collectionn = collection(db, `${this._pathCM}/${cm}/activeClient`);
+    async lisService() {
+        const collectionn = collection(db, `${this._pathService}`);
         const querySnapShot = query(collectionn);
         const result = await getDocs(querySnapShot)
-        return result.docs.map((item) => ({ name: item.id, ...item.data() }));
+        return result.docs.map((item) => ({ id: item.id, label: item.data()['serviceDesx'], ...item.data() }));
     }
 
-    async listActivedClients({ cm }) {
-        const collectionn = collection(db, `${this._pathCM}/${cm}/activeClient`);
-        const querySnapShot = query(collectionn);
-        const result = await getDocs(querySnapShot)
-        return result.docs;
-    }
-    async listBillingOpenByCm({ cm }) {
-        if (cm) {
-            const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
-            const querySnapShot = query(collectionn, where("status", "==", "open"));
-            const result = await getDocs(querySnapShot)
-            // console.log(result.docs);
-            return result.docs;
-        }
-    }
-    async listBilling({ cm }) {
-        const billingsOpen = await this.listBillingOpenByCm({ cm });
-        const response = [];
-        return Promise.all(billingsOpen.map(async (item) => {
-            return await this.listBillingOpenByCm({ cm, day: item.id });
-        })).then((result) => {
-            result.forEach((item) => {
-                item.forEach((item2) => {
-                    response.push(item2.data());
-                })
-            });
-            return response;
-        }
-        );
-    }
-    async listNoteByClient({ cm, name }) {
-        // console.log(name);
-        const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
-        const querySnapShot = query(collectionn, where('status', '==', 'completed'), where("cn", "==", `${name}`));
-        const result = await getDocs(querySnapShot)
-        return result.docs;
-    }
+
     //#endregion
 
     // ********************************** CRUD Billings****************************************************
@@ -117,6 +81,19 @@ class DataService {
         }
     }
 
+    async addNewService({ serviceDx }) {
+        try {
+            const { serviceDesx } = serviceDx;
+            const collRef = collection(db, `${this._pathService}`);
+            await addDoc(collRef, { serviceDesx });
+            return true;
+
+        } catch (error) {
+            console.log('addNewService', error);
+            return false;
+        }
+    }
+
     // #endregion
 
 
@@ -151,6 +128,50 @@ class DataService {
             console.log(error);
         }
         return total;
+    }
+    async listClient({ cm }) {
+        const collectionn = collection(db, `${this._pathCM}/${cm}/activeClient`);
+        const querySnapShot = query(collectionn);
+        const result = await getDocs(querySnapShot)
+        return result.docs.map((item) => ({ name: item.id, ...item.data() }));
+    }
+
+    async listActivedClients({ cm }) {
+        const collectionn = collection(db, `${this._pathCM}/${cm}/activeClient`);
+        const querySnapShot = query(collectionn);
+        const result = await getDocs(querySnapShot)
+        return result.docs;
+    }
+    async listBillingOpenByCm({ cm }) {
+        if (cm) {
+            const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
+            const querySnapShot = query(collectionn, where("status", "==", "open"));
+            const result = await getDocs(querySnapShot)
+            // console.log(result.docs);
+            return result.docs;
+        }
+    }
+    async listBilling({ cm }) {
+        const billingsOpen = await this.listBillingOpenByCm({ cm });
+        const response = [];
+        return Promise.all(billingsOpen.map(async (item) => {
+            return await this.listBillingOpenByCm({ cm, day: item.id });
+        })).then((result) => {
+            result.forEach((item) => {
+                item.forEach((item2) => {
+                    response.push(item2.data());
+                })
+            });
+            return response;
+        }
+        );
+    }
+    async listNoteByClient({ cm, name }) {
+        // console.log(name);
+        const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
+        const querySnapShot = query(collectionn, where('status', '==', 'completed'), where("cn", "==", `${name}`));
+        const result = await getDocs(querySnapShot)
+        return result.docs;
     }
     // #endregion 
 

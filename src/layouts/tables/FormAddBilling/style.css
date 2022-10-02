@@ -1,5 +1,5 @@
 div.Mui-disabled {
-    border: 1px solid #000;
+    border: 1px solid #000 !important;
     overflow: hidden;
     border-radius: 4px;
     background: linear-gradient(310deg, #141727, #406f3a) !important;

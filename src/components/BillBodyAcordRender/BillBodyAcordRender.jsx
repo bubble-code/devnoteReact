@@ -9,29 +9,11 @@ import TableRow from "@mui/material/TableRow";
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import SoftBadge from "components/SoftBadge";
-import { useSelector, useDispatch } from "react-redux";
-import { fectListServsByCM } from "../../../redux/actions/actions";
-import useRenderByDate from './funct/funtiHelper';
-import { columns } from "../../../components/TableBillingService/colunmHead";
-import { useDeleteService } from '../../../service/fetchHoo'
 
-function TableRender() {
-  const dispatchRedux = useDispatch();
-  const listServiceState = useSelector(state => state.listServiByCM);
-  const { data, loading } = listServiceState;
-  const { error, delteItem, loading: load } = useDeleteService();
+import { columns } from "../BillAcordionRender/colunmHead";
 
+function BillAcordionRender({ group, loading, len }) {
 
-  const deleteItemFromTable = ({ id, cm }) => {
-    console.log({ id, cm });
-    delteItem({ id, cm });
-    if (!error) {
-      dispatchRedux(fectListServsByCM({ cm }));
-    }
-  };
-
-
-  const group = useRenderByDate({ data, handleDelete: deleteItemFromTable });
 
   const renderAcordeonServiceByDate = useCallback(() => {
     return Object.keys(group).map((key) => {
@@ -94,15 +76,17 @@ function TableRender() {
   return useMemo(
     () => (
       <SoftBox>
-        {loading && <SoftBox display='flex' justifyContent='center' alignItems='center' mt={7} > <CircularProgress /></SoftBox>}
-        {!data.length && <SoftBox display='flex' justifyContent='center' alignItems='center' mt={7} > <SoftTypography variant="h6" fontWeight="medium" opacity={0.5}>No Data</SoftTypography></SoftBox>}
-        <SoftBox px={2}>
-          {renderAcordeonServiceByDate()}
-        </SoftBox>
+        {
+          loading ?
+            <SoftBox display='flex' justifyContent='center' alignItems='center' mt={7} > <CircularProgress /></SoftBox>
+            : len > 0 ?
+              <SoftBox px={2}> {renderAcordeonServiceByDate()} </SoftBox>
+              : <SoftBox display='flex' justifyContent='center' alignItems='center' mt={7} > <SoftTypography variant="h6" fontWeight="medium" opacity={0.5}>No Data</SoftTypography></SoftBox>
+        }
       </SoftBox>
     ),
-    [data.length, loading, renderAcordeonServiceByDate]
+    [len, loading, renderAcordeonServiceByDate]
   );
 }
 
-export default TableRender;
+export default BillAcordionRender;

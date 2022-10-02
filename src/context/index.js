@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-filename-extension */
 import { createContext, useContext, useReducer, useMemo } from "react";
 import PropTypes from "prop-types";
-import DataService from '../service/services';
 
 export const SoftUI = createContext(null);
 
@@ -73,6 +72,9 @@ function reducer(state, action) {
     case "CURRENT_CL_NOTE": {
       return { ...state, currentClToNote: action.value };
     }
+    case "SET_OPEN_MODAL_EDIT_SERVICE": {
+      return { ...state, openModalEditService: action.value };
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -94,6 +96,7 @@ function SoftUIControllerProvider({ children }) {
     listCM: [],
     listActClient: [],
     currentClToNote: {},
+    openModalEditService: { open: false, id: null, cm: null, }
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);
@@ -133,6 +136,7 @@ const setLoadActiClient = (dispatch, value) => dispatch({ type: "LOAD_ACTCLIENT"
 const setCurrentClToNote = (dispatch, value) => dispatch({ type: "CURRENT_CL_NOTE", value });
 
 const setListBilling = (dispatch, value) => dispatch({ type: "LIST_BILLING_SUCCESS", value });
+const setOpenModalEditService = (dispatch, value) => dispatch({ type: "SET_OPEN_MODAL_EDIT_SERVICE", value });
 
 export {
   SoftUIControllerProvider,
@@ -148,7 +152,8 @@ export {
   setListBilling,
   setLoadListCm,
   setLoadActiClient,
-  setCurrentClToNote
+  setCurrentClToNote,
+  setOpenModalEditService,
 };
 
 

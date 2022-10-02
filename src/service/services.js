@@ -62,6 +62,11 @@ class DataService {
         await deleteDoc(docRef);
     }
 
+    async updateService({ cm, id, data }) {
+        const docRef = doc(db, `${this._pathCM}/${cm}/openBilling/`, `${id}`);
+        await updateDoc(docRef, data);
+    }
+
     async addNewClient({ cm, data }) {
         const { name, lastName } = data;
         const docRef = doc(db, `${this._pathCM}/${cm}/activeClient/`, `${name} ${lastName}`);
@@ -103,6 +108,7 @@ class DataService {
         if (id) {
             const docRef = doc(db, `${this._pathCM}/${cm}/openBilling/`, `${id}`);
             const docSnap = await getDoc(docRef);
+            console.log(docSnap.data());
             if (docSnap.exists()) {
                 return { ...docSnap.data(), id: docSnap.id };
             } else {

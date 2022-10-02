@@ -24,7 +24,7 @@ export function fectListBilling({ cm }) {
     }
 }
 
-export function fectListServsByCM({ cm }) {
+export function fectListServsByCM({ cm }) { 
     return async (dispatch) => {
         dispatch({ type: "LIST_SERVICES_BY_CM_LOAD" });
         const res = await DataService.listBillingOpenByCm({ cm });

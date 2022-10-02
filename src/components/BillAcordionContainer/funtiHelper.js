@@ -1,20 +1,20 @@
 /* eslint-disable react/jsx-filename-extension */
+import moment from "moment";
+
 import SoftBox from "components/SoftBox";
-import { columns } from "../../../../components/TableBillingService/colunmHead";
+import SoftBadge from "components/SoftBadge";
+import { columns } from "../BillAcordionRender/colunmHead";
+import { TagClientName, Pos } from "../BillAcordionRender/TagClientName/TagClientName";
+import SoftTypography from "components/SoftTypography";
+import { IconButton, Tooltip } from "@mui/material";
+
 import colors from "assets/theme/base/colors";
+import { green, pink } from '@mui/material/colors';
 import typography from "assets/theme/base/typography";
 import borders from "assets/theme/base/borders";
-import { TagClientName } from "components/TableBillingService/TagClientName";
-import { Pos } from "components/TableBillingService/TagClientName";
-import SoftBadge from "components/SoftBadge";
-import DeleteRounded from '@mui/icons-material/DeleteRounded';
-import { pink } from '@mui/material/colors';
-import SoftTypography from "components/SoftTypography";
-import moment from "moment";
-import { IconButton, Tooltip } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { fectCurrentClToNote } from "../../../../redux/actions/actions";
-import { useDeleteService } from '../../../../service/fetchHoo'
+
+import { DeleteRounded } from '@mui/icons-material';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 
@@ -93,33 +93,18 @@ function formatTime(time) {
     return moment(time, "HHmm").format("HH:mm A");
 }
 
-function useDeleteServiceFromTable({ id, cm }) {
-    const dispatchRedux = useDispatch();
-    console.log({ id, cm });
-    const { error, delteItem, loading: load } = useDeleteService();
-    delteItem({ id, cm });
-    if (!error) {
-        dispatchRedux(fectCurrentClToNote({ cm, id }));
-    }
-}
-export default function useRenderByDate({ data, handleDelete }) {
-    const dispatchRedux = useDispatch();
+export default function ListServiOrderByDate({ data, handleDelete, handleEdit, setCurrentClForNote, setOpenModal }) {
     const group = groupByDate(data);
     const sort = sortByDate(group)
     const groupSort = sortByTime(sort);
     const rows = [];
 
-    const setCurrentClForNote = ({ id, cm }) => {
-        dispatchRedux(fectCurrentClToNote({ cm, id }));
-    };
 
     Object.keys(groupSort).forEach((fecha) => {
         if (!rows[fecha]) {
             rows[fecha] = [];
         }
-        // console.log('fecha', fecha);
         groupSort[fecha].map(servicio => {
-            // console.log("servicio", servicio);
             const { id, pos, description, timeEnd, timeStart, units, min, cm, cn } = servicio;
             rows[fecha].push({
                 key: id,
@@ -150,9 +135,15 @@ export default function useRenderByDate({ data, handleDelete }) {
                     <SoftBadge variant="gradient" badgeContent={min} color="success" size="xs" container />
                 ),
                 CM: cm,
-                Action: (<Tooltip title="Delete"><IconButton>
-                    <DeleteRounded sx={{ color: pink[500], cursor: 'pointer' }} fontSize="small" onClick={() => handleDelete({ id, cm })} />
-                </IconButton></Tooltip>
+                Action: (
+                    <SoftBox>
+                        <Tooltip title="Edit"><IconButton>
+                            <EditIcon sx={{ color: green[500], cursor: 'pointer' }} fontSize="small" onClick={() => setOpenModal({ id, cm })} />
+                        </IconButton></Tooltip>
+                        <Tooltip title="Delete"><IconButton>
+                            <DeleteRounded sx={{ color: pink[500], cursor: 'pointer' }} fontSize="small" onClick={() => handleDelete({ id, cm })} />
+                        </IconButton></Tooltip>
+                    </SoftBox>
                 ),
             });
 

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef, useReducer } from "react";
 import DataService from './services';
 import { useDispatch } from 'react-redux';
 import { setListBillingLoad, setListBillingSuccess } from '../redux/actions/actions'
+import { id } from "date-fns/locale";
 // import { listNotesReducer } from '../redux/reducers/reducer';
 // import {} from 'firebase/firestore';
 
@@ -214,6 +215,26 @@ export function useDeleteService() {
 
 }
 
+export function useUpdateService() {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const updateItem = useCallback(async ({ cm, id, data }) => {
+        setLoading(true);
+        try {
+            const list = await DataService.updateService({ cm, id, data });
+        } catch (error) {
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    return { loading, error, updateItem };
+
+}
+
+
 export function useAddClient() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -266,6 +287,30 @@ export function useAddService() {
     };
 
     return { loading, error, addService };
+}
+
+export function useGetServiceById({ cm, id }) {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [data, setData] = useState({});
+
+    const getService = useCallback(async () => {
+        setLoading(true);
+        try {
+            const list = await DataService.getServiceById({ cm, id });
+            setData(list);
+        } catch (error) {
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
+    }, [cm, id]);
+
+    useEffect(() => {
+        getService();
+    }, [getService]);
+
+    return { loading, error, data };
 }
 
 // -----------------------------------------------------------

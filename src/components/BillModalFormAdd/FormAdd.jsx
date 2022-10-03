@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from 'react-redux';
 import { useSoftUIController, setOpenModalEditService } from "context";
+import { useGetServiceById } from '../../service/fetchHoo';
+import { useListServices } from "../../service/fetchHoo";
 import PropTypes from "prop-types";
 import moment from "moment/moment";
-import { useGetServiceById } from '../../service/fetchHoo';
-
 
 
 // Components
@@ -12,7 +13,8 @@ import { Grid, TextField, FormControl, FormControlLabel, FormLabel, RadioGroup, 
 import SoftTypography from "components/SoftTypography";
 import SoftBox from "components/SoftBox";
 import SoftButton from "components/SoftButton";
-import { useEffect } from "react";
+import AutoCompleDescripService from "../AutoCompleDescripService/AutoCompleDescripService";
+import SelectInput from "../SelectInput";
 
 
 
@@ -23,17 +25,35 @@ const defaultValues = {
     dob: "",
     dxCode: "",
     dataAssigned: "",
-    gender: ''
+    gender: '',
+    description: [],
 };
 
 
 export default function FormAdd({ id, cm, handleClose, data }) {
-    const [formValues, setFormValues] = useState({ ...data });
-    // console.log("Data to form", { data });
+    const [formValues, setFormValues] = useState({ ...defaultValues });
+    const { listServices, error, loading } = useListServices();
+    const ListClientsByCm = useSelector((state) => state.listClientsByCM);
+    const { loading: loadingListClients, listClients } = ListClientsByCm;
+    let fecha = moment(formValues.fecha, "DD/MM/YYYY").format("YYYY-MM-DD");
+    // let description = [];
+    const refInput = React.createRef();
+
+
     const handleInputChange = (event) => {
         const { name, value } = event.target;
+        // console.log("dob", name, value);
         setFormValues(Object.assign({}, formValues, { [name]: value }))
     };
+    function handleChangeAutoCompleted(id, __, value) {
+        // const { value } = data;
+        // const cnumb = listClients.find(client => client.id === formValues.cn).cnumb;
+        // console.log(listClients);
+        // console.log(cnumb);
+        // console.log(formValues.cn);
+        // console.log(value)
+        setFormValues(formValues => ({ ...formValues, [id]: value.label, cnumb: value.cnumb }));
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -41,93 +61,99 @@ export default function FormAdd({ id, cm, handleClose, data }) {
         handleClose();
     }
 
-
+    useEffect(() => {
+        if (data) {
+            setFormValues(data);
+            // description = data.description.map((item) => item) 
+        }
+    }, [data])
     return (
         <form onSubmit={handleSubmit}>
             <SoftBox display='flex'>
                 <SoftBox width='50%' mr={1}>
                     <TextField
-                        name="cn"
+                        name="cm"
                         // label="Name"
                         type="text"
-                        value={formValues.cn}
+                        value={formValues.cm}
                         onChange={handleInputChange}
-                        helperText="Client"
+                        helperText="Case Manager"
+                        disabled
                     />
                 </SoftBox>
                 <SoftBox width='50%' mr={1}>
-                    <TextField
-                        name="lastName"
-                        // label="Last Name"
-                        type="text"
-                        value={formValues.lastName}
-                        onChange={handleInputChange}
-                        helperText="Last Name"
-                    />
+                    <SelectInput data={listClients} sxx={{ width: 220 }} onchange={handleChangeAutoCompleted} hText="Name Client" id='cn' currentCM={formValues.cn || null} ref={refInput} />
                 </SoftBox>
-                <SoftBox width='50%' mr={1}>
-                    <TextField
+                <SoftBox mr={1}>
+                    <TextField sx={{ width: 120 }}
                         name="cnumb"
                         // label="Client Number"
                         type="text"
                         value={formValues.cnumb}
                         onChange={handleInputChange}
                         helperText="Client Number"
+                        disabled
                     />
                 </SoftBox>
             </SoftBox>
             <SoftBox display='flex' mt={2} sx={{ width: '100%' }} justifyContent='space-between'>
                 <SoftBox width='50%' mr={1} sx={{ flexShrink: 5 }}>
                     <TextField
-                        name="dob"
+                        name="fecha"
                         // label="Age"
                         type="date"
-                        value={formValues.dob}
+                        value={fecha}
                         onChange={handleInputChange}
-                        helperText="Enter DOB"
-                        format="MM/dd/yyyy"
+                        helperText="Fecha"
+                    // format="MM/dd/yyyy"
 
                     />
                 </SoftBox>
-                <SoftBox width='50%' mr={1} sx={{ flexShrink: 1 }}>
-                    {/* <SelectInput hText="DxCode" data={[]} sxx={{ width: '100%' }} />*/}
+                <SoftBox width='100%' sx={{ flexShrink: 5 }} mr={0} >
+                    <TextField
+                        name="timeStart"
+                        // label="Age"
+                        type="time"
+                        value={moment(formValues.timeStart, "HH:mm").format("HH:mm")}
+                        onChange={handleInputChange}
+                        helperText="Start Time"
+                    />
                 </SoftBox>
                 <SoftBox width='100%' sx={{ flexShrink: 5 }} mr={0} >
                     <TextField
-                        name="dataAssigned"
+                        name="timeEnd"
                         // label="Age"
-                        type="date"
-                        value={formValues.dataAssigned}
+                        type="time"
+                        value={moment(formValues.timeEnd, "HH:mm").format("HH:mm")}
                         onChange={handleInputChange}
-                        helperText="Data Assigned"
+                        helperText="End Time"
+                    />
+                </SoftBox>
+                <SoftBox width='100%' mr={0} >
+                    <TextField
+                        sx={{ width: '100px' }}
+                        name="min"
+                        // label="Age"
+                        type="number"
+                        value={formValues.min}
+                        onChange={handleInputChange}
+                        helperText="Minutes"
                     />
                 </SoftBox>
             </SoftBox>
             <SoftBox display='flex' mt={2} ml={1} sx={{ width: '100%' }} justifyContent='space-between'>
-                <FormControl>
-                    <SoftTypography variant='caption'>Gender</SoftTypography>
-                    <RadioGroup
-                        name="gender"
-                        value={formValues.gender}
+                <SoftBox width='100%' mr={0} >
+                    <TextField
+                        sx={{ width: '100px' }}
+                        name="pos"
+                        // label="Age"
+                        type="number"
+                        value={formValues.pos}
                         onChange={handleInputChange}
-                        row
-                    >
-                        <SoftBox display='flex' ml={1}>
-                            <FormControlLabel
-                                key="male"
-                                value="male"
-                                control={<Radio size="small" style={{ border: 'solid 1px grey' }} />}
-                                label=<SoftTypography variant='caption'>Male</SoftTypography>
-                            />
-                            <FormControlLabel
-                                key="female"
-                                value="female"
-                                control={<Radio size="small" style={{ border: 'solid 1px grey' }} />}
-                                label=<SoftTypography variant='caption'>Female</SoftTypography>
-                            />
-                        </SoftBox>
-                    </RadioGroup>
-                </FormControl>
+                        helperText="Pos"
+                    />
+                </SoftBox>
+                <AutoCompleDescripService currentValue={formValues.description || []} handleChangeAutoCompleted={handleChangeAutoCompleted} listServices={listServices} hText="Service Description" width={355} />
             </SoftBox>
             <Divider color='grey' />
             <SoftBox display='flex' mt={2} justifyContent='end' >

@@ -47,3 +47,11 @@ export function fectListCM() {
         dispatch({ type: 'LIST_CM_SUCCESS', value: res });
     }
 }
+
+export function fectListClientsByCM({ cm }) {
+    return async (dispatch) => {
+        dispatch({ type: "LIST_CLIENTS_BY_CM_LOAD" });
+        const res = await DataService.listClient({ cm });
+        dispatch({ type: 'LIST_CLIENTS_BY_CM_SUCCESS', value: res });
+    }
+}

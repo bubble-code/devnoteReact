@@ -108,7 +108,7 @@ class DataService {
         if (id) {
             const docRef = doc(db, `${this._pathCM}/${cm}/openBilling/`, `${id}`);
             const docSnap = await getDoc(docRef);
-            console.log(docSnap.data());
+            // console.log(docSnap.data());
             if (docSnap.exists()) {
                 return { ...docSnap.data(), id: docSnap.id };
             } else {
@@ -135,12 +135,17 @@ class DataService {
         }
         return total;
     }
+
     async listClient({ cm }) {
         const collectionn = collection(db, `${this._pathCM}/${cm}/activeClient`);
         const querySnapShot = query(collectionn);
         const result = await getDocs(querySnapShot)
-        return result.docs.map((item) => ({ name: item.id, ...item.data() }));
+        return result.docs.map((item) => {
+            // const { name, lastName } = item.data();
+            return { label: item.id, ...item.data() }
+        });
     }
+    // { id: item.id, label: item.data()['serviceDesx'], ...item.data() }
 
     async listActivedClients({ cm }) {
         const collectionn = collection(db, `${this._pathCM}/${cm}/activeClient`);

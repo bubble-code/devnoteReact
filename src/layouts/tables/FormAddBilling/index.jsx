@@ -11,6 +11,7 @@ import DateTimePicker from "components/DateTimePicker";
 import DataService from '../../../service/services'
 import { Button, TextField } from "@mui/material";
 import { countUnits, duration, formInitialData } from '../data/funt';
+import AutoCompleDescripService from "../../../components/AutoCompleDescripService/AutoCompleDescripService";
 
 
 
@@ -96,16 +97,7 @@ function FormAddBilling({ headTitle }) {
                         {/* <TextField id="description" sx={{ width: 455 }} helperText="Service Description" onChange={handleForm}
     value={dataForm.description} />*/}
                     </SoftBox>
-                    <SoftBox mr={2} >
-                        <SelectInput data={listServices} sx={{
-                            width: 455,
-                            "& .MuiInputBase-root": {
-                                maxHeight: 'none !important',
-                                justifyContent: 'start !important',
-                                flexWrap: 'nowrap !important',
-                            },
-                        }} onchange={handleChangeAutoCompleted} hText="Service Description" multiple={true} id="description" value={dataForm.description} />
-                    </SoftBox>
+                    <AutoCompleDescripService currentValue={dataForm.description} handleChangeAutoCompleted={handleChangeAutoCompleted} listServices={listServices} hText="Service Description" width={455} />
                     <SoftBox mr={2}>
                         <TextField id="timeStart" sx={{ width: 80 }} placeholder="_:__" helperText="Start" onChange={handleForm}
                             value={dataForm.timeStart} />
@@ -123,7 +115,7 @@ function FormAddBilling({ headTitle }) {
                     &nbsp;Add Service
                 </Button>
             </SoftBox>
-        </SoftBox>
+        </SoftBox >
     );
 }
 

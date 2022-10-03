@@ -26,6 +26,12 @@ const initStateListCM = {
     loading: false,
 };
 
+const initialStateListClientsByCM = {
+    listClients: [],
+    loading: false,
+    error: null,
+}
+
 export function listServicesByCMReducer(state = initialState, action) {
     // console.log('action', action);
     switch (action.type) {
@@ -145,6 +151,32 @@ export function listCMReducer(state = initStateListCM, action) {
             return {
                 loading: false,
                 listCMs: action.value,
+                error: null,
+            };
+        default:
+            return state;
+    }
+}
+
+export function listClientsByCMReducer(state = initialStateListClientsByCM, action) {
+    // console.log('action', action);
+    switch (action.type) {
+        case "LIST_CLIENTS_BY_CM_LOAD":
+            return {
+                loading: true,
+                listClients: [],
+                error: null,
+            };
+        case "LIST_CLIENTS_BY_CM_FAIL":
+            return {
+                loading: false,
+                listClients: [],
+                error: action.error,
+            };
+        case "LIST_CLIENTS_BY_CM_SUCCESS":
+            return {
+                loading: false,
+                listClients: action.value,
                 error: null,
             };
         default:

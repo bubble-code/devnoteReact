@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { fectListServsByCM, fectCurrentClToNote } from '../../redux/actions/actions';
+import { fectListServsByCM, fectCurrentClToNote, fectListClientsByCM } from '../../redux/actions/actions';
 import { useDeleteService, useUpdateService } from '../../service/fetchHoo';
 import { useSoftUIController, setOpenModalEditService } from "context";
 import ListServiOrderByDate from './funtiHelper';
@@ -39,6 +39,7 @@ function ContainerAcordionBilling({ py, mb, headTitle }) {
     async function loadBillingData(id, event, value) {
         const cM = value.label;
         dispatchRedux(fectListServsByCM({ cm: cM }));
+        dispatchRedux(fectListClientsByCM({ cm: cM }));
         setCaseManager(cM);
     }
     async function reloadTable() {

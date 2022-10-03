@@ -10,7 +10,7 @@ const SelectInput = forwardRef(({ data, sxx = { width: 250 }, onchange, parse, h
     const handleChange = (event, newValue) => {
         onchange(id, event, newValue);
     };
-
+    // console.log("Selecti input", currentCM);
     return (
         <Autocomplete
             ref={ref}

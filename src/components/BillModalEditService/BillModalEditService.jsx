@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
 import { useSoftUIController, setOpenModalEditService } from 'context';
-import { useGetServiceById } from '../../service/fetchHoo'
+import { useGetServiceById, useListServices, useSaveNote } from '../../service/fetchHoo'
 
 // Components
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, useMediaQuery, Divider } from '@mui/material';
@@ -28,18 +28,22 @@ export default function BillModalEditService() {
     const { openModalEditService } = controller;
     const { open, id, cm } = openModalEditService;
     const { error, loading, data } = useGetServiceById({ id, cm });
+    const { listServices, error: errorListService, loading: loadingListService } = useListServices();
+    const { error: errorSave, loading: loginSave, saveData } = useSaveNote();
     // const { loading, error, addClient } = useAddClient();
 
     const handleClose = () => {
         setOpenModalEditService(dispatch, { open: false, id: null, cm: null, });
     };
 
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     console.log(formValues);
-    //     addClient({ cm: 'Lia', data: formValues });
-    //     handleClose();
-    // };
+    function handleSubmit(data) {
+        // console.log("dataSubmit", data);
+        saveData({ cm, id, data })
+        // if (!error) {
+        // dispatchRedux({ type: 'CURRENT_CL_TO_NOTE_SUCCESS', value: {} })
+        // setFormData(initialValues);
+        // }
+    }
     return (
         <SoftBox sx={{ height: '1200px' }}>
             <Dialog
@@ -47,13 +51,14 @@ export default function BillModalEditService() {
                 open={openModalEditService.open}
                 onClose={handleClose}
             // aria-labelledby="responsive-dialog-title"
+
             >
                 <DialogTitle >
                     {"Edit Service"}
                     <Divider color='grey' />
                 </DialogTitle>
                 <DialogContent>
-                    <FormAdd id={id} cm={cm} handleClose={handleClose} data={data} />
+                    <FormAdd id={id} cm={cm} handleClose={handleClose} data={data} listServices={listServices} handleSubmit={handleSubmit} />
                 </DialogContent>
                 <DialogActions>
 

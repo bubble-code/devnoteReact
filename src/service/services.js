@@ -34,7 +34,7 @@ class DataService {
         const collectionn = collection(db, `${this._pathService}`);
         const querySnapShot = query(collectionn);
         const result = await getDocs(querySnapShot)
-        return result.docs.map((item) => ({ id: item.id, label: item.data()['serviceDesx'], ...item.data() }));
+        return result.docs.map((item) => ({ label: item.data()['serviceDesx'] }));
     }
 
 
@@ -191,19 +191,20 @@ class DataService {
 
 
     async searchHelper({ value }) {
-        // console.log(value);
+        // console.log("value", value);
         const resultFinal = [];
         const listCMa = await this.listCM();
         // console.log(listCMa);
         const prevResult = Promise.allSettled(listCMa.map(async (item) => {
-            const collectionn = collection(db, `${this._pathCM}/${item.id}/openBilling`);
+            console.log("item.id", item.label);
+            const collectionn = collection(db, `${this._pathCM}/${item.label}/openBilling`);
             const querySnapShot = query(collectionn, where('status', '==', 'completed'));
             const result = await getDocs(querySnapShot);
             return result.docs;
         })
         ).then((result) => {
             result.forEach((item2) => {
-                // console.log("result", item2);
+                console.log("result", item2);
                 if (item2.status === "fulfilled") {
                     // resultFinal.push(
                     item2.value.map((item) => {

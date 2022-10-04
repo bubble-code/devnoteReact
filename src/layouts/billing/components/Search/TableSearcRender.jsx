@@ -18,7 +18,7 @@ function TablesSearchRender({ respData }) {
     const orderData = respData.sort((a, b) => {
         return moment(b.fecha, "DD-MM-YYYY") - moment(a.fecha, "DD-MM-YYYY");
     });
-    console.log('orderData', orderData);
+    // console.log('orderData', orderData);
     return (
         orderData.map((item, index) => {
             const { fecha, sNote, description, cm, cn } = item;

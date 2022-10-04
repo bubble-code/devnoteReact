@@ -21,7 +21,7 @@ export default function DateTimePicker({ func }) {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Stack spacing={3}>
                 <DesktopDatePicker
-                    inputFormat="MM/DD/YYYY"
+                    inputFormat="DD/MM/YYYY"
                     value={value}
                     onChange={handleChange}
                     renderInput={(params) => <TextField {...params} helperText="Date of Service" />}

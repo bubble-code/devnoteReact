@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
-import { useSoftUIController, setOpenModalEditService } from "context";
-import { useGetServiceById } from '../../service/fetchHoo';
-import { useListServices } from "../../service/fetchHoo";
 import PropTypes from "prop-types";
 import moment from "moment/moment";
+import { countUnits, duration, formInitialData } from '../../funcTime/funt';
 
 
 // Components
-import { Grid, TextField, FormControl, FormControlLabel, FormLabel, RadioGroup, Radio, Select, MenuItem, Slider, Button, Divider } from "@mui/material";
-// import SelectInput from '../../../components/SelectInput'
-import SoftTypography from "components/SoftTypography";
+import { TextField, Divider } from "@mui/material";
 import SoftBox from "components/SoftBox";
 import SoftButton from "components/SoftButton";
 import AutoCompleDescripService from "../AutoCompleDescripService/AutoCompleDescripService";
@@ -19,6 +15,7 @@ import SelectInput from "../SelectInput";
 
 
 const defaultValues = {
+    cn: '',
     name: "",
     lastName: "",
     cnumb: "",
@@ -30,45 +27,49 @@ const defaultValues = {
 };
 
 
-export default function FormAdd({ id, cm, handleClose, data }) {
+export default function FormAdd({ id, listServices, handleClose, data, handleSubmit }) {
     const [formValues, setFormValues] = useState({ ...defaultValues });
-    const { listServices, error, loading } = useListServices();
     const ListClientsByCm = useSelector((state) => state.listClientsByCM);
     const { loading: loadingListClients, listClients } = ListClientsByCm;
-    let fecha = moment(formValues.fecha, "DD/MM/YYYY").format("YYYY-MM-DD");
-    // let description = [];
     const refInput = React.createRef();
 
+    const durationTime = duration({ tEnd: formValues.timeEnd, tStart: formValues.timeStart });
+    const countUnitsTime = countUnits({ tEnd: formValues.timeEnd, tStart: formValues.timeStart });
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        // console.log("dob", name, value);
+        console.log(event.target);
         setFormValues(Object.assign({}, formValues, { [name]: value }))
     };
-    function handleChangeAutoCompleted(id, __, value) {
-        // const { value } = data;
-        // const cnumb = listClients.find(client => client.id === formValues.cn).cnumb;
-        // console.log(listClients);
-        // console.log(cnumb);
-        // console.log(formValues.cn);
-        // console.log(value)
-        setFormValues(formValues => ({ ...formValues, [id]: value.label, cnumb: value.cnumb }));
+    function handleChangeDate(value) {
+        setFormValues(formValues => ({ ...formValues, ["fecha"]: `${value.$D}-${value.$M + 1}-${value.$y}` }));
+    }
+    function handleChangeAutoCompleted(id, eve, value) {
+        setFormValues(formValues => ({ ...formValues, [id]: value }));
     }
 
-    const handleSubmit = (event) => {
+    function handleClientName(id, eve, value) {
+        setFormValues(formValues => ({ ...formValues, [id]: value.label, cnumb: value.cnumb }));
+    }
+    const handleSubmitt = (event) => {
         event.preventDefault();
-        // addClient({ cm: 'Lia', data: formValues });
+        const description = { ...formValues.description.map((item) => item.label) };
+        handleSubmit({ ...formValues, description: description, ['min']: durationTime, ['units']: countUnitsTime, });
         handleClose();
     }
 
+
     useEffect(() => {
-        if (data) {
-            setFormValues(data);
-            // description = data.description.map((item) => item) 
+        if (data.description !== undefined) {
+            let description = Object.keys(data.description).map((key) => ({ label: data.description[key] }));
+            setFormValues(Object.assign({}, { ...data }, { description: description }));
         }
+        return () => {
+            setFormValues({ ...defaultValues });
+        };
     }, [data])
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmitt}>
             <SoftBox display='flex'>
                 <SoftBox width='50%' mr={1}>
                     <TextField
@@ -82,7 +83,7 @@ export default function FormAdd({ id, cm, handleClose, data }) {
                     />
                 </SoftBox>
                 <SoftBox width='50%' mr={1}>
-                    <SelectInput data={listClients} sxx={{ width: 220 }} onchange={handleChangeAutoCompleted} hText="Name Client" id='cn' currentCM={formValues.cn || null} ref={refInput} />
+                    <SelectInput data={listClients} sxx={{ width: 220 }} onchange={handleClientName} hText="Name Client" id='cn' value={formValues.cn || null} ref={refInput} />
                 </SoftBox>
                 <SoftBox mr={1}>
                     <TextField sx={{ width: 120 }}
@@ -102,8 +103,9 @@ export default function FormAdd({ id, cm, handleClose, data }) {
                         name="fecha"
                         // label="Age"
                         type="date"
-                        value={fecha}
-                        onChange={handleInputChange}
+                        value={moment(formValues.fecha, "DD/MM/YYYY").format("YYYY-MM-DD")}
+                        onChange={handleChangeDate}
+                        // onBlur={handleInputChange}
                         helperText="Fecha"
                     // format="MM/dd/yyyy"
 
@@ -135,7 +137,7 @@ export default function FormAdd({ id, cm, handleClose, data }) {
                         name="min"
                         // label="Age"
                         type="number"
-                        value={formValues.min}
+                        value={durationTime}
                         onChange={handleInputChange}
                         helperText="Minutes"
                     />
@@ -153,7 +155,9 @@ export default function FormAdd({ id, cm, handleClose, data }) {
                         helperText="Pos"
                     />
                 </SoftBox>
-                <AutoCompleDescripService currentValue={formValues.description || []} handleChangeAutoCompleted={handleChangeAutoCompleted} listServices={listServices} hText="Service Description" width={355} />
+                <AutoCompleDescripService handleChangeAutoCompleted={handleChangeAutoCompleted} listServices={listServices} hText="Service Description" width={355} id='description'
+                    value={formValues.description}
+                />
             </SoftBox>
             <Divider color='grey' />
             <SoftBox display='flex' mt={2} justifyContent='end' >
@@ -174,5 +178,7 @@ FormAdd.propTypes = {
     id: PropTypes.string,
     cm: PropTypes.string,
     handleClose: PropTypes.func,
-    data: PropTypes.object
+    data: PropTypes.object,
+    listServices: PropTypes.array,
+    handleSubmit: PropTypes.func,
 };

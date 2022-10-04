@@ -6,7 +6,7 @@ import { Box, Autocomplete, TextField } from "@mui/material";
 
 
 
-const SelectInput = forwardRef(({ data, sxx = { width: 250 }, onchange, parse, hText, id, currentCM, ...rest }, ref) => {
+const SelectInput = forwardRef(({ data, sxx = { width: 250 }, onchange, parse, hText, id, ...rest }, ref) => {
     const handleChange = (event, newValue) => {
         onchange(id, event, newValue);
     };
@@ -20,7 +20,6 @@ const SelectInput = forwardRef(({ data, sxx = { width: 250 }, onchange, parse, h
             sx={sxx}
             renderInput={(params) => <TextField {...params} helperText={hText} />}
             onChange={handleChange}
-            value={currentCM}
             color='#000000'
             style={{ color: '#000000' }}
             // defaultValue={[]}

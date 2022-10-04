@@ -45,7 +45,7 @@ function WriteNote() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    saveData({ cm: currentClToNote.cm, id: currentClToNote.id, data: { ...formData, ['status']: 'open' } })
+    saveData({ cm: currentClToNote.cm, id: currentClToNote.id, data: { ...formData, ['status']: 'completed' } })
     if (!error) {
       dispatchRedux({ type: 'CURRENT_CL_TO_NOTE_SUCCESS', value: {} })
       setFormData(initialValues);

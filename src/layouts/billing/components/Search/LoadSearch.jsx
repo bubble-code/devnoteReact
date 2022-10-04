@@ -19,7 +19,7 @@ function LoadSearch({ value }) {
                             `${borderWidth[1]} solid ${borderColor}`
                     },
                 },
-                ".MuiBox-root": {
+                ".MuiBox-root": { 
                     " & span": {
                         width: "inherit",
                         textAlign: 'justify',

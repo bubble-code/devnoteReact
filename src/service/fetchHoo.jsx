@@ -49,15 +49,13 @@ export function useFetch() {
 }
 
 export function useSaveNote() {
-    const [datas, setData] = useState();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     const saveData = useCallback(async ({ cm, id, data }) => {
         setLoading(true);
         try {
-            const request = await DataService.updateSerNote({ cm, id, data });
-            setData(true);
+            await DataService.updateSerNote({ cm, id, data });
         } catch (error) {
             setError(error);
         } finally {
@@ -65,7 +63,7 @@ export function useSaveNote() {
         }
     }, []);
 
-    return { datas, loading, error, saveData };
+    return { loading, error, saveData };
 }
 export function useListCLients() {
     const [lisClients, setListClients] = useState([]);
@@ -178,7 +176,8 @@ export function useSearchHelperNotes(query) {
     const loadData = useCallback(async () => {
         setLoading(true);
         try {
-            const list = await DataService.searchHelper({ value: query });
+            const list = await DataService.searchHelper({ value: query }); 
+            console.log('search', list);
             setData(list);
         } catch (error) {
             setError(error);

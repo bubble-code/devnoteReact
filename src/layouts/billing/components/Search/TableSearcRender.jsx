@@ -4,11 +4,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 
-// Soft UI Dashboard React components
+// Component
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import moment from "moment";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import TextAreaTinic from "../../../../components/TextAreaTinic/TextAreaTinic";
 import { blue, grey } from '@mui/material/colors';
 
 
@@ -28,7 +29,7 @@ function TablesSearchRender({ respData }) {
                         aria-controls="panel2bh-content"
                         id={index}
                         style={{ width: '100%' }}
-                    ><SoftBox display="flex"  justifyContent="space-between" flexDirection='column' sx={{ width: '100%' }} borderRadius='md'>
+                    ><SoftBox display="flex" justifyContent="space-between" flexDirection='column' sx={{ width: '100%' }} borderRadius='md'>
                             <SoftBox display="flex" justifyContent="space-between" borderRadius='md' px={0} style={{ textAlign: 'center' }}>
                                 <SoftBox borderRadius='md' px={1} mt={1} mb={1} style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }}>
                                     <SoftTypography color='black' sx={{ fontFamily: "inherit", textTransform: 'uppercase', fontSize: '0.9rem', letterSpacing: '0.08rem' }}>{fecha.slice(0, -5)}</SoftTypography>
@@ -49,11 +50,11 @@ function TablesSearchRender({ respData }) {
                         </SoftBox>
                     </AccordionSummary>
                     <AccordionDetails >
-                        <SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth' style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }} >
-                            {sNote}
-                        </SoftTypography>
+                        {/*<TextAreaTinic value={sNote} />
+                        */}<SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth' style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }} dangerouslySetInnerHTML={{ __html: sNote }} />
+
                     </AccordionDetails>
-                </Accordion>
+                </Accordion >
 
             );
         })

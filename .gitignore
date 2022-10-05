@@ -27,4 +27,4 @@ yarn.lock
 commit.sh
 
 # Api of Tinicloud
-src\components\WriteAreaContainet\WriteAreaContainer.jsx
+/src/components/WriteAreaContainet/WriteAreaContainer.jsx

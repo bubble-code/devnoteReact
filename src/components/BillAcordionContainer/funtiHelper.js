@@ -59,34 +59,15 @@ export const renderColumns = columns.map(({ name, align, width }, key) => {
     );
 });
 
-function groupByDate(data) {
-    return data.reduce((acc, cur) => {
-        const id = cur.id;
-        const { fecha } = cur.data();
-        if (!acc[fecha]) {
-            acc[fecha] = [];
-        }
-        acc[fecha].push({ id, ...cur.data() });
-        return acc;
-    }, {});
-}
-
 function sortByDate(data) {
     const objectSort = {};
+    // const inSortObject = {};
     Object.keys(data).sort((a, b) => moment(a, "DDMMYYYY").diff(moment(b, "DDMMYYYY"))).forEach((key) => {
-        objectSort[key] = data[key];
-    });
-    return objectSort;
-}
-
-
-function sortByTime(data) {
-    const objectSort = {};
-    Object.keys(data).forEach((key) => {
+        // console.log("key", key);
         objectSort[key] = data[key].sort((a, b) => moment(a.timeStart, "HHmm").diff(moment(b.timeStart, "HHmm")));
     });
+    // console.log("objectSort", objectSort);
     return objectSort;
-
 }
 
 function formatTime(time) {
@@ -94,9 +75,7 @@ function formatTime(time) {
 }
 
 export default function ListServiOrderByDate({ data, handleDelete, handleEdit, setCurrentClForNote, setOpenModal }) {
-    const group = groupByDate(data);
-    const sort = sortByDate(group)
-    const groupSort = sortByTime(sort);
+    const groupSort = sortByDate(data);
     const rows = [];
 
 
@@ -106,6 +85,7 @@ export default function ListServiOrderByDate({ data, handleDelete, handleEdit, s
         }
         groupSort[fecha].map(servicio => {
             const { id, pos, description, timeEnd, timeStart, units, min, cm, cn } = servicio;
+            // console.log("servicio", { id, pos, timeEnd, timeStart, units, min, cm, cn });
             rows[fecha].push({
                 key: id,
                 ClientName: <SoftBox onClick={() => setCurrentClForNote({ id, cm })} style={{ cursor: 'default' }}><TagClientName name={cn} id={id} opacity={1} /></SoftBox>,
@@ -119,17 +99,17 @@ export default function ListServiOrderByDate({ data, handleDelete, handleEdit, s
                     </SoftBox>
                 ),
                 StartTime: (
-                    <SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth'>
+                    <SoftTypography variant="caption" color="secondary"  alignItems='rigth'>
                         {formatTime(timeStart)}
                     </SoftTypography>
                 ),
                 EndTime: (
-                    <SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth'>
+                    <SoftTypography variant="caption" color="secondary"  alignItems='rigth'>
                         {formatTime(timeEnd)}
                     </SoftTypography>
                 ),
                 Units: (
-                    <SoftBadge variant="gradient" badgeContent={units} color="light" size="xl" container />
+                    <SoftBadge variant="gradient" badgeContent={units} color="light"  container />
                 ),
                 Min: (
                     <SoftBadge variant="gradient" badgeContent={min} color="success" size="xs" container />

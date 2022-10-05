@@ -20,17 +20,15 @@ function Billing() {
           </Grid>
         </Grid>
         <SoftBox my={2}>
-          <Grid container spacing={3}>
-            <Grid item xs={22} md={22}>
-              <WriteNote />
-            </Grid>
+          <Grid item xs={23} md={23}>
+            <WriteNote />
           </Grid>
           <Grid item xs={23} md={23}>
             <ContainerHelperNotes />
           </Grid>
         </SoftBox>
+        <BillModalEditService />
       </SoftBox>
-      <BillModalEditService />
     </Fragment>
   );
 }

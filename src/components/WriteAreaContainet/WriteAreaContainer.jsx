@@ -21,6 +21,8 @@ export default function WriteAreaContainer({ id, value, onChange }) {
             <Editor
                 // onInit={(evt, editor) => editorRef.current = editor}
                 value={value}
+                apiKey="jgtl5czj43aj8fysglacem8dii96jgui2meic2tj27f0cfb4"
+                textareaName='writeArea'
                 init={{
                     height: 500,
                     menubar: true,
@@ -34,7 +36,7 @@ export default function WriteAreaContainer({ id, value, onChange }) {
                     //     'alignright alignjustify | bullist numlist outdent indent | ' +
                     //     'removeformat | help',
                     toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
-                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:18px;line-height: 2.2rem; }'
+                    content_style: 'body { font-family: az_ea_font, az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif; font-size:18px; line-height: 2.2rem; }'
                 }}
                 // value={'snkadnsdnla'}
                 onEditorChange={handleEditorChange}

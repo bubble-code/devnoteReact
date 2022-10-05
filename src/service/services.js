@@ -156,10 +156,23 @@ class DataService {
     async listBillingOpenByCm({ cm }) {
         if (cm) {
             const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
-            const querySnapShot = query(collectionn, where("status", "==", "open"));
+            const querySnapShot = query(collectionn, where("status", "!=", "completed"));
             const result = await getDocs(querySnapShot)
-            // console.log(result.docs);
-            return result.docs;
+            const cWithBill = new Set();
+            const data = result.docs.reduce((acc, cur) => {
+                // console.log("cur.data()", cur.data());
+                const id = cur.id;
+                const { fecha } = cur.data();
+                if (!acc[fecha]) {
+                    acc[fecha] = [];
+                }
+                acc[fecha].push({ id, ...cur.data() });
+                cWithBill.add(cur.data().cn);
+                return acc;
+            }, {});
+
+            // console.log(cWithBill);
+            return { initialData: data, data, cWithBill };
         }
     }
     async listBilling({ cm }) {

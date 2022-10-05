@@ -12,8 +12,9 @@ import SoftBadge from "components/SoftBadge";
 
 import { columns } from "../BillAcordionRender/colunmHead";
 
-function BillAcordionRender({ group, loading, len }) {
-
+function BillAcordionRender({ group, loading }) {
+  // console.log("group", !!group);
+  // console.log("len", group);
 
   const renderAcordeonServiceByDate = useCallback(() => {
     return Object.keys(group).map((key) => {
@@ -79,13 +80,13 @@ function BillAcordionRender({ group, loading, len }) {
         {
           loading ?
             <SoftBox display='flex' justifyContent='center' alignItems='center' mt={7} > <CircularProgress /></SoftBox>
-            : len > 0 ?
+            : !!group ?
               <SoftBox px={2}> {renderAcordeonServiceByDate()} </SoftBox>
               : <SoftBox display='flex' justifyContent='center' alignItems='center' mt={7} > <SoftTypography variant="h6" fontWeight="medium" opacity={0.5}>No Data</SoftTypography></SoftBox>
         }
       </SoftBox>
     ),
-    [len, loading, renderAcordeonServiceByDate]
+    [group, loading, renderAcordeonServiceByDate]
   );
 }
 

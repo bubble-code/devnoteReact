@@ -62,10 +62,10 @@ function TablesSearchRender({ respData }) {
 }
 
 // Setting default values for the props of Table
-TablesSearchRender.defaultProps = {
-    columns: [],
-    rows: [{}],
-};
+// TablesSearchRender.defaultProps = {
+//     columns: [],
+//     rows: [{}],
+// };
 
 // Typechecking props for the Table
 TablesSearchRender.propTypes = {

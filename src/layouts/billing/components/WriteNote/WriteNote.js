@@ -12,7 +12,7 @@ import SoftInput from "components/SoftInput";
 import SoftBadge from "components/SoftBadge";
 import SoftBox from "../../../../components/SoftBox";
 import SoftTypography from "components/SoftTypography";
-import { Box, Button, Grid, Icon, TextareaAutosize, TextField } from "@mui/material";
+import { Box, Button, Grid, Icon, TextareaAutosize, Snackbar, Alert } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import Card from "@mui/material/Card";
 
@@ -24,9 +24,17 @@ function WriteNote() {
   const clientFromRedux = useSelector((state) => state.currentClToNote);
   const { currentClient: currentClToNote } = clientFromRedux;
   const [formData, setFormData] = React.useState({});
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const dispatchRedux = useDispatch();
   const { datas, error, loading, saveData } = useSaveNote();
   const editorRef = useRef(null);
+
+  function handleCloseSnaclbar() {
+    setOpenSnackbar(false);
+  }
+  function handleOpenSnackbar() {
+    setOpenSnackbar(true);
+  }
 
   const description = currentClToNote.description ? Object.values(currentClToNote.description).join('/') : '';
 
@@ -61,25 +69,30 @@ function WriteNote() {
     });
   }
   function handleSubmit(e) {
-    e.preventDefault();   
+    e.preventDefault();
     saveData({ cm: currentClToNote.cm, id: currentClToNote.id, data: { ...formData, ['status']: 'open' } })
     if (!error) {
-      dispatchRedux({ type: 'CURRENT_CL_TO_NOTE_SUCCESS', value: {} })
-      setFormData(initialValues);
+      handleOpenSnackbar();
+      // dispatchRedux({ type: 'CURRENT_CL_TO_NOTE_SUCCESS', value: {} })
+      // setFormData(initialValues);
     }
   }
 
   return (
-    <SoftBox bgColor={grey[300]} borderRadius='md'>
-      <SoftBox pt={3} px={2}>
+    <SoftBox bgColor={grey[300]} borderRadius='md' pb={2}>
+      {/*<SoftBox pt={3} px={2}>
         <SoftTypography variant="h6" fontWeight="medium" sx={{ fontFamily: "Amethysta", textTransform: 'uppercase', fontSize: '0.8rem' }}>
           Case Management Progress Note
         </SoftTypography>
-      </SoftBox>
-      <SoftBox pt={1} pb={2} px={2}>
+      </SoftBox>*/}
+      <SoftBox pt={0} pb={2} px={2}>
         <Grid container spacing={3} mt={1}>
           <Grid item xs={0} md={0} ml={0} mr={0}>
             <SoftBadge variant="contained" badgeContent={currentClToNote.cn}
+              color="palettePastel" size="sm" container wordSpacing='0.1rem' />
+          </Grid>
+          <Grid item xs={0} md={0} ml={0} mr={0}>
+            <SoftBadge variant="contained" badgeContent={currentClToNote.pos}
               color="palettePastel" size="sm" container wordSpacing='0.1rem' />
           </Grid>
           <Grid item xs={0} md={0} ml={0} mr={0}>
@@ -95,7 +108,7 @@ function WriteNote() {
               color="palettePastel" size="sm" container wordSpacing='0.1rem' />
           </Grid>
           <Grid item xs={0} md={0} ml={0} mr={0}>
-            <SoftBadge variant="contained" badgeContent={currentClToNote.min}
+            <SoftBadge variant="contained" badgeContent={`${currentClToNote.min} min`}
               color="palettePastel" size="sm" container wordSpacing='0.1rem' />
           </Grid>
           <Grid item xs={0} md={0} ml={0} mr={0}>
@@ -133,15 +146,16 @@ function WriteNote() {
             </SoftBox>
           </SoftBox>
         </Grid>
-      </SoftBox >
-      <SoftBox display="flex" justifyContent="end" alignItems="left">
-        <SoftBox mr={6}>
-          <SoftButton variant="gradient" color={"dark"} onClick={handleSubmit}>
-            <Icon sx={{ fontWeight: "bold" }}>add</Icon>
-            &nbsp;Save Note
-          </SoftButton>
+        <SoftBox display="flex" justifyContent="end" alignItems="left">
+          <SoftBox mr={6}>
+            <SoftButton variant="gradient" color={"dark"} onClick={handleSubmit}>
+              <Icon sx={{ fontWeight: "bold" }}>add</Icon>
+              &nbsp;Save Note
+            </SoftButton>
+          </SoftBox>
         </SoftBox>
-      </SoftBox>
+      </SoftBox >
+      <Snackbar open={openSnackbar} autoHideDuration={2000} onClose={handleCloseSnaclbar} anchorOrigin={{ horizontal: 'center', vertical: 'top' }} message="Has been saved correctly!" />
     </SoftBox >
   );
 }

@@ -24,18 +24,19 @@ export function fectListBilling({ cm }) {
     }
 }
 
-export function fectListServsByCM({ cm }) { 
+export function fectListServsByCM({ cm }) {
     return async (dispatch) => {
         dispatch({ type: "LIST_SERVICES_BY_CM_LOAD" });
         const res = await DataService.listBillingOpenByCm({ cm });
+        // console.log(res);
         dispatch({ type: 'LIST_SERVICES_BY_CM_SUCCESS', value: res });
     }
 }
 
-export function fectCurrentClToNote({ cm, id }) { 
+export function fectCurrentClToNote({ cm, id }) {
     return async (dispatch) => {
         dispatch({ type: "CURRENT_CL_TO_NOTE_LOAD" });
-        const res = await DataService.getServiceById({ cm, id }); 
+        const res = await DataService.getServiceById({ cm, id });
         dispatch({ type: 'CURRENT_CL_TO_NOTE_SUCCESS', value: res });
     }
 }

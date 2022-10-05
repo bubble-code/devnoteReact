@@ -23,23 +23,27 @@ function ContainerAcordionBilling({ py, mb, headTitle }) {
     const dispatchRedux = useDispatch();
     const CMRedux = useSelector(state => state.listCM);
     const listServiceState = useSelector(state => state.listServiByCM);
-    const { data, loading } = listServiceState;
+    // console.log("listServiceState", listServiceState);
+    const { data: { initialData = {}, data = {}, cWithBill = [] }, loading } = listServiceState;
+    // const [selectdClient, setSelectdClient] = useState('');
+    // const { data = {}, cWithBill = [] } = objData;
     const { listCMs } = CMRedux;
     const [caseManager, setCaseManager] = useState('');
     const ref1 = React.useRef();
     const { error, delteItem, loading: load } = useDeleteService();
     const { error: errorUpdate, loading: loadingUpdate, updateItem } = useUpdateService();
     const [controller, dispatch] = useSoftUIController();
-
+    // console.log("datas", data);
+    // console.log("cWithBill", cWithBill);
 
     function handleOpen({ id, cm }) {
         setOpenModalEditService(dispatch, { open: true, id, cm });
     }
 
-    async function loadBillingData(id, event, value) {
+    function loadBillingData(id, event, value) {
         const cM = value.label;
         dispatchRedux(fectListServsByCM({ cm: cM }));
-        dispatchRedux(fectListClientsByCM({ cm: cM }));
+        // dispatchRedux(fectListClientsByCM({ cm: cM })); 
         setCaseManager(cM);
     }
     async function reloadTable() {
@@ -47,14 +51,14 @@ function ContainerAcordionBilling({ py, mb, headTitle }) {
     }
 
     const deleteItemFromTable = ({ id, cm }) => {
-        console.log({ id, cm });
+        // console.log({ id, cm });
         delteItem({ id, cm });
         if (!error) {
             dispatchRedux(fectListServsByCM({ cm }));
         }
     };
     const upDateItemFromTable = ({ id, cm }) => {
-        console.log({ id, cm });
+        // console.log({ id, cm });
         updateItem({ id, cm, data });
         if (!error) {
             dispatchRedux(fectListServsByCM({ cm }));
@@ -65,7 +69,31 @@ function ContainerAcordionBilling({ py, mb, headTitle }) {
         dispatchRedux(fectCurrentClToNote({ cm, id }));
     };
 
-    const group = ListServiOrderByDate({ data, handleDelete: deleteItemFromTable, handleEdit: upDateItemFromTable, setCurrentClForNote: setCurrentClForNote, setOpenModal: handleOpen });
+    let group = ListServiOrderByDate({ data, handleDelete: deleteItemFromTable, handleEdit: upDateItemFromTable, setCurrentClForNote: setCurrentClForNote, setOpenModal: handleOpen });
+
+    function handleFilter(id, event, value) {
+        if (value !== null) {
+            const { label } = value;
+            // console.log("value", initialData);
+            const filter = [];
+            Object.keys(initialData).map((item) => {
+                let result = initialData[item].filter(item2 => item2.cn === label);
+                if (result.length > 0) {
+                    filter[item] = result;
+                }
+            });
+            // console.log("filter", { ...filter });
+            dispatchRedux({ type: 'LIST_SERVICES_BY_CM_SUCCESS', value: { initialData, data: { ...filter }, cWithBill } });
+        } else {
+            dispatchRedux({ type: 'LIST_SERVICES_BY_CM_SUCCESS', value: { initialData, data: initialData, cWithBill } });
+        }
+    };
+
+
+
+
+
+
 
     return (
         <SoftBox py={py} bgColor={grey[600]} borderRadius='md'>
@@ -74,6 +102,7 @@ function ContainerAcordionBilling({ py, mb, headTitle }) {
                     <SoftBox display="flex" justifyContent="start" alignItems="center" p={3}>
                         <SoftTypography variant="h6" mr={5} sx={{ fontFamily: "Amethysta", textTransform: 'uppercase', fontSize: '0.8rem' }}>{headTitle} </SoftTypography>
                         <SelectInput data={listCMs} onchange={loadBillingData} hText="Choice CM Name" ref={ref1} id='cm' />
+                        <SelectInput data={Array.from(cWithBill).map(e => ({ label: e }))} onchange={handleFilter} hText="Choice CM Name" ref={ref1} id='cm' />
                         <SoftButton onClick={reloadTable} variant="contained" color="primary" ml={2}>Reload</SoftButton>
                     </SoftBox>
                     <SoftBox sx={{
@@ -86,7 +115,7 @@ function ContainerAcordionBilling({ py, mb, headTitle }) {
                     }}
                     >
                         {/**/}
-                        <BillAcordionRender group={group} loading={loading} len={data.length} />
+                        <BillAcordionRender group={group} loading={loading} len={data.length} data={data} />
                     </SoftBox>
                 </Card>
             </SoftBox>

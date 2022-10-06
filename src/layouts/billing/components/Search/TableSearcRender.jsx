@@ -51,7 +51,7 @@ function TablesSearchRender({ respData }) {
                     </AccordionSummary>
                     <AccordionDetails >
                         {/*<TextAreaTinic value={sNote} />
-                        */}<SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth' style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }} dangerouslySetInnerHTML={{ __html: sNote }} />
+                        */}<SoftTypography variant="caption" color="secondary"  alignItems='rigth' style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }} dangerouslySetInnerHTML={{ __html: sNote }} />
 
                     </AccordionDetails>
                 </Accordion >

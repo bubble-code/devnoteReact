@@ -156,7 +156,7 @@ class DataService {
     async listBillingOpenByCm({ cm }) {
         if (cm) {
             const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
-            const querySnapShot = query(collectionn, where("status", "!=", "completed"));
+            const querySnapShot = query(collectionn, where("status", "==", "open"));
             const result = await getDocs(querySnapShot)
             const cWithBill = new Set();
             const data = result.docs.reduce((acc, cur) => {
@@ -172,7 +172,7 @@ class DataService {
             }, {});
 
             // console.log(cWithBill);
-            return { initialData: data, data, cWithBill };
+            return { initialData: data, data, cWithBill: [...cWithBill] };
         }
     }
     async listBilling({ cm }) {

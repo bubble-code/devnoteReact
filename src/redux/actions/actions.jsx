@@ -23,17 +23,23 @@ export function fectListBilling({ cm }) {
 
     }
 }
-
+// Call from input in billing Services List
 export function fectListServsByCM({ cm }) {
     return async (dispatch) => {
-        dispatch({ type: "LIST_SERVICES_BY_CM_LOAD" });
+        dispatch({ type: "LIST_SERVICES_BY_CM_LOAD", cm });
         const res = await DataService.listBillingOpenByCm({ cm });
         // console.log(res);
         dispatch({ type: 'LIST_SERVICES_BY_CM_SUCCESS', value: res });
     }
 }
 
-export function fectCurrentClToNote({ cm, id }) {
+export function clearListServicesByCM() {
+    return async (dispatch) => {
+        dispatch({ type: 'LIST_SERVICES_BY_CM_CLEAR' });
+    }
+}
+
+export function fectCurrentClToNote({ cm, id }) { 
     return async (dispatch) => {
         dispatch({ type: "CURRENT_CL_TO_NOTE_LOAD" });
         const res = await DataService.getServiceById({ cm, id });

@@ -17,7 +17,16 @@ const SelectInput = forwardRef(({ data, sxx = { width: 250 }, onchange, parse, h
             disablePortal
             id={id}
             options={data}
-            sx={sxx}
+            sx={{
+                ...sxx,
+                "& div.MuiInputBase-root:nth-child(1)": {
+                    border: "1px solid black !important",
+                    display: 'flex !important',
+                    justifyContent: 'center !important',
+                    alignItems: 'center !important',
+                    flexDirection: 'column !important',
+                }
+            }}
             renderInput={(params) => <TextField {...params} helperText={hText} />}
             onChange={handleChange}
             color='#000000'
@@ -25,6 +34,7 @@ const SelectInput = forwardRef(({ data, sxx = { width: 250 }, onchange, parse, h
             // defaultValue={[]}
             {...rest}
             isOptionEqualToValue={(option, value) => option.id === value.id}
+
         />
     );
 });

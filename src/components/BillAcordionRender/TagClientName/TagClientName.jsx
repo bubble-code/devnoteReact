@@ -5,7 +5,7 @@ import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import SoftAvatar from "components/SoftAvatar";
 
-export function TagClientName({ name, id }) {
+export function TagClientName({ name, id, ...rest }) {
   const { currentClient } = useSelector((state) => state.currentClToNote);
   const { id: idCurr } = currentClient;
   const shapeColor = id === idCurr ? 'green' : '#80808047';
@@ -15,8 +15,8 @@ export function TagClientName({ name, id }) {
       <SoftBox mr={2}>
         <SoftAvatar alt={name} size="sm" variant="rounded" shapeColor={shapeColor} />
       </SoftBox>
-      <SoftBox display="flex" flexDirection="column">
-        <SoftTypography variant="button" fontWeight="medium">
+      <SoftBox display="flex" flexDirection="column" {...rest}>
+        <SoftTypography variant="button" fontWeight="medium" >
           {name}
         </SoftTypography>
       </SoftBox>
@@ -24,7 +24,7 @@ export function TagClientName({ name, id }) {
   );
 }
 
-export function Pos({ job}) {
+export function Pos({ job }) {
   return (
     <SoftBox display="flex" flexDirection="column">
       <SoftTypography variant="caption" fontWeight="medium" color="text">

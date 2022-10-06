@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-filename-extension */
 import moment from "moment";
+import { useDispatch } from 'react-redux';
 
 import SoftBox from "components/SoftBox";
 import SoftBadge from "components/SoftBadge";
@@ -74,10 +75,16 @@ function formatTime(time) {
     return moment(time, "HHmm").format("HH:mm A");
 }
 
-export default function ListServiOrderByDate({ data, handleDelete, handleEdit, setCurrentClForNote, setOpenModal }) {
+export default function ListServiOrderByDate({ data, handleDelete, handleEdit, setOpenModal }) {
+    const dispatchRedux = useDispatch();
+
     const groupSort = sortByDate(data);
     const rows = [];
 
+    const setCurrentClForNote = ({ service }) => {
+        console.log(service);
+        dispatchRedux({ type: 'CURRENT_CL_TO_NOTE_SUCCESS', value: service });
+    };
 
     Object.keys(groupSort).forEach((fecha) => {
         if (!rows[fecha]) {
@@ -88,28 +95,28 @@ export default function ListServiOrderByDate({ data, handleDelete, handleEdit, s
             // console.log("servicio", { id, pos, timeEnd, timeStart, units, min, cm, cn });
             rows[fecha].push({
                 key: id,
-                ClientName: <SoftBox onClick={() => setCurrentClForNote({ id, cm })} style={{ cursor: 'default' }}><TagClientName name={cn} id={id} opacity={1} /></SoftBox>,
-                Pos: <SoftBox onClick={() => setCurrentClForNote({ id, cm })} style={{ cursor: 'default' }}>
+                ClientName: <SoftBox style={{ cursor: 'default' }}><TagClientName onClick={() => setCurrentClForNote({ service: servicio })} name={cn} id={id} opacity={1} style={{ cursor: 'pointer' }} /></SoftBox>,
+                Pos: <SoftBox onClick={() => setCurrentClForNote({ id, cm })} style={{ cursor: 'pointer' }} >
                     <Pos job={pos} />
                 </SoftBox>,
                 ServiceDescription: (
-                    <SoftBox onClick={() => setCurrentClForNote({ id, cm })} style={{ cursor: 'default' }}>
-                        <SoftBadge variant="contained" badgeContent={Object.values(description).join(' / ')}
+                    <SoftBox style={{ cursor: 'pointer' }}>
+                        <SoftBadge variant="contained" badgeContent={Object.values(description).join(' / ')} onClick={() => setCurrentClForNote({ service: servicio })}
                             color="palettePastel" size="sm" container wordSpacing='0.1rem' />
                     </SoftBox>
                 ),
                 StartTime: (
-                    <SoftTypography variant="caption" color="secondary"  alignItems='rigth'>
+                    <SoftTypography variant="caption" color="secondary" alignItems='rigth'>
                         {formatTime(timeStart)}
                     </SoftTypography>
                 ),
                 EndTime: (
-                    <SoftTypography variant="caption" color="secondary"  alignItems='rigth'>
+                    <SoftTypography variant="caption" color="secondary" alignItems='rigth'>
                         {formatTime(timeEnd)}
                     </SoftTypography>
                 ),
                 Units: (
-                    <SoftBadge variant="gradient" badgeContent={units} color="light"  container />
+                    <SoftBadge variant="gradient" badgeContent={units} color="light" container />
                 ),
                 Min: (
                     <SoftBadge variant="gradient" badgeContent={min} color="success" size="xs" container />

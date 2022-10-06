@@ -1,6 +1,11 @@
 /* eslint-disable react/jsx-filename-extension */
 import { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
+import ListServiOrderByDate from '../BillAcordionContainer/funtiHelper';
+import { useUpdateService } from '../../service/fetchHoo';
+import { useDispatch, useSelector } from "react-redux";
+import { useSoftUIController, setOpenModalEditService } from "context";
+
 import { v4 as uuidv4 } from "uuid";
 import { Accordion, AccordionDetails, AccordionSummary, CircularProgress, Table as MuiTable } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -12,9 +17,37 @@ import SoftBadge from "components/SoftBadge";
 
 import { columns } from "../BillAcordionRender/colunmHead";
 
-function BillAcordionRender({ group, loading }) {
-  // console.log("group", !!group);
-  // console.log("len", group);
+function BillAcordionRender() {
+  const dispatchRedux = useDispatch();
+  const [controller, dispatch] = useSoftUIController();
+  const listServiceState = useSelector(state => state.listServiByCM);
+  const { data: { initialData, data, cWithBill }, loading, cm } = listServiceState;
+  const { error: errorUpdate, loading: loadingUpdate, updateItem } = useUpdateService();
+
+  function handleOpen({ id, cm }) {
+    setOpenModalEditService(dispatch, { open: true, id, cm });
+  }
+
+  const upDateItemFromTable = ({ id, cm }) => {
+    // console.log({ id, cm });
+    updateItem({ id, cm, data });
+    if (!error) {
+      dispatchRedux(fectListServsByCM({ cm }));
+    }
+  };
+
+  const deleteItemFromTable = ({ id, cm }) => {
+    // console.log({ id, cm });
+    delteItem({ id, cm });
+    if (!error) {
+      dispatchRedux(fectListServsByCM({ cm }));
+    }
+  };
+
+
+
+  let group = ListServiOrderByDate({ data, handleDelete: deleteItemFromTable, handleEdit: upDateItemFromTable, setOpenModal: handleOpen });
+
 
   const renderAcordeonServiceByDate = useCallback(() => {
     return Object.keys(group).map((key) => {

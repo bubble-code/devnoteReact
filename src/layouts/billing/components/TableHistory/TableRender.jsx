@@ -36,7 +36,7 @@ function TableRender() {
                 >
                     <SoftBox bgColor='grey-400' borderRadius='md' display='flex' justifyContent='space-between' alignItems='center' sx={{ width: '100%' }}
                         style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }} >
-                        <SoftBox  borderRadius='md' px={1} style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }}>
+                        <SoftBox borderRadius='md' px={1} style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }}>
                             <SoftTypography color='black' sx={{ fontFamily: "inherit", textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '0.08rem' }}>{fecha.slice(0, -5)}</SoftTypography>
                         </SoftBox>
                         <SoftBox borderRadius='md' px={1.5} style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }}>
@@ -46,7 +46,7 @@ function TableRender() {
                 </AccordionSummary>
                 <AccordionDetails>
                     <SoftBox container >
-                        <SoftTypography variant="caption" color="secondary" fontWeight="small" alignItems='rigth' style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }} >
+                        <SoftTypography variant="caption" color="secondary" alignItems='rigth' style={{ fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }} >
                             {sNote}
                         </SoftTypography>
                     </SoftBox>

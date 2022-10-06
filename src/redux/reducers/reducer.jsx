@@ -11,7 +11,7 @@ const initialStateSearch = {
 }
 const initialStateLisServices = {
     cm: '',
-    data: [],
+    data: { initialData: {}, data: {}, cWithBill: [] },
     error: null,
     loading: false,
 }
@@ -79,28 +79,25 @@ export function listServicesByCMReducer2(state = initialStateLisServices, action
     switch (action.type) {
         case "LIST_SERVICES_BY_CM_LOAD":
             return {
+                ...state,
                 loading: true,
-                data: [],
-                error: null,
+                cm: action.cm,
             };
         case "LIST_SERVICES_BY_CM_FAIL":
             return {
-                loading: false,
-                data: [],
+                ...state,
                 error: action.error,
             };
         case "LIST_SERVICES_BY_CM_SUCCESS":
             return {
+                ...state,
                 loading: false,
                 data: action.value,
                 error: null,
             };
-        case "LIST_SERVICES_BY_CM_CM":
+        case "LIST_SERVICES_BY_CM_CLEAR":
             return {
-                loading: false,
-                cm: action.cm,
-                data: [],
-                error: null,
+                ...initialStateLisServices
             };
         default:
             return state;

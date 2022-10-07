@@ -44,8 +44,6 @@ function BillAcordionRender() {
     }
   };
 
-
-
   let group = ListServiOrderByDate({ data, handleDelete: deleteItemFromTable, handleEdit: upDateItemFromTable, setOpenModal: handleOpen });
 
 

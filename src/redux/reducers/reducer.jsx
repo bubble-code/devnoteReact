@@ -32,6 +32,13 @@ const initialStateListClientsByCM = {
     error: null,
 }
 
+const initialStateHistoryOfClient = {
+    data: [],
+    loading: false,
+    error: null,
+    search: [],
+}
+
 export function listServicesByCMReducer(state = initialState, action) {
     // console.log('action', action);
     switch (action.type) {
@@ -175,6 +182,50 @@ export function listClientsByCMReducer(state = initialStateListClientsByCM, acti
                 loading: false,
                 listClients: action.value,
                 error: null,
+            };
+        default:
+            return state;
+    }
+}
+
+export function historyOfClientReducer(state = initialStateHistoryOfClient, action) {
+    // console.log('action', action);
+    switch (action.type) {
+        case "HISTORY_CLIENT_LOAD":
+            return {
+                ...state,
+                loading: true,
+            };
+        case "HISTORY_CLIENT_FAIL":
+            return {
+                ...state,
+                loading: false,
+                error: action.error,
+            };
+        case "HISTORY_CLIENT_SUCCESS":
+            return {
+                ...state,
+                loading: false,
+                data: action.value,
+                error: null,
+            };
+        case "SEARCH_LOAD":
+            return {
+                ...state,
+                loading: true,
+            };
+        case "SEARCH_FAIL":
+            return {
+                ...state,
+                loading: false,
+                error: action.error,
+            };
+        case "SEARCH_SUCCESS":
+            return {
+                ...state,
+                loading: false,
+                error: null,
+                search: action.value,
             };
         default:
             return state;

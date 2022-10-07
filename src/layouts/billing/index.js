@@ -16,7 +16,7 @@ function Billing() {
       <SoftBox mt={2}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <ContainerAcordionBilling  mb={2} headTitle={"Billing Service"} />
+            <ContainerAcordionBilling mb={2} headTitle={"Billing Service"} />
           </Grid>
         </Grid>
         <SoftBox my={2}>
@@ -24,8 +24,8 @@ function Billing() {
             <WriteNote />
           </Grid>
           <Grid item xs={23} md={23}>
-            {/**/}
-            <ContainerHelperNotes />
+            {/*
+            <ContainerHelperNotes />*/}
           </Grid>
         </SoftBox>
         <BillModalEditService />

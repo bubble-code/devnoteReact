@@ -12,9 +12,9 @@ function BillInputFilterByClient({ initialData, cWithBill }) {
     const dispatchRedux = useDispatch();
     // console.log("value", initialData);
 
-    useEffect(() => {
-        console.log("value", initialData);
-    }, [initialData, cWithBill]);
+    // useEffect(() => {
+    //     console.log("value", initialData);
+    // }, [initialData, cWithBill]);
 
     function handleFilter(id, event, value) {
         if (value !== null) {

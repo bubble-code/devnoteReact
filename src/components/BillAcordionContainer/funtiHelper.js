@@ -82,7 +82,7 @@ export default function ListServiOrderByDate({ data, handleDelete, handleEdit, s
     const rows = [];
 
     const setCurrentClForNote = ({ service }) => {
-        console.log(service);
+        // console.log(service);
         dispatchRedux({ type: 'CURRENT_CL_TO_NOTE_SUCCESS', value: service });
     };
 

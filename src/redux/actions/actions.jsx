@@ -1,7 +1,4 @@
-import DataService from '../../service/services'
-// import { collection, query, getDocs, where } from 'firebase/firestore';
-// import { db } from '../../service/firebase';
-// import axios from 'axios'
+import DataService from '../../service/services';
 
 const _pathCM = "/CM/cm/cm";
 
@@ -39,7 +36,7 @@ export function clearListServicesByCM() {
     }
 }
 
-export function fectCurrentClToNote({ cm, id }) { 
+export function fectCurrentClToNote({ cm, id }) {
     return async (dispatch) => {
         dispatch({ type: "CURRENT_CL_TO_NOTE_LOAD" });
         const res = await DataService.getServiceById({ cm, id });
@@ -60,5 +57,20 @@ export function fectListClientsByCM({ cm }) {
         dispatch({ type: "LIST_CLIENTS_BY_CM_LOAD" });
         const res = await DataService.listClient({ cm });
         dispatch({ type: 'LIST_CLIENTS_BY_CM_SUCCESS', value: res });
+    }
+}
+
+export function fectHistoryByClient({ cm, cn }) {
+    return async (dispatch) => {
+        dispatch({ type: "HISTORY_CLIENT_LOAD" });
+        const res = await DataService.listNoteByClient({ cm, name: cn });
+        dispatch({ type: 'HISTORY_CLIENT_SUCCESS', value: res });
+    }
+}
+export function fectSearchHelper(query) {
+    return async (dispatch) => {
+        dispatch({ type: "SEARCH_LOAD" });
+        const res = await DataService.searchHelper({ value: query });
+        dispatch({ type: 'SEARCH_SUCCESS', value: res });
     }
 }

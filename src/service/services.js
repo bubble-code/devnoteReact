@@ -1,5 +1,6 @@
 import { db } from "./firebase";
-import { collection, getDoc, getDocs, onSnapshot, doc, query, addDoc, setDoc, deleteDoc, updateDoc, where } from 'firebase/firestore'
+import { collection, getDoc, getDocs, onSnapshot, doc, query, addDoc, setDoc, deleteDoc, updateDoc, where } from 'firebase/firestore';
+import moment from "moment";
 
 
 class DataService {
@@ -195,7 +196,12 @@ class DataService {
         const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
         const querySnapShot = query(collectionn, where('status', '==', 'completed'), where("cn", "==", `${name}`));
         const result = await getDocs(querySnapShot)
-        return result.docs;
+
+        const arraOfData = result.docs.map((item) => {
+            return { id: item.id, ...item.data() }
+        })
+        arraOfData.sort((a, b) => moment(b.fecha, "DD-MM-YYYY") - moment(a.fecha, "DD-MM-YYYY"));
+        return arraOfData;
     }
     // #endregion 
 

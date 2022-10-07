@@ -45,7 +45,7 @@ export default function BillModalEditService() {
         // }
     }
     return (
-        <SoftBox sx={{ height: '1200px' }}>
+        <SoftBox >
             <Dialog
                 fullScreen={fullScreen}
                 open={openModalEditService.open}

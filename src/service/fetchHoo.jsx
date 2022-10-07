@@ -146,11 +146,14 @@ export function useNotesByCliet({ cmm, client }) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    // console.log('cmm', cmm);
+
     const loadData = useCallback(async () => {
         if (cmm) {
             setLoading(true);
             try {
                 const list = await DataService.listNoteByClient({ cm: cmm, name: client });
+                // console.log('list', list);
                 setData(list);
             } catch (error) {
                 setError(error);
@@ -176,7 +179,7 @@ export function useSearchHelperNotes(query) {
     const loadData = useCallback(async () => {
         setLoading(true);
         try {
-            const list = await DataService.searchHelper({ value: query }); 
+            const list = await DataService.searchHelper({ value: query });
             console.log('search', list);
             setData(list);
         } catch (error) {

@@ -6,7 +6,7 @@ import { useSaveNote } from "../../../../service/fetchHoo";
 import moment from "moment";
 
 // Component
-import WriteAreaContainer from "../../../../components/WriteAreaContainet/WriteAreaContainer";
+import WriteAreaContainer from "../../../../components/TextAreaTinic/TextAreaTinic";
 import SoftButton from "components/SoftButton";
 import SoftInput from "components/SoftInput";
 import SoftBadge from "components/SoftBadge";
@@ -15,7 +15,7 @@ import SoftTypography from "components/SoftTypography";
 import { Box, Button, Grid, Icon, TextareaAutosize, Snackbar, Alert, Divider } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import Card from "@mui/material/Card";
-import WriteBarHelper from "components/WriteBarHelper/WriteBarHelper";
+import WriteBarHelper from "../../../../components/WriteBarHelper/WriteBarHelper";
 
 // Style
 import './style.css'
@@ -116,6 +116,7 @@ function WriteNote() {
           <Grid container sm={1}>
             <Divider orientation={"vertical"} sx={{ "& .MuiDivider-root": { background: 'black !important' }, mt: 1, mb: 1, opacity: 1 }} />
           </Grid>
+          {/*aqui botones de ayudas*/}
           <WriteBarHelper />
         </Grid>
 

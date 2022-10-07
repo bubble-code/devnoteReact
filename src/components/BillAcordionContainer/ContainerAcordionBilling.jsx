@@ -34,11 +34,6 @@ function ContainerAcordionBilling({ mb, headTitle }) {
         }
     }
 
-   
-   
-
-
-
     return (
         <SoftBox sx={{ minHeight: 250, padding: 2 }} bgColor={grey[300]} borderRadius='md' mb={mb}>
             <SoftBox display="flex" justifyContent="start" alignItems="center" >

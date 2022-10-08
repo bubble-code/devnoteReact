@@ -29,6 +29,17 @@ export function fectListServsByCM({ cm }) {
         dispatch({ type: 'LIST_SERVICES_BY_CM_SUCCESS', value: res });
     }
 }
+// fucntion to find and replace a value in a json object
+export function findAndReplace(object, value, replacement) {
+    for (var i in object) {
+        if (typeof object[i] == 'object') {
+            findAndReplace(object[i], value, replacement);
+        } else if (object[i] == value) {
+            object[i] = replacement;
+        }
+    }
+    return object;
+}
 
 export function clearListServicesByCM() {
     return async (dispatch) => {

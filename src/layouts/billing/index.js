@@ -4,7 +4,7 @@ import { Fragment } from "react";
 // Component
 import Grid from "@mui/material/Grid";
 import SoftBox from "components/SoftBox";
-import WriteNote from "../billing/components/WriteNote/WriteNote";
+import WriteNote from "../../components/WriteNote/WriteNote";
 import ContainerHelperNotes from "./components/ContainerHelperNote";
 import ContainerAcordionBilling from "../../components/BillAcordionContainer/ContainerAcordionBilling";
 import BillModalEditService from "../../components/BillModalEditService/BillModalEditService";

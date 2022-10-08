@@ -1,21 +1,23 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentClToNote } from "../../../../context";
-import { useSaveNote } from "../../../../service/fetchHoo";
+import { setCurrentClToNote } from "../../context";
+import { useSaveNote } from "../../service/fetchHoo";
 import moment from "moment";
 
 // Component
-import WriteAreaContainer from "../../../../components/TextAreaTinic/TextAreaTinic";
+import WriteAreaContainer from "../TextAreaTinic/TextAreaTinic";
 import SoftButton from "components/SoftButton";
 import SoftInput from "components/SoftInput";
 import SoftBadge from "components/SoftBadge";
-import SoftBox from "../../../../components/SoftBox";
+import SoftBox from "../SoftBox";
 import SoftTypography from "components/SoftTypography";
-import { Box, Button, Grid, Icon, TextareaAutosize, Snackbar, Alert, Divider } from "@mui/material";
+import { Box, Button, Grid, Icon, TextareaAutosize, Snackbar, Alert } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import Card from "@mui/material/Card";
-import WriteBarHelper from "../../../../components/WriteBarHelper/WriteBarHelper";
+import WriteBarHelper from "../WriteBarHelper/WriteBarHelper";
+import WriteNoteCurrentInfoBar from "components/WriteNoteCurrentInfoBar/WriteNoteCurrentInfoBar";
+import { Row, Divider, Col } from "antd";
 
 // Style
 import './style.css'
@@ -82,44 +84,13 @@ function WriteNote() {
   return (
     <SoftBox bgColor={grey[300]} borderRadius='md' pb={2}>
       <SoftBox pt={0} pb={2} px={2}>
-        <Grid container >
-          <Grid container spacing={3} sm={5}>
-            <Grid item xs={0} md={0} ml={0} mr={0}>
-              <SoftBadge variant="contained" badgeContent={currentClToNote.cn}
-                color="palettePastel" size="sm" container wordSpacing='0.1rem' />
-            </Grid>
-            <Grid item xs={0} md={0} ml={0} mr={0}>
-              <SoftBadge variant="contained" badgeContent={currentClToNote.pos}
-                color="palettePastel" size="sm" container wordSpacing='0.1rem' />
-            </Grid>
-            <Grid item xs={0} md={0} ml={0} mr={0}>
-              <SoftBadge variant="contained" badgeContent={currentClToNote.fecha}
-                color="palettePastel" size="sm" container wordSpacing='0.1rem' />
-            </Grid>
-            <Grid item xs={0} md={0} ml={0} mr={0}>
-              <SoftBadge variant="contained" badgeContent={stringTime}
-                color="palettePastel" size="sm" container wordSpacing='0.1rem' />
-            </Grid>
-            <Grid item xs={0} md={0} ml={0} mr={0}>
-              <SoftBadge variant="contained" badgeContent={stringTimeEnd}
-                color="palettePastel" size="sm" container wordSpacing='0.1rem' />
-            </Grid>
-            <Grid item xs={0} md={0} ml={0} mr={0}>
-              <SoftBadge variant="contained" badgeContent={`${currentClToNote.min} min`}
-                color="palettePastel" size="sm" container wordSpacing='0.1rem' />
-            </Grid>
-            <Grid item xs={0} md={0} ml={0} mr={0}>
-              <SoftBadge variant="contained" badgeContent={currentClToNote.units}
-                color="palettePastel" size="sm" container wordSpacing='0.1rem' />
-            </Grid>
-          </Grid>
-          <Grid container sm={1}>
-            <Divider orientation={"vertical"} sx={{ "& .MuiDivider-root": { background: 'black !important' }, mt: 1, mb: 1, opacity: 1 }} />
-          </Grid>
-          {/*aqui botones de ayudas*/}
+        <Row>
+          <WriteNoteCurrentInfoBar />
+          <Col>
+            <Divider type="vertical" style={{ background: 'blue' }} />
+          </Col>
           <WriteBarHelper />
-        </Grid>
-
+        </Row>
         <SoftBox display='flex' justifyContent='start' container spacing={0} mt={2}>
           <SoftBadge variant="contained" badgeContent={description}
             color="palettePastel" size="sm" container wordSpacing='0.1rem' />

@@ -1,20 +1,16 @@
 import React from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from "prop-types";
 
 // Component
 import SelectInput from "components/SelectInput";
-import { useEffect } from "react";
+import SoftBox from "components/SoftBox";
 
 
-function BillInputFilterByClient({ initialData, cWithBill }) {
-
+function BillInputFilterByClient() {
+    const listServiceState = useSelector(state => state.listServiByCM);
+    const { data: { initialData, data, cWithBill }, loading, cm } = listServiceState;
     const dispatchRedux = useDispatch();
-    // console.log("value", initialData);
-
-    // useEffect(() => {
-    //     console.log("value", initialData);
-    // }, [initialData, cWithBill]);
 
     function handleFilter(id, event, value) {
         if (value !== null) {
@@ -34,7 +30,9 @@ function BillInputFilterByClient({ initialData, cWithBill }) {
     };
 
     return (
-        <SelectInput data={cWithBill.map(e => ({ label: e }))} onchange={handleFilter} hText="Filter Name" id='filter1' />
+        <SoftBox ml={2}>
+            <SelectInput data={cWithBill.map(e => ({ label: e }))} onchange={handleFilter} hText="Filter Name" id='filter1' />
+        </SoftBox>
     )
 }
 

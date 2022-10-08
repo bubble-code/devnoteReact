@@ -24,24 +24,24 @@ function TableRender() {
             {loading ? <Space size="middle"> <Spin size="large" /></Space> : <Collapse style={{ width: '100%' }}>
                 {search.map((item, index) => {
                     const { fecha, sNote, description, cm, min, cn } = item;
-                    console.log('item', item);
+                    // console.log('item', item);
                     return (
                         <Panel key={index} header={
                             <Row >
                                 <Col>
                                     <SoftTypography sx={{ fontFamily: "inherit", textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '0.08rem' }}>{moment(fecha, "DD-MM-YYYY").format('DD-MM')}</SoftTypography>
                                 </Col>
-                                <Col offset={2} span={11} >
-                                    <SoftTypography sx={{ fontFamily: "inherit", textTransform: 'uppercase', fontSize: '0.7rem', letterSpacing: '0.07rem' }}>{Object.values(description).join(' / ')}</SoftTypography>
+                                <Col offset={1} span={11} >
+                                    <SoftTypography sx={{ fontFamily: "inherit", textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '0.05rem' }}>{Object.values(description).join(' / ')}</SoftTypography>
                                 </Col>
-                                <Col >
-                                    <SoftTypography sx={{ fontFamily: "inherit", textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '0.08rem' }}>{cm}</SoftTypography>
-                                </Col>
-                                <Col offset={1}>
-                                    <SoftTypography sx={{ fontFamily: "inherit", textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '0.08rem' }}>{min}</SoftTypography>
+                                <Col offset={1} span={3}>
+                                    <SoftTypography sx={{ fontFamily: "inherit", textTransform: 'uppercase', fontSize: '0.6rem', letterSpacing: '0.05rem' }}>{cm}</SoftTypography>
                                 </Col>
                                 <Col offset={1}>
-                                    <SoftTypography sx={{ fontFamily: "inherit", textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '0.08rem' }}>{`${cn.slice(0, 8)}...`}</SoftTypography>
+                                    <SoftTypography sx={{ fontFamily: "inherit", textTransform: 'uppercase', fontSize: '0.7rem', letterSpacing: '0.06rem' }}>{min}</SoftTypography>
+                                </Col>
+                                <Col offset={1}>
+                                    <SoftTypography sx={{ fontFamily: "inherit", textTransform: 'uppercase', fontSize: '0.7rem', letterSpacing: '0.05rem' }}>{`${cn.slice(0, 8)}...`}</SoftTypography>
                                 </Col>
                             </Row>} >
                             <Row >

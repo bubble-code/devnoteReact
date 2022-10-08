@@ -215,7 +215,7 @@ class DataService {
         const listCMa = await this.listCM();
         // console.log(listCMa);
         const prevResult = Promise.allSettled(listCMa.map(async (item) => {
-            console.log("item.id", item.label);
+            // console.log("item.id", item.label);
             const collectionn = collection(db, `${this._pathCM}/${item.label}/openBilling`);
             const querySnapShot = query(collectionn, where('status', '==', 'completed'));
             const result = await getDocs(querySnapShot);
@@ -223,7 +223,7 @@ class DataService {
         })
         ).then((result) => {
             result.forEach((item2) => {
-                console.log("result", item2);
+                // console.log("result", item2);
                 if (item2.status === "fulfilled") {
                     // resultFinal.push(
                     item2.value.map((item) => {
@@ -237,12 +237,14 @@ class DataService {
                 }
             });
             // console.log("resultFinal", resultFinal);
+            resultFinal.sort((a, b) => moment(b.fecha, "DD-MM-YYYY") - moment(a.fecha, "DD-MM-YYYY"));
             return resultFinal;
         }).catch((error) => {
             console.log(error);
             return [];
         });
-        // console.log("Result Final", prevResult);
+        // console.log("Result Final", resultFinal);
+        // return prevResult.sort((a, b) => moment(b.fecha, "DD-MM-YYYY") - moment(a.fecha, "DD-MM-YYYY"));
         return prevResult;
     }
 

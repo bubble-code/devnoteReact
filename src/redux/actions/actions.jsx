@@ -1,4 +1,5 @@
 import DataService from '../../service/services';
+import { useSelector } from 'react-redux';
 
 const _pathCM = "/CM/cm/cm";
 
@@ -41,11 +42,31 @@ export function findAndReplace(object, value, replacement) {
     return object;
 }
 
+export function updateNotes({ value }) {
+    return async (dispatch) => {
+        // dispatch({ type: "UPDATE_NOTES_LOAD" });
+        const { id, cm } = value;
+        const res = await DataService.updateService({ id, cm, data: { ...value } });
+        dispatch({ type: 'LIST_SERVICES_BY_CM_UPDATE', value: { ...value } });
+    }
+}
+
+export function completedNote({ value }) {
+    return async (dispatch) => {
+        // dispatch({ type: "UPDATE_NOTES_LOAD" });
+        const { id, cm } = value;
+        // const res = await DataService.updateService({ id, cm, data: { ...value } });
+        dispatch({ type: 'LIST_SERVICES_BY_CM_COMPLETE', value: { ...value } });
+    }
+}
+
 export function clearListServicesByCM() {
     return async (dispatch) => {
         dispatch({ type: 'LIST_SERVICES_BY_CM_CLEAR' });
     }
 }
+
+
 
 export function fectCurrentClToNote({ cm, id }) {
     return async (dispatch) => {

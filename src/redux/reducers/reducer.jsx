@@ -102,6 +102,50 @@ export function listServicesByCMReducer2(state = initialStateLisServices, action
                 data: action.value,
                 error: null,
             };
+        case "LIST_SERVICES_BY_CM_UPDATE": {
+            const { fecha, id } = action.value;
+            const subArrayFind = state.data.data[fecha];
+            const index = subArrayFind.findIndex((item) => item.id === id);
+            subArrayFind[index] = { ...subArrayFind[index], ...action.value };
+
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    data: {
+                        ...state.data.data,
+                        [fecha]: subArrayFind,
+                    },
+                    initialData: {
+                        ...state.data.initialData,
+                        [fecha]: subArrayFind,
+                    },
+                },
+            };
+        }
+        case "LIST_SERVICES_BY_CM_COMPLETE": {
+            const { fecha, id } = action.value;
+            const subArrayFind = state.data.data[fecha];
+            const index = subArrayFind.findIndex((item) => item.id === id);
+            // delete object subArrayFind[index] from array and update state
+            subArrayFind.splice(index, 1);
+            // subArrayFind[index] = { ...subArrayFind[index], ...action.value };
+
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    data: {
+                        ...state.data.data,
+                        [fecha]: subArrayFind,
+                    },
+                    initialData: {
+                        ...state.data.initialData,
+                        [fecha]: subArrayFind,
+                    },
+                },
+            };
+        }
         case "LIST_SERVICES_BY_CM_CLEAR":
             return {
                 ...initialStateLisServices

@@ -23,12 +23,7 @@ function Billing() {
           <Grid item xs={23} md={23}>
             <WriteNote />
           </Grid>
-          <Grid item xs={23} md={23}>
-            {/*
-            <ContainerHelperNotes />*/}
-          </Grid>
         </SoftBox>
-        <BillModalEditService />
       </SoftBox>
     </Fragment>
   );

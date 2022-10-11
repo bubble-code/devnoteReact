@@ -11,6 +11,7 @@ import InputSelectCM from "./InputSelectCM";
 import IconReloadService from "./IconReloadService";
 
 import { grey } from '@mui/material/colors';
+import BillModalEditService from "../BillModalEditService/BillModalEditService";
 
 
 function ContainerAcordionBilling({ mb, headTitle }) {
@@ -37,6 +38,7 @@ function ContainerAcordionBilling({ mb, headTitle }) {
                 {/**/}
                 <BillAcordionRender />
             </SoftBox>
+            <BillModalEditService />
         </SoftBox>
     );
 }

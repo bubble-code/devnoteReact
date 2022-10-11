@@ -51,7 +51,7 @@ export default function FormAdd({ id, listServices, handleClose, data, handleSub
     function handleClientName(id, eve, value) {
         setFormValues(formValues => ({ ...formValues, [id]: value.label, cnumb: value.cnumb }));
     }
-    const handleSubmitt = (event) => {
+    const handleSubmitt = () => {
         event.preventDefault();
         const description = { ...formValues.description.map((item) => item.label) };
         handleSubmit({ ...formValues, description: description, ['min']: durationTime, ['units']: countUnitsTime, });

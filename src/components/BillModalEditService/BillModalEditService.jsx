@@ -26,19 +26,20 @@ export default function BillModalEditService() {
     const [formValues, setFormValues] = useState(defaultValues);
     const [controller, dispatch] = useSoftUIController();
     const { openModalEditService } = controller;
-    const { open, id, cm } = openModalEditService;
-    const { error, loading, data } = useGetServiceById({ id, cm });
+    const { open, service } = openModalEditService;
+    // const { error, loading, data } = useGetServiceById({ id, cm });
     const { listServices, error: errorListService, loading: loadingListService } = useListServices();
     const { error: errorSave, loading: loginSave, saveData } = useSaveNote();
     // const { loading, error, addClient } = useAddClient();
 
     const handleClose = () => {
-        setOpenModalEditService(dispatch, { open: false, id: null, cm: null, });
+        setOpenModalEditService(dispatch, { open: false, service: {}, });
     };
 
     function handleSubmit(data) {
         // console.log("dataSubmit", data);
-        saveData({ cm, id, data })
+
+        saveData({ data })
         // if (!error) {
         // dispatchRedux({ type: 'CURRENT_CL_TO_NOTE_SUCCESS', value: {} })
         // setFormData(initialValues);
@@ -58,7 +59,7 @@ export default function BillModalEditService() {
                     <Divider color='grey' />
                 </DialogTitle>
                 <DialogContent>
-                    <FormAdd id={id} cm={cm} handleClose={handleClose} data={data} listServices={listServices} handleSubmit={handleSubmit} />
+                    <FormAdd id={service.id} cm={service.cm} handleClose={handleClose} data={service} listServices={listServices} handleSubmit={handleSubmit} />
                 </DialogContent>
                 <DialogActions>
 

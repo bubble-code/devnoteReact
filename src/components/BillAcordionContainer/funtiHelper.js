@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import moment from "moment";
 import { useDispatch } from 'react-redux';
+import { useSoftUIController, setOpenModalEditService } from "../../context/index";
 
 import SoftBox from "components/SoftBox";
 import SoftBadge from "components/SoftBadge";
@@ -75,11 +76,15 @@ function formatTime(time) {
     return moment(time, "HHmm").format("HH:mm A");
 }
 
-export default function ListServiOrderByDate({ data, handleDelete, handleEdit, setOpenModal }) {
+export default function ListServiOrderByDate({ data, handleDelete, handleEdit, }) {
     const dispatchRedux = useDispatch();
-
+    const [controller, dispatch] = useSoftUIController();
     const groupSort = sortByDate(data);
     const rows = [];
+
+    function handleOpen({ service }) {
+        setOpenModalEditService(dispatch, { open: true, service });
+    }
 
     const setCurrentClForNote = ({ service }) => {
         // console.log(service);
@@ -96,7 +101,7 @@ export default function ListServiOrderByDate({ data, handleDelete, handleEdit, s
             rows[fecha].push({
                 key: id,
                 ClientName: <SoftBox style={{ cursor: 'default' }}><TagClientName onClick={() => setCurrentClForNote({ service: servicio })} name={cn} id={id} opacity={1} style={{ cursor: 'pointer' }} /></SoftBox>,
-                Pos: <SoftBox onClick={() => setCurrentClForNote({ id, cm })} style={{ cursor: 'pointer' }} >
+                Pos: <SoftBox onClick={() => setCurrentClForNote({ service: servicio })} style={{ cursor: 'pointer' }} >
                     <Pos job={pos} />
                 </SoftBox>,
                 ServiceDescription: (
@@ -125,7 +130,7 @@ export default function ListServiOrderByDate({ data, handleDelete, handleEdit, s
                 Action: (
                     <SoftBox>
                         <Tooltip title="Edit"><IconButton>
-                            <EditIcon sx={{ color: green[500], cursor: 'pointer' }} fontSize="small" onClick={() => setOpenModal({ id, cm })} />
+                            <EditIcon sx={{ color: green[500], cursor: 'pointer' }} fontSize="small" onClick={() => handleOpen({ service: servicio })} />
                         </IconButton></Tooltip>
                         <Tooltip title="Delete"><IconButton>
                             <DeleteRounded sx={{ color: pink[500], cursor: 'pointer' }} fontSize="small" onClick={() => handleDelete({ id, cm })} />

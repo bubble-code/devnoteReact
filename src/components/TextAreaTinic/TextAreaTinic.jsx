@@ -20,6 +20,7 @@ export default function TextAreaTinic({ value, onChange, id }) {
         <SoftBox>
             <Editor
                 // onInit={(evt, editor) => editorRef.current = editor}
+                apiKey='jgtl5czj43aj8fysglacem8dii96jgui2meic2tj27f0cfb4'
                 value={value}
                 init={{
                     // height: auto,
@@ -34,7 +35,7 @@ export default function TextAreaTinic({ value, onChange, id }) {
                         'alignright alignjustify | bullist numlist outdent indent | ' +
                         'removeformat | help',
                     toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
-                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:1rem;line-height: 1.8rem; }'
+                    content_style: 'body { font-family:Courier new,Arial,sans-serif; font-size:14pt ;line-height: 1.8rem; }'
                 }}
                 // value={'snkadnsdnla'}
                 onEditorChange={handleEditorChange}

@@ -96,7 +96,7 @@ function SoftUIControllerProvider({ children }) {
     listCM: [],
     listActClient: [],
     currentClToNote: {},
-    openModalEditService: { open: false, id: null, cm: null, }
+    openModalEditService: { open: false, service: {} }
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);

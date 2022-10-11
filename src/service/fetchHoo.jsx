@@ -52,7 +52,8 @@ export function useSaveNote() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const saveData = useCallback(async ({ cm, id, data }) => {
+    const saveData = useCallback(async ({ data }) => {
+        const { id, cm } = data;
         setLoading(true);
         try {
             await DataService.updateSerNote({ cm, id, data });

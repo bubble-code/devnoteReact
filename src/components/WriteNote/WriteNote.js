@@ -1,60 +1,44 @@
 /* eslint-disable react/jsx-filename-extension */
-import React, { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setCurrentClToNote } from "../../context";
-import { useSaveNote } from "../../service/fetchHoo";
-import moment from "moment";
+import React, { useState, useRef, useEffect } from "react";
+import { useSelector } from 'react-redux';
+
 
 // Component
 import WriteAreaContainer from "../TextAreaTinic/TextAreaTinic";
-import SoftButton from "components/SoftButton";
 import SoftInput from "components/SoftInput";
 import SoftBadge from "components/SoftBadge";
 import SoftBox from "../SoftBox";
-import SoftTypography from "components/SoftTypography";
-import { Box, Button, Grid, Icon, TextareaAutosize, Snackbar, Alert } from "@mui/material";
+import { TextareaAutosize, Snackbar } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import Card from "@mui/material/Card";
 import WriteBarHelper from "../WriteBarHelper/WriteBarHelper";
-import WriteNoteCurrentInfoBar from "components/WriteNoteCurrentInfoBar/WriteNoteCurrentInfoBar";
+import WriteNoteCurrentInfoBar from "../WriteNoteCurrentInfoBar/WriteNoteCurrentInfoBar";
 import { Row, Divider, Col } from "antd";
+import ButtonsSave from "./ButtonsSaves";
 
 // Style
 import './style.css'
 
 
 function WriteNote() {
-  const clientFromRedux = useSelector((state) => state.currentClToNote);
-  const { currentClient: currentClToNote } = clientFromRedux;
-  const [formData, setFormData] = React.useState({});
-  const [openSnackbar, setOpenSnackbar] = React.useState(false);
-  const dispatchRedux = useDispatch();
-  const { datas, error, loading, saveData } = useSaveNote();
+  const clientFromRedux = useSelector((state) => state);
+  const { currentClient: currentClToNote } = clientFromRedux["currentClToNote"];
+  const [formData, setFormData] = useState(currentClToNote);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const editorRef = useRef(null);
+
+  const { isInProcess = false } = currentClToNote;
+  // console.log("isInProcess", currentClToNote);
+
+  useEffect(() => {
+    setFormData(currentClToNote);
+  }, [currentClToNote]);
 
   function handleCloseSnaclbar() {
     setOpenSnackbar(false);
   }
-  function handleOpenSnackbar() {
-    setOpenSnackbar(true);
-  }
 
-  const description = currentClToNote.description ? Object.values(currentClToNote.description).join('/') : '';
 
-  const initialValues = {
-    sNote: '',
-    domain: '',
-    outComeS: '',
-    nStep: '',
-  };
-
-  useEffect(() => {
-    setFormData({ ...currentClToNote });
-
-  }, [currentClToNote]);
-
-  const stringTime = currentClToNote.timeStart ? moment(currentClToNote.timeStart, "HHmm").format("HH:mm A") : null;
-  const stringTimeEnd = currentClToNote.timeEnd ? moment(currentClToNote.timeEnd, "HHmm").format("HH:mm A") : null;
+  const description = currentClToNote.description ? Object.values(currentClToNote.description).join(' / ') : '';
 
   function handleChange(e) {
     setFormData({
@@ -63,73 +47,54 @@ function WriteNote() {
     });
   }
   function handeAreaChange(id, data) {
-    // console.log('Content was updated:', data);
-    // console.log('ID:', id);
-
     setFormData({
       ...formData,
       [id]: data,
     });
   }
-  function handleSubmit(e) {
-    e.preventDefault();
-    saveData({ cm: currentClToNote.cm, id: currentClToNote.id, data: { ...formData, ['status']: 'open' } })
-    if (!error) {
-      handleOpenSnackbar();
-      // dispatchRedux({ type: 'CURRENT_CL_TO_NOTE_SUCCESS', value: {} })
-      // setFormData(initialValues);
-    }
-  }
+
 
   return (
     <SoftBox bgColor={grey[300]} borderRadius='md' pb={2}>
-      <SoftBox pt={0} pb={2} px={2}>
-        <Row>
+      <Row >
+        <Col span={10}>
           <WriteNoteCurrentInfoBar />
-          <Col>
-            <Divider type="vertical" style={{ background: 'blue' }} />
-          </Col>
+        </Col>
+        <Col span={1}>
+          <Divider type="vertical" style={{ background: 'blue' }} />
+        </Col>
+        <Col span={10}>
           <WriteBarHelper />
-        </Row>
-        <SoftBox display='flex' justifyContent='start' container spacing={0} mt={2}>
-          <SoftBadge variant="contained" badgeContent={description}
-            color="palettePastel" size="sm" container wordSpacing='0.1rem' />
-          <SoftBox ml={4}>
+        </Col>
+        <Row gutter={[24, 24]} justify='start' align="bottom">
+          <Col>
+            <SoftBadge variant="contained" badgeContent={description}
+              color="palettePastel" size="sm" container wordSpacing='0.1rem' />
+          </Col>
+          <Col >
             <SoftInput id="domain" onChange={handleChange} value={formData['domain'] || ''} placeholder="Domain" />
-          </SoftBox>
-        </SoftBox>
-        <Grid container spacing={0} mt={1} pr={0} justifyContent={'space-between'}>
-          {/*<SoftBox sx={{ width: '100%' }} bgColor={grey[500]}>
-            <TextareaAutosize id="sNote" sx={{ width: '100%' }} minRows={15} onChange={handleChange} style={{ background: grey[300], fontSize: '1.2rem', lineHeight: 1.5, textAlign: 'justify', fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }} value={formData['sNote'] || ''} />
-          </SoftBox>*/}
-          <SoftBox sx={{ width: '100%' }} bgColor={grey[300]}>
-            <SoftBox>
-              <WriteAreaContainer editorRef={editorRef} value={formData['sNote'] || ''} onChange={handeAreaChange} id="sNote" />
-            </SoftBox>
-          </SoftBox>
+          </Col>
+        </Row>
 
-          <SoftBox display='flex' width='100%' spacing={2} >
-            <SoftBox sx={{ width: '50%', margin: '4px' }} >
+        <Col span={24}>
+          <WriteAreaContainer editorRef={editorRef} value={formData['sNote'] || ''} onChange={handeAreaChange} id="sNote" />
+        </Col>
+        <Col span={24}>
+          <Row gutter={[16, 16]} >
+            <Col span={12}>
               <SoftBadge variant="contained" badgeContent="OutCome of Service"
                 color="palettePastel" size="sm" container wordSpacing='0.1rem' />
               <TextareaAutosize id="outComeS" minRows={5} onChange={handleChange} style={{ marginTop: '2px', fontSize: '1.2rem', width: '100%', fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }} value={formData['outComeS'] || ''} />
-            </SoftBox>
-            <SoftBox sx={{ width: '50%', margin: '4px' }}>
+            </Col>
+            <Col span={12}>
               <SoftBadge variant="contained" badgeContent="Next Step"
                 color="palettePastel" size="sm" container wordSpacing='0.1rem' />
               <TextareaAutosize id="nStep" minRows={5} onChange={handleChange} style={{ marginTop: '2px', fontSize: '1.2rem', width: '100%', fontFamily: 'az_ea_font, "Segoe UI", az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif' }} value={formData['nStep'] || ''} />
-            </SoftBox>
-          </SoftBox>
-          <SoftBox display="flex" justifyContent="end" alignItems="left">
-            <SoftBox mr={6}>
-              <SoftButton variant="gradient" color={"dark"} onClick={handleSubmit}>
-                <Icon sx={{ fontWeight: "bold" }}>add</Icon>
-                &nbsp;Save Note
-              </SoftButton>
-            </SoftBox>
-          </SoftBox>
-        </Grid>
-      </SoftBox >
+            </Col>
+          </Row>
+        </Col>
+        <ButtonsSave formVal={formData} handleOpenSnack={setOpenSnackbar} viewInProccess={!formData?.isInProcess} />
+      </Row >
       <Snackbar open={openSnackbar} autoHideDuration={2000} onClose={handleCloseSnaclbar} anchorOrigin={{ horizontal: 'center', vertical: 'top' }} message="Has been saved correctly!" />
     </SoftBox >
   );

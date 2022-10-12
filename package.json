@@ -5,11 +5,11 @@
   "license": "SEE LICENSE IN <https://www.creative-tim.com/license>",
   "description": "ReactJS version of Soft UI Dashboard by Creative Tim",
   "bugs": {
-    "url": "https://github.com/creativetimofficial/soft-ui-dashboard-react/issues"
+    "url": "https://github.com/bubble_code"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/creativetimofficial/soft-ui-dashboard-react.git"
+    "url": "git+https://github.com/bubble_code.git"
   },
   "engines": {
     "node": "14 || 15 || 16",

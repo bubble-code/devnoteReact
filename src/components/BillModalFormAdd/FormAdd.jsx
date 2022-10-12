@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from 'react-redux';
+import React, { useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from "prop-types";
 import moment from "moment/moment";
-import { countUnits, duration, formInitialData } from '../../funcTime/funt';
+import { updateNotes } from "../../redux/actions/actions";
+import { countUnits, duration } from '../../funcTime/funt';
+import { useSaveNote, useListServices } from "../../service/fetchHoo";
 
 
 // Components
@@ -13,24 +15,13 @@ import AutoCompleDescripService from "../AutoCompleDescripService/AutoCompleDesc
 import SelectInput from "../SelectInput";
 
 
-
-const defaultValues = {
-    cn: '',
-    name: "",
-    lastName: "",
-    cnumb: "",
-    dob: "",
-    dxCode: "",
-    dataAssigned: "",
-    gender: '',
-    description: [],
-};
-
-
-export default function FormAdd({ id, listServices, handleClose, data, handleSubmit }) {
-    const [formValues, setFormValues] = useState({ ...defaultValues });
+export default function FormAdd({ handleClose, data }) {
+    const dispatchRedux = useDispatch();
+    const { description = {} } = data;
+    const [formValues, setFormValues] = useState({ ...data, description: Object.values(description).map((desc) => ({ label: desc })) });
     const ListClientsByCm = useSelector((state) => state.listClientsByCM);
-    const { loading: loadingListClients, listClients } = ListClientsByCm;
+    const { listClients } = ListClientsByCm;
+    const { listServices } = useListServices();
     const refInput = React.createRef();
 
     const durationTime = duration({ tEnd: formValues.timeEnd, tStart: formValues.timeStart });
@@ -51,33 +42,21 @@ export default function FormAdd({ id, listServices, handleClose, data, handleSub
     function handleClientName(id, eve, value) {
         setFormValues(formValues => ({ ...formValues, [id]: value.label, cnumb: value.cnumb }));
     }
-    const handleSubmitt = () => {
+    const handleSubmit = (event) => {
         event.preventDefault();
         const description = { ...formValues.description.map((item) => item.label) };
-        handleSubmit({ ...formValues, description: description, ['min']: durationTime, ['units']: countUnitsTime, });
+        dispatchRedux(updateNotes({ value: { ...formValues, description: description, ['min']: durationTime, ['units']: countUnitsTime } }))
         handleClose();
     }
 
-
-    useEffect(() => {
-        if (data.description !== undefined) {
-            let description = Object.keys(data.description).map((key) => ({ label: data.description[key] }));
-            setFormValues(Object.assign({}, { ...data }, { description: description }));
-        }
-        return () => {
-            setFormValues({ ...defaultValues });
-        };
-    }, [data])
     return (
-        <form onSubmit={handleSubmitt}>
+        <form onSubmit={handleSubmit}>
             <SoftBox display='flex'>
                 <SoftBox width='50%' mr={1}>
                     <TextField
                         name="cm"
-                        // label="Name"
                         type="text"
                         value={formValues.cm}
-                        // onChange={handleInputChange}
                         helperText="Case Manager"
                         disabled
                     />
@@ -88,7 +67,6 @@ export default function FormAdd({ id, listServices, handleClose, data, handleSub
                 <SoftBox mr={1}>
                     <TextField sx={{ width: 120 }}
                         name="cnumb"
-                        // label="Client Number"
                         type="text"
                         value={formValues.cnumb}
                         onChange={handleInputChange}
@@ -101,20 +79,16 @@ export default function FormAdd({ id, listServices, handleClose, data, handleSub
                 <SoftBox width='50%' mr={1} sx={{ flexShrink: 5 }}>
                     <TextField
                         name="fecha"
-                        // label="Age"
                         type="date"
                         value={moment(formValues.fecha, "DD/MM/YYYY").format("YYYY-MM-DD")}
                         onChange={handleChangeDate}
-                        // onBlur={handleInputChange}
                         helperText="Fecha"
-                    // format="MM/dd/yyyy"
 
                     />
                 </SoftBox>
                 <SoftBox width='100%' sx={{ flexShrink: 5 }} mr={0} >
                     <TextField
                         name="timeStart"
-                        // label="Age"
                         type="time"
                         value={moment(formValues.timeStart, "HH:mm").format("HH:mm")}
                         onChange={handleInputChange}
@@ -124,7 +98,6 @@ export default function FormAdd({ id, listServices, handleClose, data, handleSub
                 <SoftBox width='100%' sx={{ flexShrink: 5 }} mr={0} >
                     <TextField
                         name="timeEnd"
-                        // label="Age"
                         type="time"
                         value={moment(formValues.timeEnd, "HH:mm").format("HH:mm")}
                         onChange={handleInputChange}
@@ -135,7 +108,6 @@ export default function FormAdd({ id, listServices, handleClose, data, handleSub
                     <TextField
                         sx={{ width: '100px' }}
                         name="min"
-                        // label="Age"
                         type="number"
                         value={durationTime}
                         onChange={handleInputChange}

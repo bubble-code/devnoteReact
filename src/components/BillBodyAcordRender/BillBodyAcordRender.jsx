@@ -1,50 +1,24 @@
 /* eslint-disable react/jsx-filename-extension */
 import { useCallback, useMemo } from "react";
-import PropTypes from "prop-types";
 import ListServiOrderByDate from '../BillAcordionContainer/funtiHelper';
-import { useUpdateService } from '../../service/fetchHoo';
-import { useDispatch, useSelector } from "react-redux";
-import { useSoftUIController, setOpenModalEditService } from "context";
-
+import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
+
+// Component
 import { Accordion, AccordionDetails, AccordionSummary, CircularProgress, Table as MuiTable } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TableBody from "@mui/material/TableBody";
-import TableRow from "@mui/material/TableRow";
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import SoftBadge from "components/SoftBadge";
 
-import { columns } from "../BillAcordionRender/colunmHead";
 
 function BillAcordionRender() {
-  const dispatchRedux = useDispatch();
-  const [controller, dispatch] = useSoftUIController();
   const listServiceState = useSelector(state => state.listServiByCM);
-  const { data: { initialData, data, cWithBill }, loading, cm } = listServiceState;
-  const { error: errorUpdate, loading: loadingUpdate, updateItem } = useUpdateService();
+  const { data: { data }, loading } = listServiceState;
 
-  function handleOpen({ id, cm }) {
-    setOpenModalEditService(dispatch, { open: true, id, cm });
-  }
 
-  const upDateItemFromTable = ({ id, cm }) => {
-    // console.log({ id, cm });
-    updateItem({ id, cm, data });
-    if (!error) {
-      dispatchRedux(fectListServsByCM({ cm }));
-    }
-  };
-
-  const deleteItemFromTable = ({ id, cm }) => {
-    // console.log({ id, cm });
-    delteItem({ id, cm });
-    if (!error) {
-      dispatchRedux(fectListServsByCM({ cm }));
-    }
-  };
-
-  let group = ListServiOrderByDate({ data, handleDelete: deleteItemFromTable, handleEdit: upDateItemFromTable, setOpenModal: handleOpen });
+  let group = ListServiOrderByDate({ data });
 
 
   const renderAcordeonServiceByDate = useCallback(() => {
@@ -54,7 +28,7 @@ function BillAcordionRender() {
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
-            id="panel1a-header"
+            id={key}
           >
             <SoftBox display="flex" alignItems="center" color="palettePastel" size="sm" container wordSpacing='0.1rem' >
               <SoftBadge variant="contained" badgeContent={key} color="palettePastel" size="sm" container wordSpacing='0.1rem' />
@@ -71,32 +45,11 @@ function BillAcordionRender() {
                 <SoftBox component="thead">
                 </SoftBox>
                 <TableBody>
-                  {group[key].map((row, key) => {
-                    const rowKey = row['key'];
-                    const caseM = row['CM'];
-                    const tableRow = columns.map(({ name, align }) => {
-                      return (
-                        <SoftBox
-                          key={uuidv4()}
-                          component="td"
-                          p={1}
-                          textAlign={align}
-                          borderBottom={null}
-                        >
-                          <SoftTypography
-                            variant="button"
-                            fontWeight="regular"
-                            color="secondary"
-                            sx={{ display: "inline-block", width: "max-content" }}
-                          >
-                            {row[name]}
-                          </SoftTypography>
-                        </SoftBox>
-                      );
-                    });
-
-                    return <TableRow key={rowKey} >{tableRow}</TableRow>;
-                  })}
+                  {group[key].map((row) => {
+                    return (row);
+                  }
+                  )
+                  }
                 </TableBody>
               </MuiTable>
             </SoftBox>

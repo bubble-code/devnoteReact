@@ -60,6 +60,15 @@ export function completedNote({ value }) {
     }
 }
 
+export function deleteNote({ value }) {
+    return async (dispatch) => {
+        // dispatch({ type: "UPDATE_NOTES_LOAD" });
+        const { id, cm } = value;
+        const res = await DataService.deleteService({ cm, id });
+        dispatch({ type: 'LIST_SERVICES_BY_CM_COMPLETE', value: { ...value } });
+    }
+}
+//  ==================  End CRUD SERVICE  ==================
 export function clearListServicesByCM() {
     return async (dispatch) => {
         dispatch({ type: 'LIST_SERVICES_BY_CM_CLEAR' });

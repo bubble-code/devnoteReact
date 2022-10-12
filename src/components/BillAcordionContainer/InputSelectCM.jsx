@@ -1,8 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { fectListServsByCM, clearListServicesByCM } from '../../redux/actions/actions';
-import PropTypes from "prop-types";
-
+import { fectListServsByCM, clearListServicesByCM, fectListClientsByCM } from '../../redux/actions/actions';
 // Component
 import SelectInput from "../SelectInput";
 import SoftBox from "components/SoftBox";
@@ -18,6 +16,7 @@ function InputSelectCM() {
         // console.log("cM", cM);
         if (cM) {
             dispatchRedux(fectListServsByCM({ cm: cM }));
+            dispatchRedux(fectListClientsByCM({ cm: cM }));
         } else {
             dispatchRedux(clearListServicesByCM());
         }

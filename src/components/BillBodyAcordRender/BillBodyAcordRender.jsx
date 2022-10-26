@@ -15,7 +15,7 @@ import SoftBadge from "components/SoftBadge";
 
 function BillAcordionRender() {
   const listServiceState = useSelector(state => state.listServiByCM);
-  const { data: { data }, loading } = listServiceState;
+  const { data: { data }, loading } = listServiceState; 
 
 
   let group = ListServiOrderByDate({ data });

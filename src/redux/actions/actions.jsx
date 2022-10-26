@@ -92,7 +92,22 @@ export function fectListCM() {
         dispatch({ type: 'LIST_CM_SUCCESS', value: res });
     }
 }
+// ==================  START CRUD CLIENT  ==================
+export function ClientAction({ value }) {
+    return async (dispatch) => {
+        dispatch({ type: "ADD_CLIENT_LOAD" });
+        try {
+            await DataService.addNewClient({ data: value });
 
+        } catch (error) {
+            dispatch({ type: "ADD_CLIENT_FAIL", error: error });
+        }
+        finally {
+            dispatch({ type: "ADD_CLIENT_SUCCESS" });
+        }
+
+    }
+};
 export function fectListClientsByCM({ cm }) {
     return async (dispatch) => {
         dispatch({ type: "LIST_CLIENTS_BY_CM_LOAD" });

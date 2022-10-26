@@ -68,8 +68,8 @@ class DataService {
         await updateDoc(docRef, data);
     }
 
-    async addNewClient({ cm, data }) {
-        const { name, lastName } = data;
+    async addNewClient({ data }) {
+        const { name, lastName, cm } = data;
         const docRef = doc(db, `${this._pathCM}/${cm}/activeClient/`, `${name} ${lastName}`);
         await setDoc(docRef, data);
     }

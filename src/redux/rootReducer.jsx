@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { listServicesByCMReducer, listNotesReducer, listServicesByCMReducer2, currentClToNoteReducer, listCMReducer, listClientsByCMReducer, historyOfClientReducer } from './reducers/reducer'
+import { listServicesByCMReducer, listNotesReducer, listServicesByCMReducer2, currentClToNoteReducer, listCMReducer, listClientsByCMReducer, historyOfClientReducer, ClientReducer } from './reducers/reducer'
 
 const rootReducer = combineReducers({
     listSbyCM: listServicesByCMReducer,
@@ -9,6 +9,7 @@ const rootReducer = combineReducers({
     listCM: listCMReducer,
     listClientsByCM: listClientsByCMReducer,
     historyClient: historyOfClientReducer,
+    clientReducer: ClientReducer,
 });
 
 export default rootReducer;

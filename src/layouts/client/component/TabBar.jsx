@@ -10,10 +10,10 @@ import BarAddChoose from './BarAddChoose';
 import { CircularProgress, Divider } from '@mui/material';
 import ModalAddClient from './ModalAddClient';
 import ListClient from './ListClient';
-import SoftBox from 'components/SoftBox';
 import TabAddClient from './TabAddClient';
 import tabs from '../tabs';
 import { v4 as uuidv4 } from 'uuid';
+import { Col, Row, Spin } from 'antd';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -50,6 +50,7 @@ function a11yProps(index) {
 
 export default function TabBarClient() {
     const { listCMs } = useSelector(state => state.listCM);
+    const { loading: loadSpin, error: errorSpin } = useSelector(state => state.clientReducer);
     const [value, setValue] = useState(0);
     const [caseManager, setCaseManager] = useState('');
     const [open, setOpen] = useState(false);
@@ -73,34 +74,40 @@ export default function TabBarClient() {
         setOpen(false);
     };
     return (
-        <SoftBox sx={{ width: '100%' }}>
-            <SoftBox sx={{ borderBottom: 1, borderColor: 'divider', width: '50%' }}>
+        <Col span={24} >
+            <Col span={12}>
                 <Tabs value={value} onChange={handleChange} display='flex' sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'start', justifyContent: 'start' }}>
                     {tabs().map((tab, index) => (
                         <Tab label={tab.label} {...a11yProps(index)} key={uuidv4()} />
                     ))}
                 </Tabs>
-            </SoftBox>
-            <TabPanel value={value} index={0}>
-                <BarAddChoose listCMs={listCMs} title={'Assignated to:'} handleChange={loadBillingData} currentCM={caseManager} addOpen={handleClickOpen} />
-                <Divider style={{ margin: 0 }} />
-                {loading ? <CircularProgress /> : <ListClient datas={lisClients} />}
-                <ModalAddClient open={open} handleClose={handleClose} />
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-                Item Two
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-                <TabAddClient />
-            </TabPanel>
-        </SoftBox>
+            </Col>
+            <Col span={24}>
+                <TabPanel value={value} index={0}>
+                    <BarAddChoose listCMs={listCMs} title={'Assignated to:'} handleChange={loadBillingData} currentCM={caseManager} addOpen={handleClickOpen} />
+                    <Row justify='start' >
+                        <Col span={10}>
+                            {loading ? <CircularProgress /> : <ListClient datas={lisClients} />}
+                            <ModalAddClient open={open} handleClose={handleClose} />
+                        </Col>
+                    </Row>
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    Item Two
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                    <Row >
+                        <Col span={4} >
+                            <TabAddClient />
+                        </Col>
+                        <Col span={2} >
+                            <Row justify='center' align='middle' style={{ height: '100%' }}>
+                                {loadSpin && <Spin size="large" tip={'Savings...'} />}
+                            </Row>
+                        </Col>
+                    </Row>
+                </TabPanel>
+            </Col>
+        </Col>
     );
 }
-
-TabBarClient.propTypes = {
-    listCMs: PropTypes.array,
-    loadBillingData: PropTypes.func,
-    caseManager: PropTypes.string,
-    handleClickOpen: PropTypes.func,
-    handleClose: PropTypes.func,
-};
